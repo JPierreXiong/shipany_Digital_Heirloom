@@ -15,7 +15,7 @@ dotenv.config({ path: resolve(process.cwd(), '.env.local') });
 import { db } from '../src/core/db/index.js';
 import { shippingLogs, digitalVaults, beneficiaries, user } from '../src/config/db/schema.js';
 import { eq } from 'drizzle-orm';
-import { getUuid } from '../src/shared/lib/hash/index.js';
+import { getUuid } from '../src/shared/lib/hash.js';
 
 async function createTestShippingRequest() {
   try {
