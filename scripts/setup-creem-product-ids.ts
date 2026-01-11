@@ -11,10 +11,11 @@
 import * as readline from 'readline';
 
 // Creem Product IDs 配置
+// Base (Standard) Product: 49USD - prod_4oN2BFtSPSpAnYcvUN0uoi
+// Pro (Family/Premium) Product: 149 USD - prod_4epepOcgUjSjPoWmAnBaFt
 const CREEM_PRODUCT_IDS = {
-  "starter-monthly": "prod_2tOrusjFjkm0WaOn9waSCP",
-  "base-monthly": "prod_52so9q1usRp5ZfDZ0vIBru",
-  "pro-monthly": "prod_6Wo2c7ZLGrOcz1jGrSqhi0"
+  "digital-heirloom-base-annual": "prod_4oN2BFtSPSpAnYcvUN0uoi",
+  "digital-heirloom-pro-annual": "prod_4epepOcgUjSjPoWmAnBaFt"
 };
 
 const ENV_VAR_KEY = 'CREEM_PRODUCT_IDS';

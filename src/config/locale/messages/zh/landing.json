@@ -435,7 +435,7 @@
     "id": "faq",
     "title": "常见问题",
     "description": "还有其他问题？请通过邮件联系我们。",
-    "tip": "没有找到想要的答案？请联系 <a href='mailto:support@subtitletk.app' class='text-primary font-medium hover:underline'>我们的客服团队</a>",
+    "tip": "没有找到想要的答案？请联系 <a href='mailto:support@digitalheirloom.app' class='text-primary font-medium hover:underline'>我们的客服团队</a>",
     "items": [
       {
         "question": "支持哪些平台，处理流程是怎样的？",
@@ -548,7 +548,7 @@
         {
           "title": "邮箱",
           "icon": "Mail",
-          "url": "mailto:support@subtitletk.app",
+          "url": "mailto:support@digitalheirloom.app",
           "target": "_self"
         }
       ]

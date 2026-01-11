@@ -77,6 +77,7 @@
         },
         "product_id": "digital-heirloom-base-annual",
         "product_name": "Digital Heirloom 标准版（年付）",
+        "payment_product_id": "prod_4oN2BFtSPSpAnYcvUN0uoi",
         "group": "annual",
         "plan_name": "标准版"
       },
@@ -110,6 +111,7 @@
         },
         "product_id": "digital-heirloom-pro-annual",
         "product_name": "Digital Heirloom 尊享版（年付）",
+        "payment_product_id": "prod_4epepOcgUjSjPoWmAnBaFt",
         "group": "annual",
         "plan_name": "尊享版"
       }

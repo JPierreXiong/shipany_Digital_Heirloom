@@ -435,7 +435,7 @@
     "id": "faq",
     "title": "Frequently Asked Questions",
     "description": "Have another question? Contact us by email.",
-    "tip": "Can't find what you're looking for? Contact our <a href='mailto:support@subtitletk.app' class='text-primary font-medium hover:underline'>customer support team</a>",
+    "tip": "Can't find what you're looking for? Contact our <a href='mailto:support@digitalheirloom.app' class='text-primary font-medium hover:underline'>customer support team</a>",
     "items": [
       {
         "question": "How can I extract transcripts from YouTube videos using Digital Heirloom?",
@@ -553,7 +553,7 @@
         {
           "title": "Email",
           "icon": "Mail",
-          "url": "mailto:support@subtitletk.app",
+          "url": "mailto:support@digitalheirloom.app",
           "target": "_self"
         }
       ]

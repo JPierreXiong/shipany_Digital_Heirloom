@@ -435,7 +435,7 @@
     "id": "faq",
     "title": "Questions fréquemment posées",
     "description": "Vous avez une autre question ? Contactez-nous par e-mail.",
-    "tip": "Vous ne trouvez pas ce que vous cherchez ? Contactez notre <a href='mailto:support@subtitletk.app' class='text-primary font-medium hover:underline'>équipe de support client</a>",
+    "tip": "Vous ne trouvez pas ce que vous cherchez ? Contactez notre <a href='mailto:support@digitalheirloom.app' class='text-primary font-medium hover:underline'>équipe de support client</a>",
     "items": [
       {
         "question": "Combien coûte l'utilisation de Digital Heirloom ?",
@@ -548,7 +548,7 @@
         {
           "title": "Email",
           "icon": "Mail",
-          "url": "mailto:support@subtitletk.app",
+          "url": "mailto:support@digitalheirloom.app",
           "target": "_self"
         }
       ]

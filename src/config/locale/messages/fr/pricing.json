@@ -77,6 +77,7 @@
         },
         "product_id": "digital-heirloom-base-annual",
         "product_name": "Digital Heirloom Base (Annuel)",
+        "payment_product_id": "prod_4oN2BFtSPSpAnYcvUN0uoi",
         "group": "annual",
         "plan_name": "Base"
       },
@@ -110,6 +111,7 @@
         },
         "product_id": "digital-heirloom-pro-annual",
         "product_name": "Digital Heirloom Pro (Annuel)",
+        "payment_product_id": "prod_4epepOcgUjSjPoWmAnBaFt",
         "group": "annual",
         "plan_name": "Pro"
       }
