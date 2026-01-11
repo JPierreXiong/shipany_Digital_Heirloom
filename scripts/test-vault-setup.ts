@@ -102,18 +102,21 @@ class VaultSetupTester {
       // 生成恢复包
       const recoveryKit = await generateRecoveryKit(TEST_CONFIG.masterPassword, testVaultId);
       
-      // 加密主密码备份
+      // 加密主密码备份（使用助记词作为加密密码）
+      // 注意：recoveryKit 已经包含了备份信息，这里只是为了测试
       const { encryptedData: backupToken, salt: backupSalt, iv: backupIv } = 
-        await encryptData(TEST_CONFIG.masterPassword, recoveryKit.mnemonicPhrase);
+        await encryptData(TEST_CONFIG.masterPassword, recoveryKit.mnemonic);
 
       const step1Data = {
         password: TEST_CONFIG.masterPassword,
         hint: TEST_CONFIG.hint,
         recoveryKit: {
-          mnemonicPhrase: recoveryKit.mnemonicPhrase,
-          backupToken,
-          backupSalt,
-          backupIv,
+          mnemonic: recoveryKit.mnemonic,
+          mnemonicArray: recoveryKit.mnemonicArray,
+          backupToken: recoveryKit.backupToken, // 使用 recoveryKit 中的备份
+          backupSalt: recoveryKit.backupSalt,
+          backupIv: recoveryKit.backupIv,
+          vaultId: recoveryKit.vaultId,
         },
       };
 
@@ -123,7 +126,7 @@ class VaultSetupTester {
         message: '主密码设置成功，恢复包已生成',
         data: {
           recoveryKitGenerated: true,
-          mnemonicPhraseLength: recoveryKit.mnemonicPhrase.split(' ').length,
+          mnemonicLength: recoveryKit.mnemonicArray.length,
         },
       });
 
