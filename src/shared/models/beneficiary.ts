@@ -244,7 +244,7 @@ export async function findBeneficiariesNeedingUnlockNotification() {
     );
 
   // 过滤出已请求但未发送通知的受益人
-  return result.filter((b) => b.unlockRequestedAt && !b.unlockNotificationSent);
+  return result.filter((b: Beneficiary) => b.unlockRequestedAt && !b.unlockNotificationSent);
 }
 
 /**

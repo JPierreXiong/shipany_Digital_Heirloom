@@ -186,16 +186,16 @@ export async function getEventStats(vaultId: string) {
   const stats = {
     total: events.length,
     warningSent: events.filter(
-      (e) => e.eventType === DeadManSwitchEventType.WARNING_SENT
+      (e: DeadManSwitchEvent) => e.eventType === DeadManSwitchEventType.WARNING_SENT
     ).length,
     gracePeriodStarted: events.filter(
-      (e) => e.eventType === DeadManSwitchEventType.GRACE_PERIOD_STARTED
+      (e: DeadManSwitchEvent) => e.eventType === DeadManSwitchEventType.GRACE_PERIOD_STARTED
     ).length,
     assetsReleased: events.filter(
-      (e) => e.eventType === DeadManSwitchEventType.ASSETS_RELEASED
+      (e: DeadManSwitchEvent) => e.eventType === DeadManSwitchEventType.ASSETS_RELEASED
     ).length,
     heartbeatReceived: events.filter(
-      (e) => e.eventType === DeadManSwitchEventType.HEARTBEAT_RECEIVED
+      (e: DeadManSwitchEvent) => e.eventType === DeadManSwitchEventType.HEARTBEAT_RECEIVED
     ).length,
     lastEvent: events[0] || null,
   };
