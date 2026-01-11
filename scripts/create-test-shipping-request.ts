@@ -46,12 +46,11 @@ async function createTestShippingRequest() {
     const userId = testUser?.id || (await database.select().from(user).limit(1))[0].id;
 
     // 2. 查找或创建数字保险箱
-    let vault = await database
+    const [vault] = await database
       .select()
       .from(digitalVaults)
       .where(eq(digitalVaults.userId, userId))
-      .limit(1)
-      .then((rows) => rows[0]);
+      .limit(1);
 
     if (!vault) {
       console.log('⚠️ 用户没有数字保险箱，创建一个测试保险箱...');
@@ -71,21 +70,20 @@ async function createTestShippingRequest() {
         status: 'released', // 模拟已释放状态
         lastSeenAt: new Date(Date.now() - 100 * 24 * 60 * 60 * 1000), // 100天前
       });
-      vault = await database
+      [vault] = await database
         .select()
         .from(digitalVaults)
         .where(eq(digitalVaults.id, vaultId))
-        .then((rows) => rows[0]);
+        .limit(1);
       console.log(`✅ 创建测试保险箱: ${vaultId}\n`);
     }
 
     // 3. 查找或创建受益人
-    let beneficiary = await database
+    const [beneficiary] = await database
       .select()
       .from(beneficiaries)
       .where(eq(beneficiaries.vaultId, vault.id))
-      .limit(1)
-      .then((rows) => rows[0]);
+      .limit(1);
 
     if (!beneficiary) {
       console.log('⚠️ 保险箱没有受益人，创建一个测试受益人...');
@@ -105,11 +103,11 @@ async function createTestShippingRequest() {
         countryCode: 'CN',
         status: 'released', // 模拟已释放状态
       });
-      beneficiary = await database
+      [beneficiary] = await database
         .select()
         .from(beneficiaries)
         .where(eq(beneficiaries.id, beneficiaryId))
-        .then((rows) => rows[0]);
+        .limit(1);
       console.log(`✅ 创建测试受益人: ${beneficiaryId}\n`);
     }
 
