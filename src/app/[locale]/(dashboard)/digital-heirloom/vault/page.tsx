@@ -427,13 +427,15 @@ export default function DigitalHeirloomVaultPage() {
                     </button>
                   ))}
                 </div>
-                <AssetUploader
-                  vaultId={vaultId}
-                  category="secure_keys"
-                  userPlan={userPlan}
-                  onUploadComplete={handleUploadComplete}
-                  onError={(error) => toast.error(error.message)}
-                />
+                {vaultId && (
+                  <AssetUploader
+                    vaultId={vaultId}
+                    category="secure_keys"
+                    userPlan={userPlan}
+                    onUploadComplete={handleUploadComplete}
+                    onError={(error) => toast.error(error.message)}
+                  />
+                )}
               </div>
             )}
           </div>
