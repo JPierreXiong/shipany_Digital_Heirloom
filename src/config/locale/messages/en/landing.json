@@ -438,36 +438,28 @@
     "tip": "Can't find what you're looking for? Contact our <a href='mailto:support@digitalheirloom.app' class='text-primary font-medium hover:underline'>customer support team</a>",
     "items": [
       {
-        "question": "How can I extract transcripts from YouTube videos using Digital Heirloom?",
-        "answer": "Extracting transcripts from YouTube videos is simple with Digital Heirloom. Copy the YouTube video URL (supports standard watch links, Shorts, and youtu.be formats) and paste it into our input box. Click the 'Extract' button, and our advanced tool will instantly retrieve the full transcript with timestamps. You can then download the transcript in SRT format or choose to translate it into one of 12+ supported languages using our AI-powered Gemini 1.5 Flash translation engine. The entire process is automated, secure, and typically completes within minutes."
+        "question": "Does the ShipAny package contain a USB drive or my actual data?",
+        "answer": "No. For ultimate security, we never ship USB drives. The package contains only a high-strength physical encrypted credential (Recovery Kit). Your assets remain encrypted in the cloud; the physical credential is the sole \"key\" to unlock them."
       },
       {
-        "question": "Is Digital Heirloom free to use for personal study and research?",
-        "answer": "Yes, Digital Heirloom is designed as a free online resource for researchers, language learners, and content creators. We offer a free tier with daily check-in rewards - you can earn 5 free credits every day by logging in and using our Daily Check-in feature. These credits are valid for 30 days and can be used for transcript extraction, video analysis, and translation. For power users who need higher volume processing, we offer subscription plans (Pro/Base) with the lowest price per credit, high concurrency (up to 3 tasks), and no video length limits. We also have on-demand plans ($4.9) perfect for casual users, with credits valid for 365 days."
+        "question": "What happens if DigitalHeirloom's database is hacked?",
+        "answer": "This is the brilliance of our architecture. Even if hackers exfiltrated the entire database, they could read nothing. The critical decryption factors are not on our servers; they reside in the physical credentials sent to your beneficiaries. The algorithmic complexity makes cracking as difficult as finding a specific atom in the universe."
       },
       {
-        "question": "What file formats can I download from Digital Heirloom?",
-        "answer": "Digital Heirloom supports multiple output formats to meet your content analysis and research needs. You can download subtitles in SRT format (standard subtitle file compatible with video players), CSV format for spreadsheet analysis and data processing, or download the complete video file for offline study. All downloads are available without watermarks, ensuring professional-quality results. This versatility makes Digital Heirloom perfect for content creators analyzing trending scripts, researchers studying video content, and language learners practicing translation skills."
+        "question": "Does the platform guarantee the quality or integrity of my file content?",
+        "answer": "We guarantee the physical integrity and security of your encrypted data blocks via globally distributed storage. However, as a \"Zero-Knowledge\" platform, we do not audit or guarantee the internal content quality. We are the vault manufacturers, not content auditors."
       },
       {
-        "question": "How does the credit system and refund policy work?",
-        "answer": "Tasks consume credits based on usage: 10 credits for subtitle extraction, 15 credits for video downloads, and 5 credits for AI translation. Our \"Fail-Safe\" refund policy ensures that if a task fails due to a system error, all credits are automatically refunded to your account immediately. This protects your investment and ensures you only pay for successful operations."
+        "question": "Will my beneficiary still need my Master Password after receiving the physical credential?",
+        "answer": "No. Pro credentials feature \"Auto-Parsing\" technology. Once the beneficiary scans the encrypted QR code, the system validates identity via the physical medium, automatically bypassing the password input for a friction-less recovery."
       },
       {
-        "question": "Can I translate video subtitles into multiple languages?",
-        "answer": "Absolutely. Digital Heirloom features a powerful AI-powered translation engine that supports 12+ major languages including English, Chinese (Simplified), Spanish, French, German, Japanese, Korean, Portuguese, Russian, Italian, Arabic, and Hindi. Our translation system uses Google's Gemini 1.5 Flash model to provide accurate, context-aware translations that preserve the original meaning while adapting to your target language. This allows users to break language barriers and repurpose content for international audiences efficiently. Perfect for content creators expanding globally, researchers studying cross-cultural content, and language learners improving their skills."
+        "question": "Why emphasize \"Physical Credentials\" over pure digital passwords?",
+        "answer": "Digital passwords can be compromised via brute force or phishing. Our physical credentials are \"non-replicable.\" This dual-validation—binding digital legacy with physical logistics (ShipAny)—ensures that even if a hacker breaches your network, they cannot cross physical space."
       },
       {
-        "question": "Are there any video length or processing limitations?",
-        "answer": "Free and Base plan users can process videos under 10 minutes in length and handle 1 task at a time. Professional plan users enjoy unlimited video length and can run up to 3 tasks simultaneously for maximum efficiency. All plans support both YouTube and TikTok video processing, with automatic language detection and high-quality subtitle extraction."
-      },
-      {
-        "question": "How secure is my data and how long is it stored?",
-        "answer": "Your privacy and data security are our top priorities. All extracted video files are stored in encrypted Cloudflare R2 storage with enterprise-grade security. Files are automatically and permanently deleted after 24 hours. We recommend downloading your files (SRT, CSV, or Video) within this window to ensure you have local copies. We never share your data with third parties. Digital Heirloom is designed for personal use, research, and educational purposes only, and we maintain strict data protection protocols to ensure your information remains confidential."
-      },
-      {
-        "question": "Is it legal to extract transcripts and download videos?",
-        "answer": "Digital Heirloom is designed for personal use, research, and educational purposes only. Users must ensure they have the right to access the content and comply with the original platform's terms of service and copyright laws. We do not encourage the unauthorized distribution of copyrighted material. Our tool functions by accessing publicly available metadata to generate transcripts and facilitate video analysis. We respect the intellectual property rights of all content creators and platforms, and we are not affiliated with YouTube, TikTok, or any of their subsidiaries."
+        "question": "Does decrypting a 2GB asset take a long time?",
+        "answer": "Decryption time depends on the beneficiary's local hardware, not bandwidth. Once the physical credential activates the channel, the system uses Vercel Edge computing for streaming decryption. A 2GB archive can typically be restored within minutes."
       }
     ]
   },

@@ -438,28 +438,28 @@
     "tip": "Vous ne trouvez pas ce que vous cherchez ? Contactez notre <a href='mailto:support@digitalheirloom.app' class='text-primary font-medium hover:underline'>équipe de support client</a>",
     "items": [
       {
-        "question": "Combien coûte l'utilisation de Digital Heirloom ?",
-        "answer": "Digital Heirloom est une boîte à outils numérique haute performance conçue pour extraire et traduire les sous-titres des vidéos YouTube et TikTok. Nous croyons en une tarification simple et transparente. Notre modèle actuel est : 1 crédit pour l'extraction de sous-titres. 1 crédit pour le téléchargement de vidéo (TikTok). 1 crédit pour les services de traduction IA. (Note : Chaque action spécifique consomme exactement un crédit, ce qui facilite la gestion de votre solde.)"
+        "question": "Le colis ShipAny contient-il une clé USB ou mes données réelles ?",
+        "answer": "Non. Pour une sécurité maximale, nous n'expédions jamais de clés USB. Le colis contient uniquement un identifiant crypté physique haute résistance (Recovery Kit). Vos actifs restent cryptés dans le cloud ; l'identifiant physique est la seule \"clé\" pour les déverrouiller."
       },
       {
-        "question": "Que se passe-t-il si une extraction échoue ?",
-        "answer": "Chez Digital Heirloom, nous valorisons votre confiance. Si une vidéo est restreinte, privée ou si le système ne parvient pas à la traiter, notre politique de remboursement automatique garantit que votre crédit est immédiatement retourné à votre compte."
+        "question": "Que se passe-t-il si la base de données de DigitalHeirloom est piratée ?",
+        "answer": "C'est la brillance de notre architecture. Même si les pirates exfiltrent toute la base de données, ils ne peuvent rien lire. Les facteurs de décryptage critiques ne sont pas sur nos serveurs ; ils résident dans les identifiants physiques envoyés à vos bénéficiaires. La complexité algorithmique rend le craquage aussi difficile que de trouver un atome spécifique dans l'univers."
       },
       {
-        "question": "En combien de langues puis-je traduire ?",
-        "answer": "Digital Heirloom prend en charge 12+ langues mondiales majeures pour la traduction IA, notamment l'anglais, le chinois, l'espagnol, le français, l'allemand, le japonais et plus encore. Cela vous permet de localiser tout contenu viral pour votre public cible spécifique."
+        "question": "La plateforme garantit-elle la qualité ou l'intégrité du contenu de mes fichiers ?",
+        "answer": "Nous garantissons l'intégrité physique et la sécurité de vos blocs de données cryptés via un stockage distribué mondialement. Cependant, en tant que plateforme \"Zero-Knowledge\", nous n'auditons ni ne garantissons la qualité du contenu interne. Nous sommes les fabricants de coffres-forts, pas les auditeurs de contenu."
       },
       {
-        "question": "Puis-je prévisualiser les résultats avant de télécharger ?",
-        "answer": "Oui. Une fois le traitement atteint 100%, vous pouvez visiter votre tableau de bord d'activité pour voir un tableau d'aperçu des 10 premiers segments de sous-titres. Une fois satisfait, vous pouvez télécharger le fichier .SRT complet."
+        "question": "Mon bénéficiaire aura-t-il encore besoin de mon mot de passe principal après avoir reçu l'identifiant physique ?",
+        "answer": "Non. Les identifiants Pro disposent de la technologie \"Auto-Parsing\". Une fois que le bénéficiaire scanne le code QR crypté, le système valide l'identité via le support physique, contournant automatiquement la saisie du mot de passe pour une récupération sans friction."
       },
       {
-        "question": "Pourquoi le processus de traduction est-il parfois plus lent que l'extraction ?",
-        "answer": "Bien que l'extraction soit presque instantanée, la traduction IA est traitée par blocs intelligents (4000 caractères chacun) pour maintenir une précision linguistique élevée et contourner les limites techniques. Pour les longues vidéos, cela peut prendre 1-2 minutes pour garantir que chaque mot est parfaitement traduit."
+        "question": "Pourquoi insister sur les \"Identifiants Physiques\" plutôt que sur des mots de passe purement numériques ?",
+        "answer": "Les mots de passe numériques peuvent être compromis par force brute ou hameçonnage. Nos identifiants physiques sont \"non réplicables\". Cette double validation—liant l'héritage numérique à la logistique physique (ShipAny)—garantit que même si un pirate franchit votre réseau, il ne peut pas franchir l'espace physique."
       },
       {
-        "question": "Où sont stockés mes fichiers ?",
-        "answer": "Vos fichiers traités et les métadonnées vidéo sont stockés en toute sécurité dans notre stockage cloud privé. Vous pouvez accéder à votre historique et télécharger vos fichiers à tout moment via l'onglet Activité de votre tableau de bord."
+        "question": "Le décryptage d'un actif de 2 Go prend-il beaucoup de temps ?",
+        "answer": "Le temps de décryptage dépend du matériel local du bénéficiaire, pas de la bande passante. Une fois que l'identifiant physique active le canal, le système utilise le calcul Edge de Vercel pour le décryptage en streaming. Une archive de 2 Go peut généralement être restaurée en quelques minutes."
       }
     ]
   },

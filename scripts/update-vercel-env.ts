@@ -10,12 +10,12 @@ const PROJECT_NAME = 'shipany-digital-heirloom';
 // 需要设置的环境变量
 const envVars = {
   // 基础应用配置
-  'NEXT_PUBLIC_APP_URL': process.env.NEXT_PUBLIC_APP_URL || 'https://shipany-digital-heirloom.vercel.app',
+  'NEXT_PUBLIC_APP_URL': process.env.NEXT_PUBLIC_APP_URL || 'https://www.digitalheirloom.app',
   'NEXT_PUBLIC_APP_NAME': 'Digital Heirloom',
   
   // 认证配置（必需）
   'AUTH_SECRET': '6doOS5VaVh4CEVpYXaG0BrupEuVCPPxt7B4/02O/ucQ=',
-  'AUTH_URL': process.env.AUTH_URL || 'https://shipany-digital-heirloom.vercel.app',
+  'AUTH_URL': process.env.AUTH_URL || 'https://www.digitalheirloom.app',
   
   // Supabase 配置
   'NEXT_PUBLIC_SUPABASE_URL': 'https://vkafrwwskupsyibrvcvd.supabase.co',
