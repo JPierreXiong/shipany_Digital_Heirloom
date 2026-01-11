@@ -47,6 +47,7 @@
     ".next",
     "out",
     "dist",
-    "supabase"
+    "supabase",
+    "scripts"
   ]
 }
