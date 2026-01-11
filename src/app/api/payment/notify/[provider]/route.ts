@@ -61,10 +61,12 @@ export async function POST(
 
         if (shippingLog) {
           // Update shipping fee status
+          // Get checkout ID from paymentInfo.transactionId or metadata
+          const checkoutId = session.paymentInfo?.transactionId || session.metadata?.checkoutId || undefined;
           await updateShippingFeeStatus(
             shippingLogId,
             ShippingFeeStatus.PAID,
-            session.sessionId,
+            checkoutId,
             new Date()
           );
 
