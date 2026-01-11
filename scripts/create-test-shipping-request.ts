@@ -46,7 +46,7 @@ async function createTestShippingRequest() {
     const userId = testUser?.id || (await database.select().from(user).limit(1))[0].id;
 
     // 2. 查找或创建数字保险箱
-    const [vault] = await database
+    let [vault] = await database
       .select()
       .from(digitalVaults)
       .where(eq(digitalVaults.userId, userId))
@@ -79,7 +79,7 @@ async function createTestShippingRequest() {
     }
 
     // 3. 查找或创建受益人
-    const [beneficiary] = await database
+    let [beneficiary] = await database
       .select()
       .from(beneficiaries)
       .where(eq(beneficiaries.vaultId, vault.id))
