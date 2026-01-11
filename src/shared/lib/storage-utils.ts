@@ -36,8 +36,8 @@ export async function uploadToBlobStorage(
   // 构建存储路径：vault_id/file_id_original_name.enc
   const storagePath = `${vaultId}/${fileId}_${fileName}.enc`;
 
-  // 将 Uint8Array 转换为 Blob
-  const encryptedBlob = new Blob([encryptedData], {
+  // 将 Uint8Array 转换为 Blob（添加类型断言以兼容 TypeScript）
+  const encryptedBlob = new Blob([encryptedData as BlobPart], {
     type: 'application/octet-stream',
   });
 

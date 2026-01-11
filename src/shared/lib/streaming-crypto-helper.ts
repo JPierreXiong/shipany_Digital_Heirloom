@@ -59,7 +59,7 @@ async function deriveKey(
   return crypto.subtle.deriveKey(
     {
       name: 'PBKDF2',
-      salt: salt,
+      salt: salt as BufferSource,
       iterations: 100000,
       hash: 'SHA-256',
     },
@@ -179,8 +179,8 @@ export async function streamEncryptAndUpload(
       offset += chunk.length;
     }
 
-    // 上传到 Blob Storage
-    const encryptedBlob = new Blob([mergedEncryptedData], {
+    // 上传到 Blob Storage（添加类型断言以兼容 TypeScript）
+    const encryptedBlob = new Blob([mergedEncryptedData as BlobPart], {
       type: 'application/octet-stream',
     });
 
