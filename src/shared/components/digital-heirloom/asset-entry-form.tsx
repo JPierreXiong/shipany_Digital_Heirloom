@@ -202,6 +202,7 @@ export default function AssetEntryForm({ onComplete }: AssetEntryFormProps) {
     setEncryptionPhase('key-derivation');
     encryptionStartTime.current = Date.now();
 
+    let vaultId: string | null = null;
     try {
       // Get vault ID
       const vaultResponse = await fetch('/api/digital-heirloom/vault/get');
@@ -212,7 +213,7 @@ export default function AssetEntryForm({ onComplete }: AssetEntryFormProps) {
         throw new Error(t('error_get_vault_info'));
       }
 
-      const vaultId = vaultResult.data.vault.id;
+      vaultId = vaultResult.data.vault.id;
       const fileSizeMB = selectedFile.size / (1024 * 1024);
       const estimatedEncryptionTimeMs = (fileSizeMB / 50) * 1000; // 假设 50MB/s 加密速度
 
@@ -246,31 +247,34 @@ export default function AssetEntryForm({ onComplete }: AssetEntryFormProps) {
       
       // 立即保存到 IndexedDB（防止数据丢失）
       let pendingAssetId: string | null = null;
-      try {
-        const { savePendingAsset } = await import('@/shared/lib/indexeddb-cache');
-        pendingAssetId = await savePendingAsset({
-          vaultId,
-          encryptedData: encryptedResult.encryptedData,
-          salt: encryptedResult.salt,
-          iv: encryptedResult.iv,
-          checksum: encryptedResult.checksum,
-          fileName: selectedFile.name,
-          displayName: selectedFile.name,
-          fileType: selectedFile.type || 'application/octet-stream',
-          fileSize: selectedFile.size,
-          category: selectedCategory,
-          metadataSaved: false,
-        });
-        console.log('Asset saved to IndexedDB:', pendingAssetId);
-      } catch (indexedDBError: any) {
-        console.warn('IndexedDB save failed (non-critical):', indexedDBError.message);
-        // IndexedDB 失败不影响主流程
+      if (vaultId) {
+        try {
+          const { savePendingAsset } = await import('@/shared/lib/indexeddb-cache');
+          pendingAssetId = await savePendingAsset({
+            vaultId,
+            encryptedData: encryptedResult.encryptedData,
+            salt: encryptedResult.salt,
+            iv: encryptedResult.iv,
+            checksum: encryptedResult.checksum,
+            fileName: selectedFile.name,
+            displayName: selectedFile.name,
+            fileType: selectedFile.type || 'application/octet-stream',
+            fileSize: selectedFile.size,
+            category: selectedCategory,
+            metadataSaved: false,
+          });
+          console.log('Asset saved to IndexedDB:', pendingAssetId);
+        } catch (indexedDBError: any) {
+          console.warn('IndexedDB save failed (non-critical):', indexedDBError.message);
+          // IndexedDB 失败不影响主流程
+        }
       }
       
       // 上传到 Blob Storage（通过 API 路由，服务器端处理）
       let blobUrl: string | null = null;
       try {
-        const blob = new Blob([encryptedResult.encryptedData], { type: 'application/octet-stream' });
+        // 将 Uint8Array 转换为 Blob（使用类型断言解决 TypeScript 类型兼容性问题）
+        const blob = new Blob([encryptedResult.encryptedData as BlobPart], { type: 'application/octet-stream' });
         const blobPath = `digital-heirloom/${vaultId}/${Date.now()}_${selectedFile.name}.encrypted`;
         
         // 使用 API 路由上传（服务器端可以访问环境变量）
@@ -293,10 +297,10 @@ export default function AssetEntryForm({ onComplete }: AssetEntryFormProps) {
         }
         
         // 更新 IndexedDB 中的 blobUrl
-        if (pendingAssetId) {
+        if (pendingAssetId && blobUrl) {
           try {
             const { updatePendingAsset } = await import('@/shared/lib/indexeddb-cache');
-            await updatePendingAsset(pendingAssetId, { blobUrl });
+            await updatePendingAsset(pendingAssetId, { blobUrl: blobUrl || undefined });
           } catch (updateError) {
             // 忽略更新错误
           }
@@ -385,7 +389,7 @@ export default function AssetEntryForm({ onComplete }: AssetEntryFormProps) {
         const { downloadRecoveryKitPDF } = await import('@/shared/lib/recovery-kit-pdf');
         
         // Generate recovery kit（本地生成，不依赖后端）
-        const recoveryKit = await generateRecoveryKit(masterPassword, vaultId);
+        const recoveryKit = await generateRecoveryKit(masterPassword, vaultId || 'temp');
         
         // Get beneficiary name if available
         const beneficiaryName = selectedBeneficiaries.length > 0 

@@ -190,26 +190,13 @@ export function BeneficiaryUnlock({
             const { getPendingAssets } = await import('@/shared/lib/indexeddb-cache');
             const assets = await getPendingAssets(vaultId);
             
-            if (assets.length > 0 && assets[0].masterPassword) {
-              // 优先使用 IndexedDB 中的密码
-              password = assets[0].masterPassword;
-            } else if (assets.length > 0 && assets[0].recoveryBackupToken) {
-              // 尝试从恢复令牌恢复密码
-              try {
-                const { recoverMasterPasswordFromKit } = await import('@/shared/lib/recovery-kit');
-                password = await recoverMasterPasswordFromKit(
-                  mnemonicString,
-                  assets[0].recoveryBackupToken,
-                  assets[0].recoveryBackupSalt || '',
-                  assets[0].recoveryBackupIv || ''
-                );
-              } catch (recoveryError: any) {
-                console.warn('Failed to recover password from mnemonic:', recoveryError);
-                // 降级：直接使用助记词作为密码（仅用于测试）
-                password = mnemonicString;
-              }
+            // 注意：密码不应该存储在 IndexedDB 中（安全考虑）
+            // 在模拟模式下，使用用户提供的助记词或密码
+            if (assets.length > 0) {
+              // 如果有资产，使用助记词作为密码（仅用于测试）
+              password = mnemonicString;
             } else {
-              // 如果没有备份令牌，直接使用助记词作为密码（仅用于测试）
+              // 如果没有资产，直接使用助记词作为密码（仅用于测试）
               password = mnemonicString;
             }
           } catch (indexedDBError: any) {
@@ -395,13 +382,16 @@ export function BeneficiaryUnlock({
             const { getPendingAssets } = await import('@/shared/lib/indexeddb-cache');
             const assets = await getPendingAssets(vaultId);
             
-            if (assets.length > 0 && assets[0].masterPassword) {
-              setMasterPassword(assets[0].masterPassword);
-              setUseMnemonic(false);
+            // 注意：密码不应该存储在 IndexedDB 中（安全考虑）
+            // 在模拟模式下，使用助记词进行解密
+            if (assets.length > 0) {
+              // 使用模拟助记词
+              setMnemonic(simulatedParsed.mnemonic);
+              setUseMnemonic(true);
               
               // 直接开始解密（跳过密码输入步骤）
               setTimeout(() => {
-                handlePasswordSubmit();
+                handlePasswordSubmit(simulatedParsed.mnemonic);
               }, 500);
             } else {
               // 如果没有找到密码，使用模拟助记词
@@ -474,13 +464,16 @@ export function BeneficiaryUnlock({
             const { getPendingAssets } = await import('@/shared/lib/indexeddb-cache');
             const assets = await getPendingAssets(vaultId);
             
-            if (assets.length > 0 && assets[0].masterPassword) {
-              setMasterPassword(assets[0].masterPassword);
-              setUseMnemonic(false);
+            // 注意：密码不应该存储在 IndexedDB 中（安全考虑）
+            // 在模拟模式下，使用助记词进行解密
+            if (assets.length > 0) {
+              // 使用模拟助记词
+              setMnemonic(simulatedQrData.mnemonic);
+              setUseMnemonic(true);
               
               // 直接开始解密
               setTimeout(() => {
-                handlePasswordSubmit();
+                handlePasswordSubmit(simulatedQrData.mnemonic);
               }, 500);
             } else {
               // 使用模拟助记词
@@ -715,7 +708,7 @@ export function BeneficiaryUnlock({
               </div>
 
               <button
-                onClick={handlePasswordSubmit}
+                onClick={() => handlePasswordSubmit()}
                 disabled={(!useMnemonic && !masterPassword.trim()) || (useMnemonic && !mnemonic.trim())}
                 className={`w-full py-3 font-semibold rounded-lg transition-all ${
                   ((!useMnemonic && masterPassword.trim()) || (useMnemonic && mnemonic.trim()))

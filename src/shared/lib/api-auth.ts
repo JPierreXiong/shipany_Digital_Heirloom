@@ -4,7 +4,7 @@
  */
 
 import { respErr } from '@/shared/lib/resp';
-import { getUserInfo } from '@/shared/models/user';
+import { getUserInfo, findUserById } from '@/shared/models/user';
 import type { User } from '@/shared/models/user';
 
 /**
@@ -12,11 +12,20 @@ import type { User } from '@/shared/models/user';
  * 如果未认证，返回错误响应
  */
 export async function requireAuth(): Promise<{ user: User; error?: null } | { user?: null; error: Response }> {
-  const user = await getUserInfo();
+  const sessionUser = await getUserInfo();
+  
+  if (!sessionUser) {
+    return {
+      error: respErr('no auth, please sign in', 401),
+    };
+  }
+
+  // 从数据库获取完整的用户信息（包含 planType, freeTrialUsed, lastCheckinDate 等字段）
+  const user = await findUserById(sessionUser.id);
   
   if (!user) {
     return {
-      error: respErr('no auth, please sign in', 401),
+      error: respErr('user not found', 404),
     };
   }
 

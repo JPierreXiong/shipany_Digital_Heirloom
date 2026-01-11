@@ -147,7 +147,8 @@ export function AssetUploader({
         
         // 上传到 Blob Storage
         const storagePath = `${vaultId}/${fileId}_${file.name}.enc`;
-        const encryptedBlob = new Blob([encryptResult.encryptedData], {
+        // 将 Uint8Array 转换为 Blob（使用类型断言解决 TypeScript 类型兼容性问题）
+        const encryptedBlob = new Blob([encryptResult.encryptedData as BlobPart], {
           type: 'application/octet-stream',
         });
 
