@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { requireAdminAccess } from '@/core/rbac/permission';
-import { findShippingLogsByStatus, ShippingStatus, ShippingFeeStatus } from '@/shared/models/shipping-log';
+import { findShippingLogsByStatus, ShippingStatus, ShippingFeeStatus, ShippingLog } from '@/shared/models/shipping-log';
 import { db } from '@/core/db';
 import { shippingLogs, beneficiaries, digitalVaults, user } from '@/config/db/schema';
 import { eq } from 'drizzle-orm';
@@ -29,7 +29,7 @@ export async function GET(req: Request) {
 
     // 获取关联信息（受益人、保险箱、用户）
     const logsWithDetails = await Promise.all(
-      logs.map(async (log) => {
+      logs.map(async (log: ShippingLog) => {
         const [beneficiary] = await db()
           .select()
           .from(beneficiaries)
