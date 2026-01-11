@@ -35,6 +35,7 @@ export default async function LandingPage({
     // Digital Heirloom: 新增部分
     'how-it-works': t.raw('how-it-works'),
     'zero-knowledge-security': t.raw('zero-knowledge-security'),
+    'technical-architecture': t.raw('technical-architecture'),
     
     // 隐藏用户评价
     testimonials: undefined,

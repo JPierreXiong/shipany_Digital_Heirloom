@@ -89,6 +89,11 @@ export default async function LandingPage({
         <ZeroKnowledgeSecurity features={page['zero-knowledge-security']} />
       )}
       
+      {/* Digital Heirloom: Technical Architecture Section */}
+      {page['technical-architecture'] && (
+        <Features features={page['technical-architecture']} className="bg-muted" />
+      )}
+      
       {page.faq && <FAQ faq={page.faq} />}
       {page.cta && <CTA cta={page.cta} className="bg-muted" />}
     </>

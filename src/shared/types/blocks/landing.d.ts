@@ -111,6 +111,7 @@ export interface Landing {
   features?: Features;
   'how-it-works'?: Features;
   'zero-knowledge-security'?: Features;
+  'technical-architecture'?: Features;
   stats?: Stats;
   showcases?: Showcases;
   subscribe?: Subscribe;

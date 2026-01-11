@@ -463,6 +463,33 @@
       }
     ]
   },
+  "technical-architecture": {
+    "id": "technical-architecture",
+    "title": "Architecture Technique et Conformité",
+    "description": "En savoir plus : Architecture Technique et Conformité",
+    "items": [
+      {
+        "title": "Technologie de Base : BIP39 et AES-256-GCM",
+        "description": "La fondation d'Afterglow est construite sur la norme mnémonique BIP39, le même protocole utilisé par les portefeuilles de cryptomonnaies leaders. Le système génère un \"Kit de Récupération\" de 24 mots pour protéger votre sauvegarde de mot de passe principal. Chaque donnée est chiffrée à l'aide d'AES-256-GCM, offrant le plus haut niveau de sécurité cryptographique disponible pour un usage commercial.",
+        "icon": "Shield"
+      },
+      {
+        "title": "Pont Physique-Numérique : Alimenté par ShipAny",
+        "description": "Nous avons comblé le fossé entre les données numériques et les héritages physiques grâce à une intégration approfondie avec ShipAny, une plateforme d'orchestration logistique mondiale. Déclencheurs Automatisés : Surveillance en temps réel via des fonctions Edge haute performance. Humain dans la Boucle (HITL) : Pour éviter les erreurs d'expédition irréversibles, chaque expédition physique de niveau Pro nécessite une autorisation secondaire manuelle depuis le tableau de bord administratif d'Afterglow. Logistique Prioritaire à la Confidentialité : Les adresses d'expédition des bénéficiaires restent chiffrées dans notre base de données et ne sont déchiffrées qu'au moment de la génération de l'étiquette d'expédition.",
+        "icon": "Package"
+      },
+      {
+        "title": "Pourquoi Passer au Plan Familial Pro ?",
+        "description": "Pour les utilisateurs gérant des actifs de grande valeur—tels que les clés privées, les documents juridiques sensibles ou les archives familiales inestimables—le Plan Pro offre une \"Certitude de Livraison\" : Alertes Omnicanales : Évitez les risques de point de défaillance unique associés aux notifications par e-mail uniquement. Moteur de Règlement Logistique : La passerelle Creem intégrée permet aux bénéficiaires de régler les frais d'expédition en un seul clic. Bénéficiaires Illimités : Parfait pour la planification successorale complexe et les structures de fiducie familiale.",
+        "icon": "ArrowUpCircle"
+      },
+      {
+        "title": "Avertissement Juridique et Meilleures Pratiques",
+        "description": "Bien qu'Afterglow fournisse une sécurité technique de pointe, nous recommandons fortement aux utilisateurs d'imprimer leur Kit de Récupération et de le stocker dans un endroit sûr et ignifuge. Notre service sert de complément technologique à votre plan successoral et ne remplace pas un testament ou une disposition testamentaire légalement contraignant tel que défini par votre juridiction locale. Veuillez consulter un professionnel juridique pour une planification successorale complète.",
+        "icon": "FileText"
+      }
+    ]
+  },
   "cta": {
     "id": "cta",
     "title": "Déployez votre première startup SaaS IA",

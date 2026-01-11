@@ -463,6 +463,33 @@
       }
     ]
   },
+  "technical-architecture": {
+    "id": "technical-architecture",
+    "title": "Technical Architecture & Compliance",
+    "description": "Learn More: Technical Architecture & Compliance",
+    "items": [
+      {
+        "title": "Core Technology: BIP39 & AES-256-GCM",
+        "description": "Afterglow's foundation is built upon the BIP39 Mnemonic standard, the same protocol used by leading cryptocurrency wallets. The system generates a 24-word \"Recovery Kit\" to protect your Master Password backup. Every piece of data is encrypted using AES-256-GCM, providing the highest level of cryptographic security available for commercial use.",
+        "icon": "Shield"
+      },
+      {
+        "title": "Physical-Digital Bridge: Powered by ShipAny",
+        "description": "We have bridged the gap between digital data and physical heirlooms through deep integration with ShipAny, a global logistics orchestration platform. Automated Triggers: Real-time monitoring via high-performance Edge Functions. Human-in-the-Loop (HITL): To prevent irreversible shipping errors, every Pro-tier physical dispatch requires manual secondary authorization from the Afterglow administrative dashboard. Privacy-First Logistics: Beneficiary shipping addresses remain encrypted in our database and are only decrypted at the moment the shipping label is generated.",
+        "icon": "Package"
+      },
+      {
+        "title": "Why Upgrade to Pro Family Plan?",
+        "description": "For users managing high-value assets—such as private keys, sensitive legal documents, or priceless family archives—the Pro Plan offers \"Certainty of Delivery\": Omni-channel Alerts: Avoid single-point-of-failure risks associated with email-only notifications. Logistics Settlement Engine: Integrated Creem gateway allows beneficiaries to settle shipping fees with a single click. Unlimited Beneficiaries: Perfect for complex estate planning and family trust structures.",
+        "icon": "ArrowUpCircle"
+      },
+      {
+        "title": "Legal Disclaimer & Best Practices",
+        "description": "While Afterglow provides state-of-the-art technical security, we strongly recommend that users print their Recovery Kit and store it in a secure, fireproof location. Our service serves as a technological supplement to your estate plan and does not replace a legally binding will or testament as defined by your local jurisdiction. Please consult with a legal professional for comprehensive estate planning.",
+        "icon": "FileText"
+      }
+    ]
+  },
   "cta": {
     "id": "cta",
     "title": "Start Protecting Your Digital Legacy Today",

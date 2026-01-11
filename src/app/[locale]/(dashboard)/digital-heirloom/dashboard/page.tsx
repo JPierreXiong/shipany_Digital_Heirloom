@@ -7,7 +7,8 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Heart, Shield, Clock, Users, Lock, AlertCircle } from 'lucide-react';
+import { Link } from '@/core/i18n/navigation';
+import { Heart, Shield, Clock, Users, Lock, AlertCircle, ArrowUpCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface DashboardStats {
@@ -17,6 +18,7 @@ interface DashboardStats {
   checkInStreak: number;
   lastCheckIn: string | null;
   nextCheckInDue: number | null; // 天数
+  userPlan?: 'free' | 'base' | 'pro' | 'on_demand';
 }
 
 export default function DigitalHeirloomDashboardPage() {
@@ -30,6 +32,20 @@ export default function DigitalHeirloomDashboardPage() {
 
   const loadDashboardData = async () => {
     try {
+      // 0. 获取用户信息（包含套餐信息）
+      let userPlan: 'free' | 'base' | 'pro' | 'on_demand' = 'free';
+      try {
+        const userResponse = await fetch('/api/user/get-user-info', {
+          method: 'POST',
+        });
+        const userResult = await userResponse.json();
+        if (userResult.code === 0 && userResult.data?.planType) {
+          userPlan = userResult.data.planType;
+        }
+      } catch (userError) {
+        console.warn('获取用户套餐信息失败:', userError);
+      }
+
       // 1. 获取保险箱信息
       const vaultResponse = await fetch('/api/digital-heirloom/vault/get');
       const vaultResult = await vaultResponse.json();
@@ -51,6 +67,7 @@ export default function DigitalHeirloomDashboardPage() {
           checkInStreak: 0,
           lastCheckIn: null,
           nextCheckInDue: null,
+          userPlan,
         });
         setLoading(false);
         return;
@@ -107,6 +124,7 @@ export default function DigitalHeirloomDashboardPage() {
         checkInStreak,
         lastCheckIn,
         nextCheckInDue,
+        userPlan,
       });
     } catch (error) {
       console.error('加载 Dashboard 数据失败:', error);
@@ -326,6 +344,17 @@ export default function DigitalHeirloomDashboardPage() {
                   <AlertCircle className="w-4 h-4 text-gray-600" />
                 </div>
               </a>
+              <Link
+                href="/pricing"
+                className="block px-4 py-3 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    {stats?.userPlan === 'free' ? 'Upgrade Plan' : stats?.userPlan === 'base' ? 'Upgrade to Pro' : 'Manage Plan'}
+                  </span>
+                  <ArrowUpCircle className="w-4 h-4 text-purple-600" />
+                </div>
+              </Link>
             </div>
           </div>
         </div>

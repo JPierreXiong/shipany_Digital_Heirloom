@@ -541,8 +541,18 @@ export const digitalVaults = pgTable(
     deadManSwitchEnabled: boolean('dead_man_switch_enabled').default(false).notNull(),
     // 死信开关激活时间
     deadManSwitchActivatedAt: timestamp('dead_man_switch_activated_at'),
-    // 状态：active, warning, activated, released
+    // 状态：active, warning, activated, released, pending, triggered, completed
     status: text('status').default('active').notNull(),
+    // 验证令牌（用于邮件确认链接）
+    verificationToken: text('verification_token'),
+    // 验证令牌过期时间
+    verificationTokenExpiresAt: timestamp('verification_token_expires_at'),
+    // 预警邮件发送时间（防止重复发送）
+    warningEmailSentAt: timestamp('warning_email_sent_at'),
+    // 预警邮件发送次数
+    warningEmailCount: integer('warning_email_count').default(0),
+    // 二次提醒邮件发送时间
+    reminderEmailSentAt: timestamp('reminder_email_sent_at'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at')
       .defaultNow()
