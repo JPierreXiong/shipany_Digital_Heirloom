@@ -13,7 +13,7 @@ import { eq } from 'drizzle-orm';
 export async function GET(req: Request) {
   try {
     // 检查管理员权限
-    await requireAdminAccess();
+    await requireAdminAccess({});
 
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status') as ShippingStatus | null;

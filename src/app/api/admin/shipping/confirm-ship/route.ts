@@ -20,7 +20,7 @@ const confirmSchema = z.object({
 export async function POST(req: Request) {
   try {
     // 检查管理员权限
-    await requireAdminAccess();
+    await requireAdminAccess({});
 
     const body = await req.json();
     const { logId, trackingNumber, carrier } = confirmSchema.parse(body);
