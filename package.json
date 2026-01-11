@@ -154,6 +154,7 @@
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^20",
     "@types/pg": "^8.15.5",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "19.2.2",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@types/react-dom": "19.2.2",

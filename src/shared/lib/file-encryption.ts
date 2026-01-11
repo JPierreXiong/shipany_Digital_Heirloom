@@ -137,13 +137,15 @@ export async function decryptFile(
   onProgress?: (progress: EncryptProgress) => void
 ): Promise<Blob> {
   // 1. 派生密钥
-  const key = await deriveKey(masterPassword, base64ToBuf(salt));
+  const saltBuf = base64ToBuf(salt);
+  const key = await deriveKey(masterPassword, saltBuf as Uint8Array);
 
   // 2. 解密
+  const ivBuf = base64ToBuf(iv);
   const decryptedData = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: base64ToBuf(iv) },
+    { name: 'AES-GCM', iv: ivBuf as BufferSource },
     key,
-    encryptedData
+    encryptedData as BufferSource
   );
 
   onProgress?.({

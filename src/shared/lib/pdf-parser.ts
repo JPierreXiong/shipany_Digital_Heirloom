@@ -63,9 +63,12 @@ export async function parseRecoveryKitPDF(file: File): Promise<ParsedRecoveryKit
     // 尝试从 PDF 元数据中提取信息
     const metadata = await pdf.getMetadata();
     let qrData: any = null;
-    if (metadata?.info?.Subject) {
+    if (metadata?.info && typeof metadata.info === 'object' && 'Subject' in metadata.info) {
       try {
-        qrData = JSON.parse(metadata.info.Subject);
+        const subject = (metadata.info as { Subject?: string }).Subject;
+        if (subject) {
+          qrData = JSON.parse(subject);
+        }
       } catch {
         // 忽略解析错误
       }
