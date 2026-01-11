@@ -13,8 +13,8 @@ async function configureCreem() {
     const creemConfigs = {
       creem_enabled: 'true',
       creem_environment: 'production', // 使用生产环境
-      creem_api_key: 'creem_6gAE7JDuZD17xazPwBaCc2', // 用户提供的 API Key
-      // creem_signing_secret: 'whsec_xxx', // 需要从 Creem Dashboard 获取
+      creem_api_key: 'creem_2HGGaY2qzPVRkCP0kESZXU', // Digital Heirloom API Key
+      creem_signing_secret: 'whsec_567Ldwvldo5m33S87geqWy', // Digital Heirloom Webhook Secret
       // creem_product_ids: JSON.stringify({
       //   'free-annual': 'prod_xxx',
       //   'base-annual': 'prod_xxx',
@@ -54,8 +54,8 @@ async function configureCreem() {
     console.log('   2. 确保 creem_enabled 已启用');
     console.log('   3. 测试支付流程');
     console.log('   4. 在 Creem Dashboard 配置 Webhook:');
-    console.log('      URL: https://[ngrok-id].ngrok-free.app/api/payment/notify/creem');
-    console.log('      Secret: whsec_2QBVve0KEHHMYP5g9zEgDi');
+    console.log('      URL: https://www.digitalheirloom.app/api/payment/notify/creem');
+    console.log('      Secret: whsec_567Ldwvldo5m33S87geqWy');
     
   } catch (error) {
     console.error('❌ 配置失败:', error);

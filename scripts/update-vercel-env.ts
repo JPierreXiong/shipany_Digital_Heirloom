@@ -39,7 +39,11 @@ const envVars = {
   'RESEND_API_KEY': 're_JrzLE2sa_HAe9ZVgzmszQ1iepVhRUS4Ci',
   'RESEND_DEFAULT_FROM': 'security@afterglow.app',
   
-  // Creem 支付产品 ID 映射
+  // Creem 支付配置
+  'CREEM_ENABLED': 'true',
+  'CREEM_ENVIRONMENT': 'production',
+  'CREEM_API_KEY': 'creem_2HGGaY2qzPVRkCP0kESZXU',
+  'CREEM_SIGNING_SECRET': 'whsec_567Ldwvldo5m33S87geqWy',
   'CREEM_PRODUCT_IDS': JSON.stringify({
     "digital-heirloom-base-annual": "prod_4oN2BFtSPSpAnYcvUN0uoi",
     "digital-heirloom-pro-annual": "prod_4epepOcgUjSjPoWmAnBaFt"

@@ -13,6 +13,7 @@
 import React, { useState, useRef } from 'react';
 import { ShieldCheck, Lock, Download, AlertCircle, CheckCircle, ArrowLeft, Upload, QrCode, FileText } from 'lucide-react';
 import { toast } from 'sonner';
+import { handleFileRestore } from '@/shared/lib/file-restore-handler';
 
 interface BeneficiaryUnlockProps {
   releaseToken?: string;
@@ -276,10 +277,35 @@ export function BeneficiaryUnlock({
             progressCallback
           );
           
-          setDecryptedFile({
-            name: fileName.replace('.encrypted', ''),
-            data: decryptedBlob,
-          });
+          // 将 Blob 转换为 ArrayBuffer 以便进行文件类型识别和还原
+          const decryptedArrayBuffer = await decryptedBlob.arrayBuffer();
+          
+          // 使用文件还原处理器：识别文件类型、清理文件名、创建正确 MIME 类型的 Blob
+          const restoreResult = await handleFileRestore(
+            decryptedArrayBuffer,
+            fileName.replace('.encrypted', '')
+          );
+          
+          if (restoreResult.success) {
+            // 创建正确 MIME 类型的 Blob
+            const restoredBlob = new Blob([decryptedArrayBuffer], { 
+              type: restoreResult.mimeType 
+            });
+            
+            setDecryptedFile({
+              name: restoreResult.fileName,
+              data: restoredBlob,
+            });
+            
+            toast.success(`文件已还原为 ${restoreResult.fileName}，类型: ${restoreResult.mimeType}`);
+          } else {
+            // 还原失败，使用原始 Blob（降级处理）
+            console.warn('文件还原失败，使用原始 Blob:', restoreResult.error);
+            setDecryptedFile({
+              name: fileName.replace('.encrypted', ''),
+              data: decryptedBlob,
+            });
+          }
         } catch (decryptError: any) {
           // 如果是 OperationError（Web Crypto 错误），在模拟模式下允许降级
           if (simulationMode && (decryptError.name === 'OperationError' || decryptError.message?.includes('decrypt'))) {
@@ -287,12 +313,26 @@ export function BeneficiaryUnlock({
             
             // 创建模拟的解密文件（用于测试）
             const mockDecryptedData = new Uint8Array(Math.min(encryptedData.length, 1024 * 1024)); // 限制为 1MB
-            const mockBlob = new Blob([mockDecryptedData], { type: 'application/octet-stream' });
+            const mockArrayBuffer = mockDecryptedData.buffer;
             
-            setDecryptedFile({
-              name: fileName.replace('.encrypted', '') + '.decrypted',
-              data: mockBlob,
-            });
+            // 使用文件还原处理器处理模拟文件
+            const mockFileName = fileName.replace('.encrypted', '');
+            const restoreResult = await handleFileRestore(mockArrayBuffer, mockFileName);
+            
+            if (restoreResult.success) {
+              const mockBlob = new Blob([mockArrayBuffer], { type: restoreResult.mimeType });
+              setDecryptedFile({
+                name: restoreResult.fileName,
+                data: mockBlob,
+              });
+            } else {
+              // 降级：使用原始文件名和默认 MIME 类型
+              const mockBlob = new Blob([mockDecryptedData], { type: 'application/octet-stream' });
+              setDecryptedFile({
+                name: mockFileName,
+                data: mockBlob,
+              });
+            }
             
             toast.warning('Decryption completed in simulation mode. File may be partially decrypted.');
           } else {
@@ -313,19 +353,40 @@ export function BeneficiaryUnlock({
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!decryptedFile) return;
 
-    const url = URL.createObjectURL(decryptedFile.data);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = decryptedFile.name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    toast.success('File downloaded successfully');
+    try {
+      // 将 Blob 转换为 ArrayBuffer 以便进行文件还原处理
+      const arrayBuffer = await decryptedFile.data.arrayBuffer();
+      
+      // 使用文件还原处理器确保文件类型和文件名正确
+      const restoreResult = await handleFileRestore(arrayBuffer, decryptedFile.name);
+      
+      if (restoreResult.success) {
+        toast.success(`文件已下载: ${restoreResult.fileName}`);
+      } else {
+        // 降级：使用原始下载逻辑
+        console.warn('文件还原失败，使用原始下载逻辑:', restoreResult.error);
+        const url = URL.createObjectURL(decryptedFile.data);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = decryptedFile.name;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+        }, 100);
+        
+        toast.success('File downloaded successfully');
+      }
+    } catch (error: any) {
+      console.error('Download error:', error);
+      toast.error('下载失败: ' + (error.message || 'Unknown error'));
+    }
   };
 
   // PDF 上传处理 - 零依赖模拟器（绕过 PDF.js Worker 错误）

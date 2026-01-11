@@ -7,7 +7,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const ENV_FILE = path.join(process.cwd(), '.env.local');
-const CREEM_API_KEY = 'creem_6gAE7JDuZD17xazPwBaCc2';
+const CREEM_API_KEY = 'creem_2HGGaY2qzPVRkCP0kESZXU';
+const CREEM_SIGNING_SECRET = 'whsec_567Ldwvldo5m33S87geqWy';
 
 async function updateCreemConfig() {
   try {
@@ -24,6 +25,7 @@ async function updateCreemConfig() {
       CREEM_ENABLED: 'true',
       CREEM_ENVIRONMENT: 'production', // 使用生产环境
       CREEM_API_KEY: CREEM_API_KEY,
+      CREEM_SIGNING_SECRET: CREEM_SIGNING_SECRET,
     };
 
     // 更新或添加配置项
@@ -81,9 +83,10 @@ async function updateCreemConfig() {
 
     console.log('\n📌 下一步：');
     console.log('   1. 重启开发服务器: pnpm dev');
-    console.log('   2. 访问 https://www.creem.io/dashboard/developers 获取 Signing Secret（用于 Webhook）');
-    console.log('   3. 在 Creem Dashboard 配置 Webhook URL（如果需要）');
-    console.log('   4. 测试支付流程');
+    console.log('   2. 在 Creem Dashboard 配置 Webhook URL:');
+    console.log('      URL: https://www.digitalheirloom.app/api/payment/notify/creem');
+    console.log('      Secret: whsec_567Ldwvldo5m33S87geqWy');
+    console.log('   3. 测试支付流程');
   } catch (error: any) {
     console.error('❌ 更新失败:', error.message);
     process.exit(1);
