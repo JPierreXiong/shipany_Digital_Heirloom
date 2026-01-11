@@ -195,7 +195,7 @@ export async function findVaultsNeedingAssetRelease() {
       )
     );
 
-  const vaultsNeedingRelease = result.filter((vault) => {
+  const vaultsNeedingRelease = result.filter((vault: DigitalVault) => {
     if (!vault.lastSeenAt) return false;
 
     const lastSeenDate = new Date(vault.lastSeenAt);
