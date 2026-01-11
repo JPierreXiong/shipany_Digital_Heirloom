@@ -10,7 +10,7 @@ import { requireAuth } from '@/shared/lib/api-auth';
 import { findDigitalVaultByUserId, findDigitalVaultById } from '@/shared/models/digital-vault';
 import { findBeneficiaryById } from '@/shared/models/beneficiary';
 import { calculateMnemonicChecksum } from '@/shared/lib/checksum';
-import { generateBIP39Mnemonic } from 'bip39';
+import * as bip39 from 'bip39';
 
 export async function GET(request: NextRequest) {
   try {
@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     } else {
       // 生成临时助记词用于打印预览
       // 实际应用中，应该要求客户端传递助记词
-      const tempMnemonic = generateBIP39Mnemonic(256); // 24 words
+      const tempMnemonic = bip39.generateMnemonic(256); // 24 words
       mnemonicArray = tempMnemonic.split(' ');
     }
     

@@ -5,7 +5,7 @@
 
 import { NextRequest } from 'next/server';
 import { respData, respErr } from '@/shared/lib/resp';
-import { requireAuthAndVaultOwnership } from '@/shared/lib/api-auth';
+import { requireAuth } from '@/shared/lib/api-auth';
 import {
   findDigitalVaultByUserId,
   updateDigitalVault,

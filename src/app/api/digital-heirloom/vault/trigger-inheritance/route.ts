@@ -9,7 +9,7 @@ import { NextRequest } from 'next/server';
 import { respData, respErr } from '@/shared/lib/resp';
 import { requireAuth } from '@/shared/lib/api-auth';
 import { findDigitalVaultByUserId, updateDigitalVault, VaultStatus } from '@/shared/models/digital-vault';
-import { findBeneficiariesByVaultId } from '@/shared/models/beneficiary';
+import { findBeneficiariesByVaultId, Beneficiary } from '@/shared/models/beneficiary';
 import { logSwitchActivatedEvent } from '@/shared/models/dead-man-switch-event';
 
 export async function POST(request: NextRequest) {
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     return respData({
       vault: updatedVault,
-      beneficiaries: beneficiaries.map(b => ({
+      beneficiaries: beneficiaries.map((b: Beneficiary) => ({
         id: b.id,
         name: b.name,
         email: b.email,
