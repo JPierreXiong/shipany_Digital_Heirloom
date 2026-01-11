@@ -13,16 +13,19 @@ import { requireAuth } from '@/shared/lib/api-auth';
 import { findDigitalVaultByUserId } from '@/shared/models/digital-vault';
 
 export async function GET(request: NextRequest) {
+  let user: { id: string } | null = null;
+  let vault: { id: string } | null = null;
+  
   try {
     // 1. 身份验证
     const authResult = await requireAuth();
     if (authResult.error) {
       return authResult.error;
     }
-    const user = authResult.user;
+    user = authResult.user;
 
     // 2. 获取用户的保险箱
-    const vault = await findDigitalVaultByUserId(user.id);
+    vault = await findDigitalVaultByUserId(user.id);
     if (!vault) {
       return respErr('Vault not found. Please initialize your vault first.', 404);
     }
@@ -128,7 +131,7 @@ export async function GET(request: NextRequest) {
     return respData({
       assets: [],
       total: 0,
-      vault_id: user.id, // 使用 user.id 作为 fallback
+      vault_id: vault?.id || null, // 使用 vault.id 作为 fallback，如果未定义则使用 null
     });
   }
 }
