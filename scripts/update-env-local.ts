@@ -86,7 +86,7 @@ RESEND_DEFAULT_FROM=security@afterglow.app
 # 存储配置
 # ============================================
 # Vercel Blob 读写令牌
-BLOB_READ_WRITE_TOKEN=vercel_blob_rw_7oVXdnhuqiGHSBqT_Rbt9XkMYeMSXYNsd58SkTqHMLleOSM
+BLOB_READ_WRITE_TOKEN=vercel_blob_rw_T1QruDd1XViT9FhM_y9TAKwEjlSRuuQXRo9B5vJKNyGulcJ
 # 存储提供商: vercel-blob / supabase / r2 / s3
 STORAGE_PROVIDER=supabase
 

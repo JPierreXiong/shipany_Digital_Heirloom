@@ -71,7 +71,7 @@ postgres://postgres.vkafrwwskupsyibrvcvd:lEuluFvxDT90QiFz@aws-1-us-east-1.pooler
 
 **读写令牌**:
 ```
-vercel_blob_rw_7oVXdnhuqiGHSBqT_Rbt9XkMYeMSXYNsd58SkTqHMLleOSM
+vercel_blob_rw_T1QruDd1XViT9FhM_y9TAKwEjlSRuuQXRo9B5vJKNyGulcJ
 ```
 
 **使用示例**:
@@ -99,7 +99,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhY
 DATABASE_URL=postgres://postgres.vkafrwwskupsyibrvcvd:lEuluFvxDT90QiFz@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true
 
 # Vercel Blob（可选）
-BLOB_READ_WRITE_TOKEN=vercel_blob_rw_7oVXdnhuqiGHSBqT_Rbt9XkMYeMSXYNsd58SkTqHMLleOSM
+BLOB_READ_WRITE_TOKEN=vercel_blob_rw_T1QruDd1XViT9FhM_y9TAKwEjlSRuuQXRo9B5vJKNyGulcJ
 ```
 
 ---
