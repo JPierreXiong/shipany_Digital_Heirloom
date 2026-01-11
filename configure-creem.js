@@ -12,13 +12,14 @@ async function configureCreem() {
 
     const creemConfigs = {
       creem_enabled: 'true',
-      creem_environment: 'sandbox',
-      creem_api_key: 'creem_test_6449uLShhyL3U6HVnhuasm',
-      creem_signing_secret: 'whsec_2QBVve0KEHHMYP5g9zEgDi',
-      creem_product_ids: JSON.stringify({
-        'standard-monthly': 'prod_7c1FZHQeCCFczvNU5dYWEj',
-        'premium-monthly': 'prod_1pM4Co56OhCMC7EkwMjVf',
-      }, null, 2),
+      creem_environment: 'production', // 使用生产环境
+      creem_api_key: 'creem_6gAE7JDuZD17xazPwBaCc2', // 用户提供的 API Key
+      // creem_signing_secret: 'whsec_xxx', // 需要从 Creem Dashboard 获取
+      // creem_product_ids: JSON.stringify({
+      //   'free-annual': 'prod_xxx',
+      //   'base-annual': 'prod_xxx',
+      //   'pro-annual': 'prod_xxx',
+      // }, null, 2),
     };
 
     const database = db();

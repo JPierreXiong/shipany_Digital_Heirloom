@@ -1,6 +1,7 @@
 import {
   CreemProvider,
   PaymentManager,
+  PaymentProvider,
   PaymentSession,
   PaymentStatus,
   PaymentType,
@@ -110,6 +111,14 @@ export async function getPaymentService(): Promise<PaymentManager> {
     paymentService = getPaymentServiceWithConfigs(configs);
   }
   return paymentService;
+}
+
+/**
+ * Get payment provider by name
+ */
+export async function getPaymentProvider(providerName: string): Promise<PaymentProvider | null> {
+  const paymentService = await getPaymentService();
+  return paymentService.getProvider(providerName) || null;
 }
 
 /**
