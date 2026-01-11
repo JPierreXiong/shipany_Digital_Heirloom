@@ -204,7 +204,7 @@ async function executeMigration() {
 
     console.log('✅ Migration process completed!');
     console.log('\n📋 Next steps:');
-    console.log('   1. Run test script: npx tsx scripts/test-plan-system.ts');
+    // Note: test-plan-system.ts removed (mediaTasks table no longer exists)
     console.log('   2. Test daily check-in functionality');
     console.log('   3. Test plan limits');
     console.log('   4. Test free trial logic');
