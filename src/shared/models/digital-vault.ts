@@ -127,7 +127,7 @@ export async function findVaultsNeedingDeadManSwitchCheck() {
     );
 
   // 在应用层过滤：检查 lastSeenAt + heartbeatFrequency 是否超过当前时间
-  const vaultsNeedingCheck = result.filter((vault) => {
+  const vaultsNeedingCheck = result.filter((vault: DigitalVault) => {
     if (!vault.lastSeenAt) return false;
 
     const lastSeenDate = new Date(vault.lastSeenAt);
@@ -158,7 +158,7 @@ export async function findVaultsNeedingWarning() {
       )
     );
 
-  const vaultsNeedingWarning = result.filter((vault) => {
+  const vaultsNeedingWarning = result.filter((vault: DigitalVault) => {
     if (!vault.lastSeenAt) return false;
 
     const lastSeenDate = new Date(vault.lastSeenAt);
