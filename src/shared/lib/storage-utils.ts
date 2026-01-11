@@ -12,6 +12,26 @@ import { createClient } from '@supabase/supabase-js';
 const BUCKET_NAME = 'digital_heirloom_assets';
 
 /**
+ * 安全获取 Supabase 客户端配置
+ */
+function getSupabaseConfig() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+
+  if (!supabaseUrl || !supabaseKey) {
+    const error = new Error('Supabase configuration is missing. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+    console.error('❌ Supabase 环境变量未配置:', {
+      url: supabaseUrl ? '✅' : '❌',
+      key: supabaseKey ? '✅' : '❌',
+      env: typeof window !== 'undefined' ? 'client' : 'server',
+    });
+    throw error;
+  }
+
+  return { supabaseUrl, supabaseKey };
+}
+
+/**
  * 上传文件到 Blob Storage
  * 
  * @param vaultId 保险箱 ID
@@ -28,10 +48,8 @@ export async function uploadToBlobStorage(
   encryptedData: Uint8Array,
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   // 构建存储路径：vault_id/file_id_original_name.enc
   const storagePath = `${vaultId}/${fileId}_${fileName}.enc`;
@@ -112,10 +130,8 @@ async function uploadLargeFile(
 export async function downloadFromBlobStorage(
   storagePath: string
 ): Promise<Uint8Array> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.storage
     .from(BUCKET_NAME)
@@ -141,10 +157,8 @@ export async function createSignedUrl(
   storagePath: string,
   expiresIn: number = 3600
 ): Promise<string> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.storage
     .from(BUCKET_NAME)
@@ -165,10 +179,8 @@ export async function createSignedUrl(
 export async function deleteFromBlobStorage(
   storagePath: string
 ): Promise<void> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { error } = await supabase.storage
     .from(BUCKET_NAME)
@@ -188,10 +200,8 @@ export async function deleteFromBlobStorage(
 export async function fileExistsInBlobStorage(
   storagePath: string
 ): Promise<boolean> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   const { data, error } = await supabase.storage
     .from(BUCKET_NAME)

@@ -17,10 +17,24 @@ import { createClient } from '@supabase/supabase-js';
 import { encryptFile } from '@/shared/lib/file-encryption';
 import { checkFeatureAccess } from '@/shared/lib/feature-access';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// 安全获取 Supabase 环境变量（客户端）
+const getSupabaseConfig = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('❌ Supabase 环境变量未配置:', {
+      url: supabaseUrl ? '✅' : '❌',
+      key: supabaseKey ? '✅' : '❌',
+    });
+    throw new Error('Supabase configuration is missing. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+  }
+
+  return { supabaseUrl, supabaseKey };
+};
+
+const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export type AssetCategory = 'secure_keys' | 'legal_docs' | 'video_legacy' | 'instructions';
 

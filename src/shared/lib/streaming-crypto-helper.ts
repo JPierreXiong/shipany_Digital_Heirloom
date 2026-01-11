@@ -15,6 +15,26 @@ import { calculateSHA256 } from './checksum';
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB 每块（避免内存溢出）
 const BUCKET_NAME = 'digital_heirloom_assets';
 
+/**
+ * 安全获取 Supabase 客户端配置
+ */
+function getSupabaseConfig() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+
+  if (!supabaseUrl || !supabaseKey) {
+    const error = new Error('Supabase configuration is missing. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+    console.error('❌ Supabase 环境变量未配置:', {
+      url: supabaseUrl ? '✅' : '❌',
+      key: supabaseKey ? '✅' : '❌',
+      env: typeof window !== 'undefined' ? 'client' : 'server',
+    });
+    throw error;
+  }
+
+  return { supabaseUrl, supabaseKey };
+}
+
 export interface StreamingEncryptOptions {
   file: File;
   masterPassword: string;
@@ -86,10 +106,8 @@ export async function streamEncryptAndUpload(
 ): Promise<StreamingEncryptResult> {
   const { file, masterPassword, vaultId, fileId, onProgress, onChunkEncrypted } = options;
   
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   // 1. 生成随机盐值和 IV
   const salt = crypto.getRandomValues(new Uint8Array(16));
