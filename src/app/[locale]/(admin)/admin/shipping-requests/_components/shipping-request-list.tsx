@@ -19,8 +19,8 @@ import { Label } from '@/shared/components/ui/label';
 import { Badge } from '@/shared/components/ui/badge';
 import { toast } from 'sonner';
 import { type Table } from '@/shared/types/blocks/table';
-// 只导入枚举类型，不导入数据库函数（避免 fs 错误）
-import { ShippingStatus, ShippingFeeStatus } from '@/shared/models/shipping-log';
+// 从共享类型文件导入枚举（避免导入 server-only 模块）
+import { ShippingStatus, ShippingFeeStatus } from '@/shared/models/shipping-log-types';
 
 // 使用枚举值（字符串常量，避免导入整个模块）
 const ShippingStatusValues = {

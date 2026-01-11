@@ -5,33 +5,14 @@ import { desc, eq, and } from 'drizzle-orm';
 import { db } from '@/core/db';
 import { shippingLogs } from '@/config/db/schema';
 
+// 导出枚举（从共享类型文件导入，避免客户端组件导入 server-only 模块）
+export { ShippingStatus, ShippingFeeStatus } from './shipping-log-types';
+
 export type ShippingLog = typeof shippingLogs.$inferSelect;
 export type NewShippingLog = typeof shippingLogs.$inferInsert;
 export type UpdateShippingLog = Partial<
   Omit<NewShippingLog, 'id' | 'createdAt' | 'vaultId' | 'beneficiaryId'>
 >;
-
-/**
- * 物流状态枚举
- */
-export enum ShippingStatus {
-  PENDING_REVIEW = 'pending_review',
-  WAITING_PAYMENT = 'waiting_payment',
-  READY_TO_SHIP = 'ready_to_ship',
-  SHIPPED = 'shipped',
-  DELIVERED = 'delivered',
-  CANCELLED = 'cancelled',
-}
-
-/**
- * 运费状态枚举
- */
-export enum ShippingFeeStatus {
-  NOT_REQUIRED = 'not_required',
-  PENDING_PAYMENT = 'pending_payment',
-  PAID = 'paid',
-  WAIVED = 'waived',
-}
 
 /**
  * 创建物流记录
