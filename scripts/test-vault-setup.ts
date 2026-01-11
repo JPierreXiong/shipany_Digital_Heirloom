@@ -11,6 +11,7 @@
 
 import { encryptData } from '../src/shared/lib/encryption';
 import { generateRecoveryKit } from '../src/shared/lib/recovery-kit';
+import { getUuid } from '../src/shared/lib/hash';
 
 // 测试配置
 const TEST_CONFIG = {
@@ -95,8 +96,11 @@ class VaultSetupTester {
     console.log('📝 Step 1: 设置主密码...');
     
     try {
+      // 生成测试用的 vaultId
+      const testVaultId = getUuid();
+      
       // 生成恢复包
-      const recoveryKit = await generateRecoveryKit(TEST_CONFIG.masterPassword);
+      const recoveryKit = await generateRecoveryKit(TEST_CONFIG.masterPassword, testVaultId);
       
       // 加密主密码备份
       const { encryptedData: backupToken, salt: backupSalt, iv: backupIv } = 
