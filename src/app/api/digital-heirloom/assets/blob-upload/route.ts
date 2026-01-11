@@ -53,8 +53,8 @@ export async function POST(request: NextRequest) {
     return respData({
       url: result.url,
       pathname: result.pathname,
-      size: result.size,
-      uploadedAt: result.uploadedAt,
+      size: file.size, // 使用文件对象的大小
+      uploadedAt: new Date().toISOString(), // 使用当前时间
     });
   } catch (error: any) {
     console.error('Blob upload failed:', error);
