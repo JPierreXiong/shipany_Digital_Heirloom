@@ -25,7 +25,7 @@ export interface StreamingEncryptOptions {
 }
 
 export interface StreamingProgress {
-  stage: 'reading' | 'encrypting' | 'uploading' | 'completed';
+  stage: 'reading' | 'encrypting' | 'decrypting' | 'uploading' | 'completed';
   loaded: number;
   total: number;
   percentage: number;
@@ -253,10 +253,11 @@ export async function streamDecrypt(
       const end = Math.min(start + CHUNK_SIZE, encryptedData.length);
       const chunk = encryptedData.slice(start, end);
 
+      const ivBuf = base64ToBuf(iv);
       const decryptedChunk = await crypto.subtle.decrypt(
-        { name: 'AES-GCM', iv: base64ToBuf(iv) },
+        { name: 'AES-GCM', iv: ivBuf as BufferSource },
         key,
-        chunk
+        chunk as BufferSource
       );
 
       decryptedChunks.push(new Uint8Array(decryptedChunk));
@@ -285,10 +286,11 @@ export async function streamDecrypt(
   }
 
   // 小文件直接解密
+  const ivBuf = base64ToBuf(iv);
   const decryptedData = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: base64ToBuf(iv) },
+    { name: 'AES-GCM', iv: ivBuf as BufferSource },
     key,
-    encryptedData
+    encryptedData as BufferSource
   );
 
   onProgress?.({
