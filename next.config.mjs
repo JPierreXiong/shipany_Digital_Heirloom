@@ -28,15 +28,12 @@ const nextConfig = {
   async redirects() {
     return [];
   },
-  // 类型检查和 Lint 配置（用于快速通过 Vercel 部署）
+  // 类型检查配置（用于快速通过 Vercel 部署）
   typescript: {
-    // 允许构建时忽略 TypeScript 错误（仅在必要时使用）
+    // 允许构建时忽略 TypeScript 错误（仅在 Vercel 环境下使用）
     ignoreBuildErrors: process.env.VERCEL === 'true',
   },
-  eslint: {
-    // 允许构建时忽略 ESLint 错误（仅在必要时使用）
-    ignoreDuringBuilds: process.env.VERCEL === 'true',
-  },
+  // 注意：Next.js 16+ 中 eslint 配置已移除，通过环境变量控制
   turbopack: {
     // 明确指定项目根目录，避免 Next.js 错误推断工作区根目录
     root: process.cwd(),
