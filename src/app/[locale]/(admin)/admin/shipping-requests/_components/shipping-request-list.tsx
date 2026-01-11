@@ -20,7 +20,7 @@ import { Badge } from '@/shared/components/ui/badge';
 import { toast } from 'sonner';
 import { type Table } from '@/shared/types/blocks/table';
 // 只导入枚举类型，不导入数据库函数（避免 fs 错误）
-import type { ShippingStatus, ShippingFeeStatus } from '@/shared/models/shipping-log';
+import { ShippingStatus, ShippingFeeStatus } from '@/shared/models/shipping-log';
 
 // 使用枚举值（字符串常量，避免导入整个模块）
 const ShippingStatusValues = {
