@@ -205,7 +205,7 @@ async function testDigitalHeirloom() {
     console.log('4️⃣ Testing encryption module...');
     try {
       const encryptionModule = await import('@/shared/lib/encryption');
-      if (encryptionModule.encryptData && encryptionModule.decryptData) {
+      if (typeof encryptionModule.encryptData === 'function' && typeof encryptionModule.decryptData === 'function') {
         console.log('   ✅ Encryption functions available');
         console.log('   ℹ️  Note: Actual encryption requires browser environment (Web Crypto API)\n');
         testResults.encryption = true;
