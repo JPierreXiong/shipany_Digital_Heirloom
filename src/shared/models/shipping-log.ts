@@ -5,6 +5,9 @@ import { desc, eq, and } from 'drizzle-orm';
 import { db } from '@/core/db';
 import { shippingLogs } from '@/config/db/schema';
 
+// 导入枚举类型（用于函数参数类型）
+import { ShippingStatus, ShippingFeeStatus } from './shipping-log-types';
+
 // 导出枚举（从共享类型文件导入，避免客户端组件导入 server-only 模块）
 export { ShippingStatus, ShippingFeeStatus } from './shipping-log-types';
 

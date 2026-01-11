@@ -30,25 +30,25 @@ export interface PlanLimits {
 export async function getUserPlanType(userId: string): Promise<PlanType> {
   try {
     // First check user.planType field
-    const userRecord = await db()
+    const result = await db()
       .select()
       .from(user)
       .where(eq(user.id, userId))
-      .limit(1)
-      .then((rows) => rows[0]);
+      .limit(1);
+    const [userRecord] = result;
 
     if (userRecord?.planType) {
       return (userRecord.planType as PlanType) || 'free';
     }
 
     // Fallback: check active subscription
-    const userSub = await db()
+    const subResult = await db()
       .select()
       .from(subscription)
       .where(eq(subscription.userId, userId))
       .where(eq(subscription.status, 'active'))
-      .limit(1)
-      .then((rows) => rows[0]);
+      .limit(1);
+    const [userSub] = subResult;
 
     if (userSub?.planType) {
       return (userSub.planType as PlanType) || 'free';
@@ -71,21 +71,21 @@ export async function getUserPlanLimits(userId: string): Promise<PlanLimits> {
     const planConfig = getPlanConfig(planType);
 
     // Get user record for freeTrialUsed
-    const userRecord = await db()
+    const userResult = await db()
       .select()
       .from(user)
       .where(eq(user.id, userId))
-      .limit(1)
-      .then((rows) => rows[0]);
+      .limit(1);
+    const [userRecord] = userResult;
 
     // Get active subscription for subscription-specific limits
-    const userSub = await db()
+    const subResult2 = await db()
       .select()
       .from(subscription)
       .where(eq(subscription.userId, userId))
       .where(eq(subscription.status, 'active'))
-      .limit(1)
-      .then((rows) => rows[0]);
+      .limit(1);
+    const [userSub] = subResult2;
 
     // Use subscription limits if available, otherwise use plan config defaults
     const subscriptionLimits = userSub ? {
