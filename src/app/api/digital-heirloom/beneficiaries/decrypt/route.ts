@@ -11,7 +11,7 @@ import {
 } from '@/shared/models/beneficiary';
 import { findDigitalVaultById } from '@/shared/models/digital-vault';
 import { canBeneficiaryDecrypt } from '@/shared/lib/digital-heirloom-plan-limits';
-import { mergeFragments } from '@/shared/lib/pdf-fragment-parser';
+import { mergeFragments } from '@/shared/lib/fragment-merger';
 import { recoverMasterPasswordFromKit } from '@/shared/lib/recovery-kit';
 import { decryptData } from '@/shared/lib/encryption';
 import { db } from '@/core/db';

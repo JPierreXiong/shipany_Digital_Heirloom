@@ -1,19 +1,27 @@
 /**
  * PDF Fragment Parser
  * 解析 PDF 恢复包，提取 Fragment A/B 助记词和二维码
+ * 
+ * 注意：此文件包含客户端专用的代码（pdfjs-dist, jsqr），
+ * 不应在服务器端 API 路由中直接导入。
+ * 如需在服务器端合并 Fragment，请使用 fragment-merger.ts
  */
 
-import * as pdfjsLib from 'pdfjs-dist';
 import { validateBIP39Mnemonic } from './recovery-kit';
 
-// 配置 PDF.js worker - 使用本地 Worker 避免 404 错误
+// 仅在客户端导入 pdfjs-dist
+let pdfjsLib: any = null;
 if (typeof window !== 'undefined') {
   try {
-    // 使用 Next.js 的静态资源路径
+    // 动态导入 pdfjs-dist，避免服务器端构建错误
+    pdfjsLib = require('pdfjs-dist');
+    // 配置 PDF.js worker - 使用本地 Worker 避免 404 错误
     pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
   } catch {
     // 如果本地 Worker 不可用，禁用 Worker（性能稍慢但不会报错）
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+    if (pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+    }
   }
 }
 
@@ -37,6 +45,11 @@ export interface QRCodeData {
  * 从 PDF 中提取文本内容
  */
 async function extractTextFromPDF(pdfFile: File): Promise<string> {
+  // 仅在客户端执行
+  if (typeof window === 'undefined' || !pdfjsLib) {
+    throw new Error('PDF parsing is only available in browser environment');
+  }
+
   const arrayBuffer = await pdfFile.arrayBuffer();
   
   // 使用与现有 pdf-parser.ts 相同的配置
@@ -314,50 +327,6 @@ export function validateFragmentMnemonic(
   };
 }
 
-/**
- * 合并 Fragment A 和 Fragment B
- */
-export function mergeFragments(
-  fragmentA: string[],
-  fragmentB: string[]
-): {
-  mnemonic: string[];
-  valid: boolean;
-  errors: string[];
-} {
-  const errors: string[] = [];
-  
-  // 检查数量
-  if (fragmentA.length !== 12) {
-    errors.push(`Fragment A must contain 12 words, found ${fragmentA.length}`);
-  }
-  
-  if (fragmentB.length !== 12) {
-    errors.push(`Fragment B must contain 12 words, found ${fragmentB.length}`);
-  }
-  
-  if (errors.length > 0) {
-    return {
-      mnemonic: [],
-      valid: false,
-      errors,
-    };
-  }
-  
-  // 合并助记词
-  const mergedMnemonic = [...fragmentA, ...fragmentB];
-  
-  // 验证合并后的助记词
-  const mnemonicString = mergedMnemonic.join(' ');
-  const isValid = validateBIP39Mnemonic(mnemonicString);
-  
-  if (!isValid) {
-    errors.push('Merged mnemonic does not match BIP39 standard');
-  }
-  
-  return {
-    mnemonic: mergedMnemonic,
-    valid: isValid,
-    errors,
-  };
-}
+// 重新导出 mergeFragments 以保持向后兼容
+// 建议：在服务器端代码中使用 fragment-merger.ts 中的版本
+export { mergeFragments } from './fragment-merger';

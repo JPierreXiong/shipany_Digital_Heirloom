@@ -97,7 +97,7 @@ export async function GET(request: NextRequest) {
 
     // 2. 访问日志统计（受益人访问记录）
     // 查询最近访问的受益人（通过 releaseToken 和 lastDecryptionAt）
-    const recentAccesses = await db()
+    const recentAccessesResult = await db()
       .select({
         id: beneficiaries.id,
         vaultId: beneficiaries.vaultId,
@@ -115,11 +115,21 @@ export async function GET(request: NextRequest) {
       )
       .orderBy(desc(beneficiaries.lastDecryptionAt))
       .limit(100);
+    
+    type RecentAccess = {
+      id: string;
+      vaultId: string;
+      email: string | null;
+      lastDecryptionAt: Date | null;
+      releaseToken: string | null;
+      releaseTokenExpiresAt: Date | null;
+    };
+    const recentAccesses: RecentAccess[] = recentAccessesResult;
 
     // 3. 异常访问模式检测
     // 检测同一受益人在短时间内多次访问
     const accessPatterns = new Map<string, Array<{ timestamp: Date; vaultId: string }>>();
-    recentAccesses.forEach((access: { id: string; vaultId: string; email: string | null; lastDecryptionAt: Date | null }) => {
+    recentAccesses.forEach((access: RecentAccess) => {
       if (access.lastDecryptionAt) {
         const key = `${access.vaultId}-${access.email}`;
         if (!accessPatterns.has(key)) {
@@ -195,7 +205,7 @@ export async function GET(request: NextRequest) {
         })),
       },
       suspiciousIPs,
-      recentAccesses: recentAccesses.map((access: { id: string; vaultId: string; email: string | null; lastDecryptionAt: Date | null; releaseToken: string | null; releaseTokenExpiresAt: Date | null }) => ({
+      recentAccesses: recentAccesses.map((access: RecentAccess) => ({
         beneficiaryId: access.id,
         vaultId: access.vaultId,
         email: access.email,

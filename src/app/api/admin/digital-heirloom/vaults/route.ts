@@ -9,7 +9,7 @@ import { requireAuth } from '@/shared/lib/api-auth';
 import { canAccessAdmin } from '@/core/rbac/permission';
 import { db } from '@/core/db';
 import { digitalVaults, beneficiaries } from '@/config/db/schema';
-import { getUserByUserIds } from '@/shared/models/user';
+import { getUserByUserIds, User } from '@/shared/models/user';
 import { eq, and, or, like, sql, desc } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
@@ -87,8 +87,8 @@ export async function GET(request: NextRequest) {
 
     // 获取用户信息
     const userIds = [...new Set(vaults.map((v: typeof digitalVaults.$inferSelect) => v.userId))];
-    const users = await getUserByUserIds(userIds as string[]);
-    const userMap = new Map(users.map((u: { id: string; email?: string }) => [u.id, u]));
+    const users: User[] = await getUserByUserIds(userIds as string[]);
+    const userMap = new Map(users.map((u: User) => [u.id, u]));
 
     // 获取每个保险箱的受益人数量和解密进度
     const vaultIds = vaults.map((v: typeof digitalVaults.$inferSelect) => v.id);
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
     // 计算每个保险箱的统计信息
     const now = new Date();
     const vaultsWithStats = vaults.map((vault: typeof digitalVaults.$inferSelect) => {
-      const user = userMap.get(vault.userId) as { id: string; email?: string } | undefined;
+      const user = userMap.get(vault.userId) as User | undefined;
       const beneficiariesCount = beneficiaryCountMap.get(vault.id) || 0;
 
       // 计算距离上次活跃的天数
