@@ -60,17 +60,32 @@ export async function POST(req: Request) {
       paymentProviderName = configs.default_payment_provider;
     }
     if (!paymentProviderName) {
-      // Check which payment providers are available
+      // Check which payment providers are available and automatically use the first one if only one is enabled
       const availableProviders: string[] = [];
-      if (configs.stripe_enabled === 'true') availableProviders.push('Stripe');
-      if (configs.creem_enabled === 'true') availableProviders.push('Creem');
-      if (configs.paypal_enabled === 'true') availableProviders.push('PayPal');
+      const availableProviderNames: string[] = [];
       
-      const errorMessage = availableProviders.length > 0
-        ? `No default payment provider configured. Available providers: ${availableProviders.join(', ')}. Please configure a default payment provider in admin settings.`
-        : 'No payment provider configured. Please enable and configure at least one payment provider (Stripe, Creem, or PayPal) in admin settings.';
+      if (configs.stripe_enabled === 'true') {
+        availableProviders.push('Stripe');
+        availableProviderNames.push('stripe');
+      }
+      if (configs.creem_enabled === 'true') {
+        availableProviders.push('Creem');
+        availableProviderNames.push('creem');
+      }
+      if (configs.paypal_enabled === 'true') {
+        availableProviders.push('PayPal');
+        availableProviderNames.push('paypal');
+      }
       
-      return respErr(errorMessage);
+      // If only one provider is available, automatically use it
+      if (availableProviderNames.length === 1) {
+        paymentProviderName = availableProviderNames[0];
+      } else if (availableProviders.length > 0) {
+        const errorMessage = `No default payment provider configured. Available providers: ${availableProviders.join(', ')}. Please configure a default payment provider in admin settings.`;
+        return respErr(errorMessage);
+      } else {
+        return respErr('No payment provider configured. Please enable and configure at least one payment provider (Stripe, Creem, or PayPal) in admin settings.');
+      }
     }
 
     // Validate payment provider against allowed providers
@@ -231,7 +246,17 @@ export async function POST(req: Request) {
     };
 
     if (!paymentProductId) {
-      // checkout price validation
+      // For Creem, productId is required (Creem API doesn't support dynamic pricing)
+      if (paymentProviderName === 'creem') {
+        return respErr(
+          `Creem payment requires product_id configuration. ` +
+          `Please configure creem_product_ids mapping in admin settings ` +
+          `for product "${pricingItem.product_id}" (currency: ${checkoutCurrency}). ` +
+          `Visit Creem Dashboard (https://www.creem.io/dashboard/products) to create products ` +
+          `and map them in admin settings (/admin/settings/payment).`
+        );
+      }
+      // checkout price validation for other providers
       if (!checkoutPrice.amount || !checkoutPrice.currency) {
         return respErr('invalid checkout price');
       }

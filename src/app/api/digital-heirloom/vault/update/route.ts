@@ -10,6 +10,7 @@ import {
   findDigitalVaultByUserId,
   updateDigitalVault,
 } from '@/shared/models/digital-vault';
+import { checkHeartbeatFrequency, checkStorageLimit } from '@/shared/lib/digital-heirloom-plan-limits';
 
 export async function PUT(request: NextRequest) {
   try {
@@ -47,6 +48,15 @@ export async function PUT(request: NextRequest) {
       if (!encryptionSalt || !encryptionIv) {
         return respErr('encryptionSalt and encryptionIv are required when updating encryptedData');
       }
+      
+      // Phase 4.1: 检查存储限制（基于计划等级）
+      // 计算加密数据的大小（Base64 编码后的字符串长度）
+      const encryptedDataSize = Buffer.byteLength(encryptedData, 'utf8');
+      const storageCheck = await checkStorageLimit(vault.id, encryptedDataSize);
+      if (!storageCheck.allowed) {
+        return respErr(storageCheck.reason || 'Storage limit exceeded');
+      }
+      
       updateData.encryptedData = encryptedData;
       updateData.encryptionSalt = encryptionSalt;
       updateData.encryptionIv = encryptionIv;
@@ -60,6 +70,13 @@ export async function PUT(request: NextRequest) {
       if (heartbeatFrequency < 1 || heartbeatFrequency > 365) {
         return respErr('heartbeatFrequency must be between 1 and 365 days');
       }
+      
+      // Phase 4.3: 检查心跳频率限制（基于计划等级）
+      const frequencyCheck = await checkHeartbeatFrequency(vault.id, heartbeatFrequency);
+      if (!frequencyCheck.allowed) {
+        return respErr(frequencyCheck.reason || 'Heartbeat frequency limit exceeded');
+      }
+      
       updateData.heartbeatFrequency = heartbeatFrequency;
     }
 

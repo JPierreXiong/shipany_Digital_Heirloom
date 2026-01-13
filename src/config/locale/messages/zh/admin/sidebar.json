@@ -70,6 +70,41 @@
           "icon": "Shield",
           "children": [
             {
+              "title": "看板",
+              "url": "/admin/digital-heirloom",
+              "icon": "LayoutDashboard"
+            },
+            {
+              "title": "金库管理",
+              "url": "/admin/digital-heirloom/vaults",
+              "icon": "Vault"
+            },
+            {
+              "title": "补偿记录",
+              "url": "/admin/digital-heirloom/compensations",
+              "icon": "Gift"
+            },
+            {
+              "title": "成本监控",
+              "url": "/admin/digital-heirloom/costs",
+              "icon": "DollarSign"
+            },
+            {
+              "title": "安全监控",
+              "url": "/admin/digital-heirloom/security",
+              "icon": "ShieldAlert"
+            },
+            {
+              "title": "报警历史",
+              "url": "/admin/digital-heirloom/alerts",
+              "icon": "Bell"
+            },
+            {
+              "title": "自定义报表",
+              "url": "/admin/digital-heirloom/reports",
+              "icon": "FileText"
+            },
+            {
               "title": "物流请求",
               "url": "/admin/shipping-requests",
               "icon": "Package"

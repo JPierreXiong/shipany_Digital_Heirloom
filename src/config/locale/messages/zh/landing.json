@@ -2,7 +2,7 @@
   "header": {
     "id": "header",
     "brand": {
-      "title": "Subtitle ToolKit",
+      "title": "Afterglow",
       "url": "/"
     },
     "nav": {
@@ -69,7 +69,7 @@
       {
         "title": "了解更多",
         "icon": "Info",
-        "url": "#how-it-works",
+        "url": "/blog/how-decryption-works",
         "target": "_self",
         "variant": "outline",
         "className": ""

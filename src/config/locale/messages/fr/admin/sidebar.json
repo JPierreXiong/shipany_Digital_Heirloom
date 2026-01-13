@@ -70,6 +70,41 @@
           "icon": "Shield",
           "children": [
             {
+              "title": "Tableau de bord",
+              "url": "/admin/digital-heirloom",
+              "icon": "LayoutDashboard"
+            },
+            {
+              "title": "Coffres",
+              "url": "/admin/digital-heirloom/vaults",
+              "icon": "Vault"
+            },
+            {
+              "title": "Compensations",
+              "url": "/admin/digital-heirloom/compensations",
+              "icon": "Gift"
+            },
+            {
+              "title": "Coûts",
+              "url": "/admin/digital-heirloom/costs",
+              "icon": "DollarSign"
+            },
+            {
+              "title": "Sécurité",
+              "url": "/admin/digital-heirloom/security",
+              "icon": "ShieldAlert"
+            },
+            {
+              "title": "Alertes",
+              "url": "/admin/digital-heirloom/alerts",
+              "icon": "Bell"
+            },
+            {
+              "title": "Rapports",
+              "url": "/admin/digital-heirloom/reports",
+              "icon": "FileText"
+            },
+            {
               "title": "Demandes d'expédition",
               "url": "/admin/shipping-requests",
               "icon": "Package"

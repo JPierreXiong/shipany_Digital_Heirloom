@@ -6,9 +6,10 @@ import { LazyImage } from './lazy-image';
 export function BrandLogo({ brand }: { brand: BrandType }) {
   return (
     <Link
-      href={brand.url || ''}
+      href={brand.url || '/'}
       target={brand.target || '_self'}
-      className={`flex items-center space-x-2 ${brand.className}`}
+      className={`flex items-center space-x-2 transition-opacity hover:opacity-80 cursor-pointer ${brand.className}`}
+      aria-label={`Go to homepage - ${brand.title || 'Home'}`}
     >
       {brand.logo && (
         <LazyImage

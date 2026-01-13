@@ -12,6 +12,7 @@ import {
   createBeneficiaries,
 } from '@/shared/models/beneficiary';
 import { getUuid } from '@/shared/lib/hash';
+import { checkBeneficiaryLimit } from '@/shared/lib/digital-heirloom-plan-limits';
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,6 +28,12 @@ export async function POST(request: NextRequest) {
     const vault = await findDigitalVaultByUserId(user.id);
     if (!vault) {
       return respErr('Vault not found. Create one first.');
+    }
+
+    // Phase 4.2: 检查受益人数量限制
+    const limitCheck = await checkBeneficiaryLimit(vault.id);
+    if (!limitCheck.allowed) {
+      return respErr(limitCheck.reason || 'Beneficiary limit reached');
     }
 
     // 解析请求体

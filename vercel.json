@@ -25,5 +25,18 @@
       "maxDuration": 180
     }
   },
-  "crons": []
+  "crons": [
+    {
+      "path": "/api/cron/dead-man-switch-check",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/system-health-check",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/cost-alerts-check",
+      "schedule": "0 * * * *"
+    }
+  ]
 }

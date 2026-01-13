@@ -63,8 +63,10 @@ export class ResendProvider implements EmailProvider {
           content_type: att.contentType,
         }));
       }
-      if (email.tags) {
-        resendEmail.tags = email.tags.map((tag) => ({
+      if (email.tags && email.tags.length > 0) {
+        // Resend doesn't allow duplicate tag names, so we use different names for multiple tags
+        // Or use only the first tag to avoid duplication
+        resendEmail.tags = email.tags.slice(0, 1).map((tag) => ({
           name: 'category',
           value: tag,
         }));

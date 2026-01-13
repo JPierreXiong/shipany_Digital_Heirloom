@@ -15,6 +15,8 @@ export type UpdateDigitalVault = Partial<
 export enum VaultStatus {
   ACTIVE = 'active',
   WARNING = 'warning',
+  PENDING_VERIFICATION = 'pending_verification', // 等待用户确认（宽限期）
+  TRIGGERED = 'triggered', // Dead Man's Switch 已触发
   ACTIVATED = 'activated',
   RELEASED = 'released',
 }
@@ -145,6 +147,7 @@ export async function findVaultsNeedingDeadManSwitchCheck() {
 /**
  * 查找需要发送预警的保险箱
  * 查询条件：status = 'active' 且已超过心跳期限但未超过宽限期
+ * 状态机：ACTIVE -> PENDING_VERIFICATION
  */
 export async function findVaultsNeedingWarning() {
   const now = new Date();
@@ -181,7 +184,8 @@ export async function findVaultsNeedingWarning() {
 
 /**
  * 查找需要释放资产的保险箱
- * 查询条件：status = 'warning' 且已超过宽限期
+ * 查询条件：status = 'pending_verification' 且已超过宽限期
+ * 状态机：PENDING_VERIFICATION -> TRIGGERED
  */
 export async function findVaultsNeedingAssetRelease() {
   const now = new Date();
@@ -190,7 +194,7 @@ export async function findVaultsNeedingAssetRelease() {
     .from(digitalVaults)
     .where(
       and(
-        eq(digitalVaults.status, VaultStatus.WARNING),
+        eq(digitalVaults.status, VaultStatus.PENDING_VERIFICATION),
         eq(digitalVaults.deadManSwitchEnabled, true)
       )
     );
@@ -230,7 +234,3 @@ export async function deleteDigitalVault(id: string) {
 
   return result;
 }
-
-
-
-

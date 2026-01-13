@@ -60,6 +60,13 @@ export const PERMISSIONS = {
   AITASKS_READ: 'admin.ai-tasks.read',
   AITASKS_WRITE: 'admin.ai-tasks.write',
   AITASKS_DELETE: 'admin.ai-tasks.delete',
+
+  // Digital Heirloom Admin
+  DIGITAL_HEIRLOOM_READ: 'admin.digital-heirloom.read',
+  DIGITAL_HEIRLOOM_COMPENSATE: 'admin.digital-heirloom.compensate',
+  DIGITAL_HEIRLOOM_PAUSE: 'admin.digital-heirloom.pause',
+  DIGITAL_HEIRLOOM_EXPORT: 'admin.digital-heirloom.export',
+  DIGITAL_HEIRLOOM_ADMIN: 'admin.digital-heirloom.*',
 } as const;
 
 /**

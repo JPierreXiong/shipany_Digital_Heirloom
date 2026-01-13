@@ -15,11 +15,10 @@ async function configureCreem() {
       creem_environment: 'production', // 使用生产环境
       creem_api_key: 'creem_2HGGaY2qzPVRkCP0kESZXU', // Digital Heirloom API Key
       creem_signing_secret: 'whsec_567Ldwvldo5m33S87geqWy', // Digital Heirloom Webhook Secret
-      // creem_product_ids: JSON.stringify({
-      //   'free-annual': 'prod_xxx',
-      //   'base-annual': 'prod_xxx',
-      //   'pro-annual': 'prod_xxx',
-      // }, null, 2),
+      creem_product_ids: JSON.stringify({
+        'digital-heirloom-base-annual': 'prod_4oN2BFtSPSpAnYcvUN0uoi', // Base (Standard) Product: $49/year
+        'digital-heirloom-pro-annual': 'prod_4epepOcgUjSjPoWmAnBaFt', // Pro (Family/Premium) Product: $149/year
+      }, null, 2),
     };
 
     const database = db();

@@ -58,7 +58,8 @@ SHIPANY_API_URL=https://api.shipany.io/v1
 
 # Resend 配置
 RESEND_API_KEY=re_JrzLE2sa_HAe9ZVgzmszQ1iepVhRUS4Ci
-RESEND_DEFAULT_FROM=security@afterglow.app
+RESEND_DEFAULT_FROM=support@digitalheirloom.app
+RESEND_SENDER_EMAIL=support@digitalheirloom.app
 ```
 
 ---
@@ -124,7 +125,7 @@ const response = await fetch('https://api.resend.com/emails', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    from: 'Afterglow Security <security@afterglow.app>',
+    from: 'Digital Heirloom Support <support@digitalheirloom.app>',
     to: ['test@example.com'],
     subject: 'Test Email',
     html: '<p>Test email from Digital Heirloom</p>',

@@ -2,6 +2,7 @@ import {
   boolean,
   index,
   integer,
+  jsonb,
   pgTable,
   text,
   timestamp,
@@ -544,7 +545,7 @@ export const digitalVaults = pgTable(
     // 状态：active, warning, activated, released, pending, triggered, completed
     status: text('status').default('active').notNull(),
     // 验证令牌（用于邮件确认链接）
-    verificationToken: text('verification_token'),
+    verificationToken: text('verification_token').unique(),
     // 验证令牌过期时间
     verificationTokenExpiresAt: timestamp('verification_token_expires_at'),
     // 预警邮件发送时间（防止重复发送）
@@ -553,6 +554,10 @@ export const digitalVaults = pgTable(
     warningEmailCount: integer('warning_email_count').default(0),
     // 二次提醒邮件发送时间
     reminderEmailSentAt: timestamp('reminder_email_sent_at'),
+    // 订阅管理字段（Digital Heirloom 专用）
+    currentPeriodEnd: timestamp('current_period_end'), // 订阅结束日期
+    bonusDays: integer('bonus_days').default(0), // 赠送的天数（累计）
+    planLevel: text('plan_level').default('free'), // 'free' | 'base' | 'pro'
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at')
       .defaultNow()
@@ -601,6 +606,17 @@ export const beneficiaries = pgTable(
     unlockRequestedAt: timestamp('unlock_requested_at'), // 受益人请求解锁的时间
     unlockDelayUntil: timestamp('unlock_delay_until'), // 延迟解锁截止时间（unlock_requested_at + 24小时）
     unlockNotificationSent: boolean('unlock_notification_sent').default(false), // 是否已向原用户发送通知
+    // 解密次数管理（Digital Heirloom 专用）
+    decryptionCount: integer('decryption_count').default(0), // 当前解密次数
+    decryptionLimit: integer('decryption_limit').default(1), // 默认解密限制
+    bonusDecryptionCount: integer('bonus_decryption_count').default(0), // 管理员赠送次数
+    lastDecryptionAt: timestamp('last_decryption_at'), // 最后解密时间
+    // 解密审计日志
+    decryptionHistory: jsonb('decryption_history').default([]), // 解密尝试记录
+    // 物理恢复包管理
+    isPhysicalVerificationEnabled: boolean('is_physical_verification_enabled').default(false), // 是否启用物理验证
+    physicalKitMailed: boolean('physical_kit_mailed').default(false), // 物理恢复包是否已寄送
+    trackingNumber: text('tracking_number'), // 物流单号
     // 状态：pending, notified, unlock_requested, released
     status: text('status').default('pending').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -724,5 +740,107 @@ export const shippingLogs = pgTable(
     index('idx_shipping_fee_status').on(table.shippingFeeStatus),
     // 按 Creem Checkout ID 查询
     index('idx_shipping_creem_checkout').on(table.creemCheckoutId),
+  ]
+);
+
+/**
+ * 邮件通知日志表
+ * 记录所有发送给用户和受益人的邮件
+ */
+export const emailNotifications = pgTable(
+  'email_notifications',
+  {
+    id: text('id').primaryKey(),
+    vaultId: text('vault_id')
+      .notNull()
+      .references(() => digitalVaults.id, { onDelete: 'cascade' }),
+    recipientEmail: text('recipient_email').notNull(),
+    recipientType: text('recipient_type').notNull(), // 'user' | 'beneficiary'
+    emailType: text('email_type').notNull(), // 'heartbeat_warning' | 'heartbeat_reminder' | 'inheritance_notice'
+    subject: text('subject').notNull(),
+    sentAt: timestamp('sent_at').defaultNow().notNull(),
+    openedAt: timestamp('opened_at'), // 邮件打开时间（通过 Resend 追踪）
+    clickedAt: timestamp('clicked_at'), // 链接点击时间
+    status: text('status').default('pending').notNull(), // 'pending' | 'sent' | 'delivered' | 'opened' | 'clicked' | 'failed'
+    errorMessage: text('error_message'),
+    resendMessageId: text('resend_message_id'), // Resend API 返回的 message_id
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    // 查询保险箱的邮件记录
+    index('idx_email_vault').on(table.vaultId),
+    // 按邮件类型查询
+    index('idx_email_type').on(table.emailType),
+    // 按状态查询
+    index('idx_email_status').on(table.status),
+    // 按收件人查询
+    index('idx_email_recipient').on(table.recipientEmail),
+  ]
+);
+
+/**
+ * 管理员审计日志表
+ * 记录所有管理员操作，确保可追溯性和安全性
+ */
+export const adminAuditLogs = pgTable(
+  'admin_audit_logs',
+  {
+    id: text('id').primaryKey().default('gen_random_uuid()'),
+    adminId: text('admin_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    actionType: text('action_type').notNull(), // 'EXTEND_SUBSCRIPTION', 'RESET_DECRYPTION_COUNT', 'ADD_DECRYPTION_COUNT', 'ADD_BONUS_DECRYPTION_COUNT', 'PAUSE', 'RESET_HEARTBEAT', 'TRIGGER_NOW'
+    vaultId: text('vault_id').references(() => digitalVaults.id, { onDelete: 'set null' }),
+    beneficiaryId: text('beneficiary_id').references(() => beneficiaries.id, { onDelete: 'set null' }),
+    actionData: jsonb('action_data').default({}), // 操作详情（补偿天数、次数等）
+    reason: text('reason'), // 操作原因（必填）
+    beforeState: jsonb('before_state').default({}), // 操作前状态快照
+    afterState: jsonb('after_state').default({}), // 操作后状态快照
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    // 查询管理员的操作记录
+    index('idx_admin_audit_admin').on(table.adminId),
+    // 查询保险箱的操作记录
+    index('idx_admin_audit_vault').on(table.vaultId),
+    // 按时间排序
+    index('idx_admin_audit_created').on(table.createdAt),
+    // 按操作类型查询
+    index('idx_admin_audit_action').on(table.actionType),
+    // 查询受益人的操作记录
+    index('idx_admin_audit_beneficiary').on(table.beneficiaryId),
+  ]
+);
+
+/**
+ * 系统报警历史记录表
+ * 记录所有系统报警事件
+ */
+export const systemAlerts = pgTable(
+  'system_alerts',
+  {
+    id: text('id').primaryKey().default('gen_random_uuid()'),
+    level: text('level').notNull(), // 'info' | 'warning' | 'critical'
+    type: text('type').notNull(), // 'business' | 'resource' | 'cost'
+    category: text('category').notNull(), // 'triggered_spike', 'email_limit', 'email_failure_rate', 'storage_limit', 'shipping_limit'
+    message: text('message').notNull(),
+    alertData: jsonb('alert_data').default({}), // 报警数据详情
+    resolved: boolean('resolved').default(false), // 是否已解决
+    resolvedAt: timestamp('resolved_at'), // 解决时间
+    resolvedBy: text('resolved_by').references(() => user.id, { onDelete: 'set null' }), // 解决人
+    resolvedNote: text('resolved_note'), // 解决备注
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    // 查询未解决的报警
+    index('idx_alert_resolved').on(table.resolved),
+    // 按时间排序
+    index('idx_alert_created').on(table.createdAt),
+    // 按级别查询
+    index('idx_alert_level').on(table.level),
+    // 按类型查询
+    index('idx_alert_type').on(table.type),
+    // 按类别查询
+    index('idx_alert_category').on(table.category),
   ]
 );

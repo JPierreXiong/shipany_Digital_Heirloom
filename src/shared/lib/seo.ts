@@ -72,7 +72,15 @@ export function getMetadata(
       appName = envConfigs.app_name || '';
     }
 
+    // Build language alternates for SEO
+    const languageAlternates: Record<string, string> = {
+      'en-US': `${envConfigs.app_url}${locale === 'en' ? '' : '/en'}`,
+      'zh-CN': `${envConfigs.app_url}${locale === 'zh' ? '' : '/zh'}`,
+      'fr-FR': `${envConfigs.app_url}${locale === 'fr' ? '' : '/fr'}`,
+    };
+
     return {
+      metadataBase: new URL(envConfigs.app_url),
       title:
         passedMetadata.title ||
         translatedMetadata.title ||
@@ -87,16 +95,24 @@ export function getMetadata(
         defaultMetadata.keywords,
       alternates: {
         canonical: canonicalUrl,
+        languages: languageAlternates,
       },
 
       openGraph: {
         type: 'website',
-        locale: locale,
+        locale: locale === 'zh' ? 'zh_CN' : locale === 'fr' ? 'fr_FR' : 'en_US',
         url: canonicalUrl,
         title,
         description,
         siteName: appName,
-        images: [imageUrl.toString()],
+        images: [
+          {
+            url: imageUrl.toString(),
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
       },
 
       twitter: {
@@ -110,6 +126,13 @@ export function getMetadata(
       robots: {
         index: options.noIndex ? false : true,
         follow: options.noIndex ? false : true,
+        googleBot: {
+          index: options.noIndex ? false : true,
+          follow: options.noIndex ? false : true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
       },
     };
   };
