@@ -69,7 +69,7 @@
       {
         "title": "了解更多",
         "icon": "Info",
-        "url": "/blog/how-decryption-works",
+        "url": "/blog",
         "target": "_self",
         "variant": "outline",
         "className": ""
@@ -557,13 +557,18 @@
           "title": "合作伙伴",
           "children": [
             {
-              "title": "YouTube",
-              "url": "https://www.youtube.com",
+              "title": "Creem",
+              "url": "https://www.creem.io",
               "target": "_blank"
             },
             {
-              "title": "TikTok",
-              "url": "https://www.tiktok.com",
+              "title": "ShipAny",
+              "url": "https://www.shipany.io",
+              "target": "_blank"
+            },
+            {
+              "title": "Resend",
+              "url": "https://resend.com",
               "target": "_blank"
             }
           ]
