@@ -195,7 +195,7 @@ export async function GET(request: NextRequest) {
         })),
       },
       suspiciousIPs,
-      recentAccesses: recentAccesses.map((access) => ({
+      recentAccesses: recentAccesses.map((access: { id: string; vaultId: string; email: string | null; lastDecryptionAt: Date | null; releaseToken: string | null; releaseTokenExpiresAt: Date | null }) => ({
         beneficiaryId: access.id,
         vaultId: access.vaultId,
         email: access.email,

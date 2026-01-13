@@ -87,7 +87,7 @@ export async function GET(request: NextRequest) {
 
     // 获取用户信息
     const userIds = [...new Set(vaults.map((v: typeof digitalVaults.$inferSelect) => v.userId))];
-    const users = await getUserByUserIds(userIds);
+    const users = await getUserByUserIds(userIds as string[]);
     const userMap = new Map(users.map((u: { id: string; email?: string }) => [u.id, u]));
 
     // 获取每个保险箱的受益人数量和解密进度
