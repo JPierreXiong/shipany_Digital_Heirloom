@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
     const resolverMap = new Map(resolvers.map((r) => [r.id, r]));
 
     // 格式化报警数据
-    const formattedAlerts = alerts.map((alert) => {
+    const formattedAlerts = alerts.map((alert: typeof systemAlerts.$inferSelect) => {
       const resolver = alert.resolvedBy ? resolverMap.get(alert.resolvedBy) : null;
       return {
         id: alert.id,
