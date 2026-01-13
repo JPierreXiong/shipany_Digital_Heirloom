@@ -7,7 +7,7 @@
 import { NextRequest } from 'next/server';
 import { respData, respErr } from '@/shared/lib/resp';
 import { validateReleaseToken } from '@/shared/models/beneficiary';
-import { validateFragmentMnemonic } from '@/shared/lib/pdf-fragment-parser';
+import { validateFragmentMnemonic } from '@/shared/lib/fragment-merger';
 
 export async function POST(request: NextRequest) {
   try {

@@ -9,20 +9,28 @@
 
 import { validateBIP39Mnemonic } from './recovery-kit';
 
-// 仅在客户端导入 pdfjs-dist
+// 仅在客户端导入 pdfjs-dist（使用动态导入避免服务器端构建错误）
 let pdfjsLib: any = null;
-if (typeof window !== 'undefined') {
-  try {
-    // 动态导入 pdfjs-dist，避免服务器端构建错误
-    pdfjsLib = require('pdfjs-dist');
-    // 配置 PDF.js worker - 使用本地 Worker 避免 404 错误
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
-  } catch {
-    // 如果本地 Worker 不可用，禁用 Worker（性能稍慢但不会报错）
-    if (pdfjsLib) {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+
+// 延迟初始化 pdfjsLib，只在需要时加载
+function getPdfjsLib() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  
+  if (!pdfjsLib) {
+    try {
+      // 使用动态 require，避免构建时解析
+      pdfjsLib = require('pdfjs-dist');
+      // 配置 PDF.js worker - 使用本地 Worker 避免 404 错误
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
+    } catch {
+      // 如果本地 Worker 不可用，禁用 Worker（性能稍慢但不会报错）
+      pdfjsLib = null;
     }
   }
+  
+  return pdfjsLib;
 }
 
 export interface ParsedPDFFragment {
@@ -46,14 +54,15 @@ export interface QRCodeData {
  */
 async function extractTextFromPDF(pdfFile: File): Promise<string> {
   // 仅在客户端执行
-  if (typeof window === 'undefined' || !pdfjsLib) {
+  const pdfjs = getPdfjsLib();
+  if (!pdfjs) {
     throw new Error('PDF parsing is only available in browser environment');
   }
 
   const arrayBuffer = await pdfFile.arrayBuffer();
   
   // 使用与现有 pdf-parser.ts 相同的配置
-  const loadingTask = pdfjsLib.getDocument({
+  const loadingTask = pdfjs.getDocument({
     data: arrayBuffer,
     useWorkerFetch: false,
     isEvalSupported: false,
@@ -115,10 +124,15 @@ async function extractQRCodeFromPDF(pdfFile: File): Promise<QRCodeData | null> {
       console.warn('jsQR not available, skipping QR code extraction');
       return null;
     }
+    const pdfjs = getPdfjsLib();
+    if (!pdfjs) {
+      return null;
+    }
+    
     const arrayBuffer = await pdfFile.arrayBuffer();
     
     // 使用与现有 pdf-parser.ts 相同的配置
-    const loadingTask = pdfjsLib.getDocument({
+    const loadingTask = pdfjs.getDocument({
       data: arrayBuffer,
       useWorkerFetch: false,
       isEvalSupported: false,
@@ -277,56 +291,6 @@ export async function parsePDFFragment(pdfFile: File): Promise<ParsedPDFFragment
   };
 }
 
-/**
- * 验证 Fragment 助记词（BIP39）
- */
-export function validateFragmentMnemonic(
-  mnemonic: string[],
-  fragment: 'A' | 'B' | 'full'
-): {
-  valid: boolean;
-  errors: string[];
-} {
-  const errors: string[] = [];
-  
-  // 检查数量
-  if (fragment === 'full' && mnemonic.length !== 24) {
-    errors.push(`Full mnemonic must contain 24 words, found ${mnemonic.length}`);
-  } else if ((fragment === 'A' || fragment === 'B') && mnemonic.length !== 12) {
-    errors.push(`Fragment ${fragment} must contain 12 words, found ${mnemonic.length}`);
-  }
-  
-  // 检查 BIP39 有效性（如果数量正确）
-  if (errors.length === 0) {
-    const mnemonicString = mnemonic.join(' ');
-    
-    // 对于 Fragment A/B，我们需要验证它们是否是完整 24 词助记词的一部分
-    // 这里简化处理：只验证单词是否在 BIP39 列表中
-    try {
-      // 如果 fragment 是 full，直接验证
-      if (fragment === 'full') {
-        if (!validateBIP39Mnemonic(mnemonicString)) {
-          errors.push('Mnemonic does not match BIP39 standard');
-        }
-      } else {
-        // 对于 Fragment A/B，我们暂时只检查单词格式
-        // 完整的验证需要在合并后进行
-        const invalidWords = mnemonic.filter(word => !/^[a-z]+$/.test(word));
-        if (invalidWords.length > 0) {
-          errors.push(`Invalid word format: ${invalidWords.join(', ')}`);
-        }
-      }
-    } catch (error: any) {
-      errors.push(`Validation error: ${error.message}`);
-    }
-  }
-  
-  return {
-    valid: errors.length === 0,
-    errors,
-  };
-}
-
-// 重新导出 mergeFragments 以保持向后兼容
+// 重新导出 mergeFragments 和 validateFragmentMnemonic 以保持向后兼容
 // 建议：在服务器端代码中使用 fragment-merger.ts 中的版本
-export { mergeFragments } from './fragment-merger';
+export { mergeFragments, validateFragmentMnemonic } from './fragment-merger';
