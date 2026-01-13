@@ -192,7 +192,7 @@ export async function GET(request: NextRequest) {
     });
 
     // 过滤掉 null 值（被 hoursLeft 筛选排除的）
-    const filteredVaults = vaultsWithStats.filter((v): v is NonNullable<typeof v> => v !== null);
+    const filteredVaults = vaultsWithStats.filter((v: NonNullable<typeof vaultsWithStats[0]> | null): v is NonNullable<typeof vaultsWithStats[0]> => v !== null);
     
     // 如果是高风险查询，按剩余小时数重新排序
     if (urgent === 'true') {

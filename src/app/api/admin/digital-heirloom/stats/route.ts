@@ -110,7 +110,7 @@ export async function GET(request: NextRequest) {
       base: 0,
       pro: 0,
     };
-    planDistributionResult.forEach((row) => {
+    planDistributionResult.forEach((row: { planLevel: string | null; count: number | null }) => {
       const plan = (row.planLevel || 'free') as 'free' | 'base' | 'pro';
       planDistribution[plan] = Number(row.count || 0);
     });
@@ -174,7 +174,7 @@ export async function GET(request: NextRequest) {
         )
       );
     
-    const potentialConversionUsers = new Set(potentialConversionResult.map(r => r.vaultId)).size;
+    const potentialConversionUsers = new Set(potentialConversionResult.map((r: { vaultId: string; decryptionCount: number }) => r.vaultId)).size;
     const potentialConversionValue = potentialConversionUsers * BASE_PLAN_PRICE;
 
     // 本周趋势数据（最近 7 天）
@@ -195,7 +195,7 @@ export async function GET(request: NextRequest) {
       triggeredVaults: Array(7).fill(0),
     };
     
-    const trendMap = new Map(weeklyTrendResult.map(r => [r.date, Number(r.newVaults || 0)]));
+    const trendMap = new Map(weeklyTrendResult.map((r: { date: string; newVaults: number | null }) => [r.date, Number(r.newVaults || 0)]));
     for (let i = 0; i < 7; i++) {
       const date = new Date(now.getTime() - (6 - i) * 24 * 60 * 60 * 1000);
       const dateStr = date.toISOString().split('T')[0];

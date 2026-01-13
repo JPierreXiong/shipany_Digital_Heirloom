@@ -78,9 +78,9 @@ export async function GET(request: NextRequest) {
       .offset(offset);
 
     // 获取解决人信息
-    const resolverIds = [...new Set(alerts.map((alert) => alert.resolvedBy).filter(Boolean))];
-    const resolvers = resolverIds.length > 0 ? await getUserByUserIds(resolverIds) : [];
-    const resolverMap = new Map(resolvers.map((r) => [r.id, r]));
+    const resolverIds = [...new Set(alerts.map((alert: typeof systemAlerts.$inferSelect) => alert.resolvedBy).filter(Boolean))];
+    const resolvers = resolverIds.length > 0 ? await getUserByUserIds(resolverIds as string[]) : [];
+    const resolverMap = new Map(resolvers.map((r: { id: string; name?: string; email?: string }) => [r.id, r]));
 
     // 格式化报警数据
     const formattedAlerts = alerts.map((alert: typeof systemAlerts.$inferSelect) => {
@@ -95,8 +95,8 @@ export async function GET(request: NextRequest) {
         resolved: alert.resolved,
         resolvedAt: alert.resolvedAt,
         resolvedBy: alert.resolvedBy,
-        resolvedByName: resolver?.name || null,
-        resolvedByEmail: resolver?.email || null,
+        resolvedByName: (resolver as { name?: string; email?: string })?.name || null,
+        resolvedByEmail: (resolver as { name?: string; email?: string })?.email || null,
         resolvedNote: alert.resolvedNote,
         createdAt: alert.createdAt,
       };
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
       warning: 0,
       info: 0,
     };
-    unresolvedByLevelResult.forEach((row) => {
+    unresolvedByLevelResult.forEach((row: { level: string; count: number | null }) => {
       const level = row.level as 'critical' | 'warning' | 'info';
       unresolvedByLevel[level] = Number(row.count || 0);
     });

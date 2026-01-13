@@ -74,13 +74,13 @@ export async function GET(request: NextRequest) {
       .offset(offset);
 
     // 获取管理员信息
-    const adminIds = [...new Set(logs.map((log) => log.adminId))];
-    const admins = await getUserByUserIds(adminIds);
-    const adminMap = new Map(admins.map((a) => [a.id, a]));
+    const adminIds = [...new Set(logs.map((log: typeof adminAuditLogs.$inferSelect) => log.adminId))];
+    const admins = await getUserByUserIds(adminIds as string[]);
+    const adminMap = new Map(admins.map((a: { id: string; name?: string; email?: string }) => [a.id, a]));
 
     // 格式化日志数据
-    const formattedLogs = logs.map((log) => {
-      const admin = adminMap.get(log.adminId);
+    const formattedLogs = logs.map((log: typeof adminAuditLogs.$inferSelect) => {
+      const admin = adminMap.get(log.adminId) as { id: string; name?: string; email?: string } | undefined;
       return {
         id: log.id,
         adminId: log.adminId,

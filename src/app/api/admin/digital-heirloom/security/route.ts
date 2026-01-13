@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
       reason?: string;
     }> = [];
 
-    beneficiariesWithDecryptionHistory.forEach((beneficiary) => {
+    beneficiariesWithDecryptionHistory.forEach((beneficiary: typeof beneficiaries.$inferSelect) => {
       const history = beneficiary.decryptionHistory as any[];
       if (Array.isArray(history)) {
         history.forEach((entry: any) => {
@@ -119,7 +119,7 @@ export async function GET(request: NextRequest) {
     // 3. 异常访问模式检测
     // 检测同一受益人在短时间内多次访问
     const accessPatterns = new Map<string, Array<{ timestamp: Date; vaultId: string }>>();
-    recentAccesses.forEach((access) => {
+    recentAccesses.forEach((access: { id: string; vaultId: string; email: string | null; lastDecryptionAt: Date | null }) => {
       if (access.lastDecryptionAt) {
         const key = `${access.vaultId}-${access.email}`;
         if (!accessPatterns.has(key)) {
@@ -205,7 +205,7 @@ export async function GET(request: NextRequest) {
           new Date(access.releaseTokenExpiresAt) > now,
       })),
       abnormalPatterns,
-      expiredVaults: expiredVaults.map((vault) => ({
+      expiredVaults: expiredVaults.map((vault: typeof digitalVaults.$inferSelect) => ({
         id: vault.id,
         userId: vault.userId,
         status: vault.status,

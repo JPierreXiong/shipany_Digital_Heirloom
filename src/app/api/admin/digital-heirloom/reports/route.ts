@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
           .groupBy(digitalVaults.planLevel, digitalVaults.status);
 
         const planStats: Record<string, Record<string, number>> = {};
-        vaultStats.forEach((stat) => {
+        vaultStats.forEach((stat: { planLevel: string | null; status: string | null; count: number | null }) => {
           const plan = stat.planLevel || 'free';
           const status = stat.status || 'active';
           if (!planStats[plan]) {
@@ -128,7 +128,7 @@ export async function GET(request: NextRequest) {
             start: periodStart.toISOString(),
             end: periodEnd.toISOString(),
           },
-          compensationStats: compensationStats.map((stat) => ({
+          compensationStats: compensationStats.map((stat: { actionType: string; count: number | null; totalDays: number | null }) => ({
             actionType: stat.actionType,
             count: Number(stat.count || 0),
             totalDays: Number(stat.totalDays || 0),
@@ -160,7 +160,7 @@ export async function GET(request: NextRequest) {
             start: periodStart.toISOString(),
             end: periodEnd.toISOString(),
           },
-          dailyActivity: activityStats.map((stat) => ({
+          dailyActivity: activityStats.map((stat: { date: string; activeVaults: number | null }) => ({
             date: stat.date,
             activeVaults: Number(stat.activeVaults || 0),
           })),

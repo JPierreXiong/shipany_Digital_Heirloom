@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
       base: 0,
       pro: 0,
     };
-    emailByPlanResult.forEach((row) => {
+    emailByPlanResult.forEach((row: { planLevel: string | null; sentCount: number | null }) => {
       const plan = (row.planLevel || 'free') as 'free' | 'base' | 'pro';
       emailByPlan[plan] = Number(row.sentCount || 0);
     });
@@ -119,7 +119,7 @@ export async function GET(request: NextRequest) {
 
     // 填充最近 30 天的数据
     const emailTrend = Array(30).fill(0);
-    const trendMap = new Map(emailTrendResult.map(r => [r.date, Number(r.count || 0)]));
+    const trendMap = new Map(emailTrendResult.map((r: { date: string; count: number | null }) => [r.date, Number(r.count || 0)]));
     for (let i = 0; i < 30; i++) {
       const date = new Date(now.getTime() - (29 - i) * 24 * 60 * 60 * 1000);
       const dateStr = date.toISOString().split('T')[0];
@@ -166,7 +166,7 @@ export async function GET(request: NextRequest) {
     // 计算累计存储趋势
     const storageTrend = Array(30).fill(0);
     let cumulativeSize = 0;
-    const storageTrendMap = new Map(storageTrendResult.map(r => ({
+    const storageTrendMap = new Map(storageTrendResult.map((r: { date: string; totalSize: number | null }) => ({
       date: r.date,
       size: Number(r.totalSize || 0),
     })));
@@ -174,7 +174,7 @@ export async function GET(request: NextRequest) {
     for (let i = 0; i < 30; i++) {
       const date = new Date(now.getTime() - (29 - i) * 24 * 60 * 60 * 1000);
       const dateStr = date.toISOString().split('T')[0];
-      const daySize = storageTrendMap.get(dateStr)?.size || 0;
+      const daySize = (storageTrendMap.get(dateStr) as { size: number } | undefined)?.size || 0;
       cumulativeSize += daySize;
       storageTrend[i] = cumulativeSize;
     }
@@ -209,7 +209,7 @@ export async function GET(request: NextRequest) {
       .orderBy(sql`DATE(${shippingLogs.createdAt})`);
 
     const shippingTrend = Array(30).fill(0);
-    const shippingTrendMap = new Map(shippingTrendResult.map(r => ({
+    const shippingTrendMap = new Map(shippingTrendResult.map((r: { date: string; count: number | null; amount: number | null }) => ({
       date: r.date,
       count: Number(r.count || 0),
       amount: Number(r.amount || 0),
@@ -218,7 +218,7 @@ export async function GET(request: NextRequest) {
     for (let i = 0; i < 30; i++) {
       const date = new Date(now.getTime() - (29 - i) * 24 * 60 * 60 * 1000);
       const dateStr = date.toISOString().split('T')[0];
-      shippingTrend[i] = shippingTrendMap.get(dateStr)?.count || 0;
+      shippingTrend[i] = (shippingTrendMap.get(dateStr) as { count: number } | undefined)?.count || 0;
     }
 
     // 4. 成本报警阈值检查
