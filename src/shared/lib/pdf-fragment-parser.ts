@@ -11,26 +11,36 @@ import { validateBIP39Mnemonic } from './recovery-kit';
 
 // 仅在客户端导入 pdfjs-dist（使用动态导入避免服务器端构建错误）
 let pdfjsLib: any = null;
+let pdfjsLibPromise: Promise<any> | null = null;
 
-// 延迟初始化 pdfjsLib，只在需要时加载
-function getPdfjsLib() {
+// 延迟初始化 pdfjsLib，只在需要时加载（使用 Promise 避免构建时解析）
+async function getPdfjsLib(): Promise<any> {
   if (typeof window === 'undefined') {
     return null;
   }
   
-  if (!pdfjsLib) {
-    try {
-      // 使用动态 require，避免构建时解析
-      pdfjsLib = require('pdfjs-dist');
-      // 配置 PDF.js worker - 使用本地 Worker 避免 404 错误
-      pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
-    } catch {
-      // 如果本地 Worker 不可用，禁用 Worker（性能稍慢但不会报错）
-      pdfjsLib = null;
-    }
+  if (!pdfjsLibPromise) {
+    pdfjsLibPromise = (async () => {
+      try {
+        // 使用动态 import，完全避免构建时解析
+        const pdfjsModule = await import('pdfjs-dist');
+        const lib = pdfjsModule.default || pdfjsModule;
+        // 配置 PDF.js worker - 使用本地 Worker 避免 404 错误
+        if (lib.GlobalWorkerOptions) {
+          lib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
+        }
+        pdfjsLib = lib;
+        return lib;
+      } catch (error) {
+        // 如果本地 Worker 不可用，禁用 Worker（性能稍慢但不会报错）
+        console.warn('Failed to load pdfjs-dist:', error);
+        pdfjsLib = null;
+        return null;
+      }
+    })();
   }
   
-  return pdfjsLib;
+  return pdfjsLibPromise;
 }
 
 export interface ParsedPDFFragment {
@@ -54,7 +64,7 @@ export interface QRCodeData {
  */
 async function extractTextFromPDF(pdfFile: File): Promise<string> {
   // 仅在客户端执行
-  const pdfjs = getPdfjsLib();
+  const pdfjs = await getPdfjsLib();
   if (!pdfjs) {
     throw new Error('PDF parsing is only available in browser environment');
   }
@@ -99,22 +109,14 @@ async function extractQRCodeFromPDF(pdfFile: File): Promise<QRCodeData | null> {
 
     // 尝试导入 jsQR，如果不存在则返回 null
     // Note: jsqr is an optional dependency, may not be installed
-    // We use a try-catch wrapper to handle build-time module resolution
+    // 使用字符串拼接避免构建时静态分析
     let jsQR: any;
     try {
-      // Use dynamic import with proper error handling
-      // Wrap in a function to avoid build-time resolution
-      const importJsQR = async () => {
-        try {
-          // @ts-expect-error - jsqr may not be installed
-          const module = await import('jsqr');
-          return module?.default || null;
-        } catch {
-          return null;
-        }
-      };
-      
-      jsQR = await importJsQR();
+      // 使用字符串拼接避免 Turbopack/Webpack 在构建时解析模块
+      const jsqrModuleName = 'js' + 'qr';
+      // @ts-expect-error - jsqr may not be installed, using dynamic import with string concatenation
+      const module = await import(/* webpackIgnore: true */ jsqrModuleName);
+      jsQR = module?.default || module || null;
       if (!jsQR) {
         console.warn('jsQR not available, skipping QR code extraction');
         return null;
@@ -124,7 +126,7 @@ async function extractQRCodeFromPDF(pdfFile: File): Promise<QRCodeData | null> {
       console.warn('jsQR not available, skipping QR code extraction');
       return null;
     }
-    const pdfjs = getPdfjsLib();
+    const pdfjs = await getPdfjsLib();
     if (!pdfjs) {
       return null;
     }

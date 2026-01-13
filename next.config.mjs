@@ -49,6 +49,23 @@ const nextConfig = {
     ...(process.env.VERCEL ? {} : { mdxRs: true }),
   },
   reactCompiler: true,
+  // Webpack 配置：忽略可选依赖 jsqr（如果未安装）
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // 客户端构建：忽略 jsqr 模块解析错误
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+      };
+      // 添加外部化配置，允许 jsqr 不存在
+      config.externals = config.externals || [];
+      if (Array.isArray(config.externals)) {
+        config.externals.push({
+          'jsqr': 'commonjs jsqr',
+        });
+      }
+    }
+    return config;
+  },
 };
 
 export default withBundleAnalyzer(withNextIntl(withMDX(nextConfig)));
