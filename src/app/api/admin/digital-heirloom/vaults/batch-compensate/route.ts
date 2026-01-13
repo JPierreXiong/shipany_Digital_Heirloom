@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
           const { findBeneficiariesByVaultId, updateBeneficiary } = await import('@/shared/models/beneficiary');
           const beneficiaries = await findBeneficiariesByVaultId(vault.id);
 
-          const beneficiariesBefore = beneficiaries.map(b => ({
+          const beneficiariesBefore = beneficiaries.map((b: any) => ({
             id: b.id,
             decryptionCount: b.decryptionCount,
             decryptionLimit: b.decryptionLimit,
@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
               beneficiaries: beneficiariesBefore,
             },
             afterState: {
-              beneficiaries: beneficiariesAfter.map(b => ({
+              beneficiaries: beneficiariesAfter.map((b: any) => ({
                 id: b.id,
                 decryptionCount: b.decryptionCount,
                 decryptionLimit: b.decryptionLimit,

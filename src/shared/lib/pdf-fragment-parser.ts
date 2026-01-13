@@ -77,19 +77,29 @@ async function extractQRCodeFromPDF(pdfFile: File): Promise<QRCodeData | null> {
 
     // 尝试导入 jsQR，如果不存在则返回 null
     // Note: jsqr is an optional dependency, may not be installed
+    // We use a try-catch wrapper to handle build-time module resolution
     let jsQR: any;
     try {
       // Use dynamic import with proper error handling
-      // @ts-ignore - jsqr may not be installed
-      const jsqrModule = await import('jsqr').catch(() => null);
-      if (!jsqrModule || !jsqrModule.default) {
+      // Wrap in a function to avoid build-time resolution
+      const importJsQR = async () => {
+        try {
+          // @ts-expect-error - jsqr may not be installed
+          const module = await import('jsqr');
+          return module?.default || null;
+        } catch {
+          return null;
+        }
+      };
+      
+      jsQR = await importJsQR();
+      if (!jsQR) {
         console.warn('jsQR not available, skipping QR code extraction');
         return null;
       }
-      jsQR = jsqrModule.default;
     } catch (error) {
       // jsQR 未安装，跳过二维码提取
-      console.warn('jsQR not available, skipping QR code extraction:', error);
+      console.warn('jsQR not available, skipping QR code extraction');
       return null;
     }
     const arrayBuffer = await pdfFile.arrayBuffer();

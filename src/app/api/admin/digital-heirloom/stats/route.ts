@@ -218,7 +218,7 @@ export async function GET(request: NextRequest) {
       .groupBy(sql`DATE(${digitalVaults.deadManSwitchActivatedAt})`)
       .orderBy(sql`DATE(${digitalVaults.deadManSwitchActivatedAt})`);
 
-    const triggeredMap = new Map(weeklyTriggeredResult.map(r => [r.date, Number(r.triggeredVaults || 0)]));
+    const triggeredMap = new Map(weeklyTriggeredResult.map((r: any) => [r.date, Number(r.triggeredVaults || 0)]));
     for (let i = 0; i < 7; i++) {
       const date = new Date(now.getTime() - (6 - i) * 24 * 60 * 60 * 1000);
       const dateStr = date.toISOString().split('T')[0];

@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         )
       )
       .limit(1)
-      .then((rows) => rows[0]);
+      .then((rows: typeof digitalVaults.$inferSelect[]) => rows[0]);
 
     if (!vault) {
       return respErr('Invalid or expired verification token');

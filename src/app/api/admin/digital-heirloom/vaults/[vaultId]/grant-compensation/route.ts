@@ -8,7 +8,7 @@ import { respData, respErr } from '@/shared/lib/resp';
 import { requireAuth } from '@/shared/lib/api-auth';
 import { canAccessAdmin } from '@/core/rbac/permission';
 import { findDigitalVaultById, updateDigitalVault } from '@/shared/models/digital-vault';
-import { findBeneficiariesByVaultId, updateBeneficiary } from '@/shared/models/beneficiary';
+import { findBeneficiariesByVaultId, updateBeneficiary, Beneficiary } from '@/shared/models/beneficiary';
 import { db } from '@/core/db';
 import { digitalVaults, beneficiaries, adminAuditLogs } from '@/config/db/schema';
 import { eq } from 'drizzle-orm';
@@ -214,7 +214,7 @@ export async function POST(
           // 重置所有受益人的解密次数
           const allBeneficiaries = await findBeneficiariesByVaultId(vaultId);
 
-          const beneficiariesBefore = allBeneficiaries.map(b => ({
+          const beneficiariesBefore = allBeneficiaries.map((b: Beneficiary) => ({
             id: b.id,
             decryptionCount: b.decryptionCount,
             decryptionLimit: b.decryptionLimit,
@@ -245,7 +245,7 @@ export async function POST(
               beneficiaries: beneficiariesBefore,
             },
             afterState: {
-              beneficiaries: beneficiariesAfter.map(b => ({
+              beneficiaries: beneficiariesAfter.map((b: Beneficiary) => ({
                 id: b.id,
                 decryptionCount: b.decryptionCount,
                 decryptionLimit: b.decryptionLimit,
@@ -352,7 +352,7 @@ export async function POST(
           // 增加所有受益人的解密次数
           const allBeneficiaries = await findBeneficiariesByVaultId(vaultId);
 
-          const beneficiariesBefore = allBeneficiaries.map(b => ({
+          const beneficiariesBefore = allBeneficiaries.map((b: Beneficiary) => ({
             id: b.id,
             decryptionCount: b.decryptionCount,
             bonusDecryptionCount: b.bonusDecryptionCount,
@@ -394,7 +394,7 @@ export async function POST(
               beneficiaries: beneficiariesBefore,
             },
             afterState: {
-              beneficiaries: beneficiariesAfter.map(b => ({
+              beneficiaries: beneficiariesAfter.map((b: Beneficiary) => ({
                 id: b.id,
                 decryptionCount: b.decryptionCount,
                 bonusDecryptionCount: b.bonusDecryptionCount,

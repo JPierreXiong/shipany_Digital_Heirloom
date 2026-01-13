@@ -69,12 +69,12 @@ export async function GET(request: NextRequest) {
       .limit(limit);
 
     // 获取用户信息
-    const userIds = [...new Set(vaults.map((v) => v.userId))];
-    const users = await getUserByUserIds(userIds);
-    const userMap = new Map(users.map((u) => [u.id, u]));
+    const userIds = [...new Set(vaults.map((v: typeof digitalVaults.$inferSelect) => v.userId))];
+    const users = await getUserByUserIds(userIds as string[]);
+    const userMap = new Map(users.map((u: { id: string; email?: string }) => [u.id, u]));
 
     // 获取每个金库的受益人数量
-    const vaultIds = vaults.map((v) => v.id);
+    const vaultIds = vaults.map((v: typeof digitalVaults.$inferSelect) => v.id);
     const beneficiariesResult = await db()
       .select({
         vaultId: beneficiaries.vaultId,
@@ -83,12 +83,12 @@ export async function GET(request: NextRequest) {
       .from(beneficiaries)
       .where(
         vaultIds.length > 0
-          ? sql`${beneficiaries.vaultId} IN (${sql.join(vaultIds.map((id) => sql`${id}`), sql`, `)})`
+          ? sql`${beneficiaries.vaultId} IN (${sql.join(vaultIds.map((id: string) => sql`${id}`), sql`, `)})`
           : sql`1=0`
       )
       .groupBy(beneficiaries.vaultId);
     const beneficiaryCountMap = new Map(
-      beneficiariesResult.map((b) => [b.vaultId, Number(b.count || 0)])
+      beneficiariesResult.map((b: { vaultId: string; count: number | null }) => [b.vaultId, Number(b.count || 0)])
     );
 
     // 格式化 CSV 数据
@@ -112,7 +112,7 @@ export async function GET(request: NextRequest) {
 
     // CSV 数据行
     for (const vault of vaults) {
-      const user = userMap.get(vault.userId);
+      const user = userMap.get(vault.userId) as { id: string; email?: string } | undefined;
       const beneficiariesCount = beneficiaryCountMap.get(vault.id) || 0;
 
       const row = [

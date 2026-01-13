@@ -86,12 +86,12 @@ export async function GET(request: NextRequest) {
       .offset(offset);
 
     // 获取用户信息
-    const userIds = [...new Set(vaults.map((v) => v.userId))];
+    const userIds = [...new Set(vaults.map((v: typeof digitalVaults.$inferSelect) => v.userId))];
     const users = await getUserByUserIds(userIds);
-    const userMap = new Map(users.map((u) => [u.id, u]));
+    const userMap = new Map(users.map((u: { id: string; email?: string }) => [u.id, u]));
 
     // 获取每个保险箱的受益人数量和解密进度
-    const vaultIds = vaults.map((v) => v.id);
+    const vaultIds = vaults.map((v: typeof digitalVaults.$inferSelect) => v.id);
     const beneficiariesResult = await db()
       .select({
         vaultId: beneficiaries.vaultId,
@@ -102,17 +102,17 @@ export async function GET(request: NextRequest) {
       .from(beneficiaries)
       .where(
         vaultIds.length > 0
-          ? sql`${beneficiaries.vaultId} IN (${sql.join(vaultIds.map((id) => sql`${id}`), sql`, `)})`
+          ? sql`${beneficiaries.vaultId} IN (${sql.join(vaultIds.map((id: string) => sql`${id}`), sql`, `)})`
           : sql`1=0`
       )
       .groupBy(beneficiaries.vaultId);
     
     const beneficiaryCountMap = new Map(
-      beneficiariesResult.map((b) => [b.vaultId, Number(b.count || 0)])
+      beneficiariesResult.map((b: { vaultId: string; count: number | null }) => [b.vaultId, Number(b.count || 0)])
     );
     
     const decryptionProgressMap = new Map(
-      beneficiariesResult.map((b) => [
+      beneficiariesResult.map((b: { vaultId: string; maxDecryptionCount: number | null; maxDecryptionLimit: number | null }) => [
         b.vaultId,
         {
           used: Number(b.maxDecryptionCount || 0),
@@ -123,8 +123,8 @@ export async function GET(request: NextRequest) {
 
     // 计算每个保险箱的统计信息
     const now = new Date();
-    const vaultsWithStats = vaults.map((vault) => {
-      const user = userMap.get(vault.userId);
+    const vaultsWithStats = vaults.map((vault: typeof digitalVaults.$inferSelect) => {
+      const user = userMap.get(vault.userId) as { id: string; email?: string } | undefined;
       const beneficiariesCount = beneficiaryCountMap.get(vault.id) || 0;
 
       // 计算距离上次活跃的天数
@@ -196,7 +196,7 @@ export async function GET(request: NextRequest) {
     
     // 如果是高风险查询，按剩余小时数重新排序
     if (urgent === 'true') {
-      filteredVaults.sort((a, b) => {
+      filteredVaults.sort((a: NonNullable<typeof vaultsWithStats[0]>, b: NonNullable<typeof vaultsWithStats[0]>) => {
         // Pro 用户优先
         const planPriority = { pro: 3, base: 2, free: 1 };
         const aPriority = planPriority[a.planLevel as keyof typeof planPriority] || 1;
