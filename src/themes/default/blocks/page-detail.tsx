@@ -23,7 +23,8 @@ function parseFAQFromContent(content: string): Array<{ question: string; answer:
   const faqItems: Array<{ question: string; answer: string }> = [];
   
   // Check if content contains FAQ section
-  const faqMatch = content.match(/##\s*FAQ[:\s]?.*?\n(.*?)(?=##|$)/is);
+  // Use [\s\S] instead of . with s flag for ES2017 compatibility
+  const faqMatch = content.match(/##\s*FAQ[:\s]?.*?\n([\s\S]*?)(?=##|$)/i);
   if (!faqMatch) {
     return faqItems;
   }
@@ -31,7 +32,8 @@ function parseFAQFromContent(content: string): Array<{ question: string; answer:
   const faqSection = faqMatch[1];
   
   // Match questions (### Question text) and answers (following paragraphs)
-  const questionRegex = /###\s+(.+?)\n\n(.+?)(?=\n###|\n##|$)/gs;
+  // Use [\s\S] instead of . with s flag for ES2017 compatibility
+  const questionRegex = /###\s+(.+?)\n\n([\s\S]*?)(?=\n###|\n##|$)/g;
   let match;
   
   while ((match = questionRegex.exec(faqSection)) !== null) {
@@ -77,7 +79,12 @@ export async function PageDetail({
   const articleSchema = generateArticleSchema(post, locale, 'TechArticle');
 
   // Parse FAQ from content for FAQPage JSON-LD
-  const contentToParse = post.content || post.body || '';
+  // Ensure content is a string for parsing
+  const contentToParse = typeof post.content === 'string' 
+    ? post.content 
+    : typeof post.body === 'string' 
+    ? post.body 
+    : String(post.content || post.body || '');
   const faqItems = parseFAQFromContent(contentToParse);
   const faqSchema = faqItems.length > 0 ? generateFAQPageSchema(faqItems) : null;
 

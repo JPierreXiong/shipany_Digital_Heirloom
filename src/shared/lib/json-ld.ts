@@ -71,7 +71,7 @@ export function generateTechArticleSchema(post: PostType, locale: string = 'en')
       },
     },
     datePublished: publishedDate,
-    dateModified: post.updated_at || publishedDate,
+    dateModified: (post as any).updated_at || publishedDate,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': canonicalUrl,
