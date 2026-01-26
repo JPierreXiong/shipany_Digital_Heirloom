@@ -1,7 +1,7 @@
+import Image from 'next/image';
+
 import { Link } from '@/core/i18n/navigation';
 import { Brand as BrandType } from '@/shared/types/blocks/common';
-
-import { LazyImage } from './lazy-image';
 
 export function BrandLogo({ brand }: { brand: BrandType }) {
   return (
@@ -12,10 +12,14 @@ export function BrandLogo({ brand }: { brand: BrandType }) {
       aria-label={`Go to homepage - ${brand.title || 'Home'}`}
     >
       {brand.logo && (
-        <LazyImage
+        <Image
           src={brand.logo.src}
           alt={brand.logo.alt || ''}
+          width={120}
+          height={40}
           className="h-10 w-auto"
+          priority
+          unoptimized={brand.logo.src.startsWith('/')}
         />
       )}
       {brand.title && (
