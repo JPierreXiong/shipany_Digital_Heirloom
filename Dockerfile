@@ -21,7 +21,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV VERCEL=0
+# Do NOT set VERCEL env var in Docker build - we want standalone output
 # Disable Turbopack for production builds to avoid font loading issues
 # This must be set before running the build command
 ENV NEXT_PRIVATE_SKIP_TURBOPACK=1
