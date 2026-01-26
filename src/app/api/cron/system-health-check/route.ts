@@ -2,7 +2,7 @@
  * Cron Job: System Health Check
  * 系统健康监控 Cron Job
  * 
- * 运行频率：每小时一次
+ * 运行频率：每天一次（UTC 00:00）
  * 功能：监控业务指标异常，发送报警
  */
 
