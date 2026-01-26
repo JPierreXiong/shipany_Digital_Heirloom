@@ -2,7 +2,9 @@ FROM node:22.21.1-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-RUN apk add --no-cache libc6-compat && yarn global add pnpm
+RUN apk add --no-cache libc6-compat && \
+    corepack enable && \
+    corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
@@ -14,6 +16,12 @@ RUN pnpm i --frozen-lockfile
 FROM deps AS builder
 
 WORKDIR /app
+
+# Set environment variables for build
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV VERCEL=0
 
 # Install dependencies based on the preferred package manager
 COPY . .
