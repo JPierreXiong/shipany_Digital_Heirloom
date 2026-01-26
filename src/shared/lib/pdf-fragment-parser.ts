@@ -114,8 +114,8 @@ async function extractQRCodeFromPDF(pdfFile: File): Promise<QRCodeData | null> {
     try {
       // 使用字符串拼接避免 Turbopack/Webpack 在构建时解析模块
       const jsqrModuleName = 'js' + 'qr';
-      // @ts-expect-error - jsqr may not be installed, using dynamic import with string concatenation
-      const module = await import(/* webpackIgnore: true */ jsqrModuleName);
+      // 使用 any 明确告诉 TS 这是一个动态路径，不需要检查类型
+      const module: any = await import(/* webpackIgnore: true */ jsqrModuleName);
       jsQR = module?.default || module || null;
       if (!jsQR) {
         console.warn('jsQR not available, skipping QR code extraction');

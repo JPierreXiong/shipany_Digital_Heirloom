@@ -48,6 +48,8 @@ const nextConfig = {
     // Disable mdxRs for Vercel deployment compatibility with fumadocs-mdx
     ...(process.env.VERCEL ? {} : { mdxRs: true }),
   },
+  // Disable Turbopack for production builds to avoid font loading issues
+  // Turbopack is only used in dev mode (--turbopack flag)
   reactCompiler: true,
   // Webpack 配置：忽略可选依赖 jsqr（如果未安装）
   webpack: (config, { isServer }) => {
