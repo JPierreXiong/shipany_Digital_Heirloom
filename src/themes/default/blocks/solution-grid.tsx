@@ -7,7 +7,6 @@ import { Link } from '@/core/i18n/navigation';
 
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
-import { SmartIcon } from '@/shared/components/ui/smart-icon';
 
 const iconMap: Record<string, typeof Wallet> = {
   Wallet,
