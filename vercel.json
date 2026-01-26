@@ -25,6 +25,9 @@
     },
     "src/app/api/media/**/*.ts": {
       "maxDuration": 180
+    },
+    "src/app/api/cron/**/*.ts": {
+      "maxDuration": 300
     }
   },
   "crons": [
