@@ -13,19 +13,19 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
   const enContent = (
     <div className="prose prose-lg max-w-none dark:prose-invert">
       <h2 className="text-2xl font-bold mb-4">
-        The Ultimate YouTube Subtitle Extractor & TikTok Video Downloader for Creators
+        Secure Your Digital Legacy with Zero-Knowledge Encryption
       </h2>
       
       <p className="mb-4">
-        In today's fast-paced digital landscape, content repurposing is the secret weapon of successful creators. Whether you are a blogger, a social media manager, or a researcher, Digital Heirloom provides a seamless, AI-powered solution to bridge the gap between video and text. Our platform is designed to help you extract value from every frame, offering a robust YouTube Subtitle Extractor and a high-speed TikTok Video Downloader in one unified dashboard.
+        In today's digital age, we accumulate vast amounts of valuable digital assets—cryptocurrency wallets, encrypted files, precious memories, and important documents. But what happens to these assets when you're no longer able to access them? Digital Heirloom provides a secure, automated solution to ensure your digital legacy is safely transferred to your loved ones, using military-grade encryption and automated heartbeat detection.
       </p>
 
       <h3 className="text-xl font-semibold mt-6 mb-3">
-        How Digital Heirloom Empowers Your Workflow
+        How Digital Heirloom Protects Your Digital Assets
       </h3>
       
       <p className="mb-4">
-        Why spend hours manually transcribing videos when AI can do it in seconds? Digital Heirloom uses advanced processing to fetch official and auto-generated transcripts directly from YouTube. But we don't stop there. For TikTok enthusiasts, our tool acts as a high-fidelity TikTok video downloader, ensuring your creative assets are clean and ready for professional editing.
+        Digital Heirloom uses zero-knowledge encryption architecture, meaning your data is encrypted in your browser before it ever reaches our servers. We never see your passwords, encryption keys, or file contents. Combined with automated heartbeat detection and physical key fragmentation, we ensure your digital assets remain secure during your lifetime and are safely transferred only when necessary.
       </p>
 
       <h3 className="text-xl font-semibold mt-6 mb-3">
@@ -34,16 +34,16 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
       
       <ol className="list-decimal list-inside space-y-2 mb-4">
         <li>
-          <strong>Copy the URL:</strong> Find the YouTube or TikTok video you want to process and copy its link from the address bar.
+          <strong>Create Your Digital Vault:</strong> Set up your secure digital vault and choose your encryption settings. All data is encrypted locally in your browser.
         </li>
         <li>
-          <strong>Paste and Analyze:</strong> Navigate to the Digital Heirloom input field and paste the link. Our system automatically detects the platform.
+          <strong>Add Your Digital Assets:</strong> Upload encrypted files, store cryptocurrency wallet information, or save important documents. Everything is protected with zero-knowledge encryption.
         </li>
         <li>
-          <strong>Choose Output:</strong> Select whether you want to download the transcript (as SRT or TXT) or the video.
+          <strong>Configure Beneficiaries:</strong> Designate trusted beneficiaries who will receive your digital assets. You can set up multiple beneficiaries with different access levels.
         </li>
         <li>
-          <strong>Extract & Save:</strong> Click the "Extract" button. Once processed, your file is ready for instant download.
+          <strong>Set Up Heartbeat Detection:</strong> Configure automated check-ins to ensure your vault remains secure. If you become unresponsive, your beneficiaries will be notified and assets will be safely transferred.
         </li>
       </ol>
 
@@ -53,13 +53,13 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
       
       <ul className="list-disc list-inside space-y-2 mb-4">
         <li>
-          <strong>Precision AI Recognition:</strong> We prioritize high-accuracy data fetching, ensuring that the subtitles you receive match the spoken word perfectly.
+          <strong>Zero-Knowledge Encryption:</strong> Your data is encrypted before leaving your device. Even we cannot access your files or passwords.
         </li>
         <li>
-          <strong>Multi-Format Export:</strong> Save your transcripts in SRT format for video subtitles or TXT format for blog drafting and AI rewriting.
+          <strong>Automated Heartbeat Detection:</strong> Periodic check-ins ensure your vault remains secure. If you become unresponsive, your beneficiaries are automatically notified.
         </li>
         <li>
-          <strong>Clean TikTok Assets:</strong> Unlike generic downloaders, we provide TikTok videos in their original quality.
+          <strong>Physical Key Fragmentation:</strong> For Pro users, encryption keys are split between digital and physical components, eliminating single points of failure.
         </li>
       </ul>
     </div>
@@ -69,19 +69,19 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
   const zhContent = (
     <div className="prose prose-lg max-w-none dark:prose-invert">
       <h2 className="text-2xl font-bold mb-4">
-        创作者必备的终极 YouTube 字幕提取器与 TikTok 视频下载工具
+        使用零知识加密保护您的数字遗产
       </h2>
       
       <p className="mb-4">
-        在当今快节奏的数字环境中，内容再利用是成功创作者的秘密武器。无论您是博客作者、社交媒体经理还是研究人员，Digital Heirloom 提供无缝的 AI 驱动解决方案，架起视频与文本之间的桥梁。我们的平台旨在帮助您从每一帧中提取价值，在一个统一的仪表板中提供强大的 YouTube 字幕提取器和高速 TikTok 视频下载器。
+        在当今数字时代，我们积累了大量的宝贵数字资产——加密货币钱包、加密文件、珍贵回忆和重要文档。但当您无法再访问这些资产时，它们会怎样？Digital Heirloom 提供安全、自动化的解决方案，使用军用级加密和自动化心跳检测，确保您的数字遗产安全传递给您的亲人。
       </p>
 
       <h3 className="text-xl font-semibold mt-6 mb-3">
-        Digital Heirloom 如何赋能您的工作流程
+        Digital Heirloom 如何保护您的数字资产
       </h3>
       
       <p className="mb-4">
-        当 AI 可以在几秒钟内完成时，为什么要花费数小时手动转录视频？Digital Heirloom 使用先进的处理技术直接从 YouTube 获取官方和自动生成的字幕。但我们并不止步于此。对于 TikTok 爱好者，我们的工具可作为高保真 TikTok 视频下载器，确保您的创意资产干净整洁，随时可用于专业编辑。
+        Digital Heirloom 使用零知识加密架构，这意味着您的数据在到达我们的服务器之前就在您的浏览器中加密。我们永远看不到您的密码、加密密钥或文件内容。结合自动化心跳检测和物理密钥分片，我们确保您的数字资产在您的一生中保持安全，并在必要时安全传递。
       </p>
 
       <h3 className="text-xl font-semibold mt-6 mb-3">
@@ -90,16 +90,16 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
       
       <ol className="list-decimal list-inside space-y-2 mb-4">
         <li>
-          <strong>复制 URL：</strong>找到您要处理的 YouTube 或 TikTok 视频，从地址栏复制其链接。
+          <strong>创建您的数字保险箱：</strong>设置您的安全数字保险箱并选择加密设置。所有数据都在您的浏览器中本地加密。
         </li>
         <li>
-          <strong>粘贴并分析：</strong>导航到 Digital Heirloom 输入字段并粘贴链接。我们的系统会自动检测平台。
+          <strong>添加您的数字资产：</strong>上传加密文件、存储加密货币钱包信息或保存重要文档。一切都受到零知识加密保护。
         </li>
         <li>
-          <strong>选择输出：</strong>选择是要下载字幕（SRT 或 TXT 格式）还是视频。
+          <strong>配置受益人：</strong>指定将接收您数字资产的受信任受益人。您可以设置多个具有不同访问级别的受益人。
         </li>
         <li>
-          <strong>提取并保存：</strong>点击"提取"按钮。处理完成后，您的文件即可立即下载。
+          <strong>设置心跳检测：</strong>配置自动化签到以确保您的保险箱保持安全。如果您无响应，您的受益人将收到通知，资产将安全传递。
         </li>
       </ol>
 
@@ -109,13 +109,13 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
       
       <ul className="list-disc list-inside space-y-2 mb-4">
         <li>
-          <strong>精准 AI 识别：</strong>我们优先考虑高精度数据获取，确保您收到的字幕与口语完美匹配。
+          <strong>零知识加密：</strong>您的数据在离开设备之前就已加密。即使是我们也无法访问您的文件或密码。
         </li>
         <li>
-          <strong>多格式导出：</strong>以 SRT 格式保存字幕用于视频字幕，或以 TXT 格式保存用于博客起草和 AI 重写。
+          <strong>自动化心跳检测：</strong>定期签到确保您的保险箱保持安全。如果您无响应，您的受益人会自动收到通知。
         </li>
         <li>
-          <strong>干净的 TikTok 资源：</strong>与通用下载器不同，我们提供原始质量的 TikTok 视频。
+          <strong>物理密钥分片：</strong>对于 Pro 用户，加密密钥在数字和物理组件之间分割，消除了单点故障。
         </li>
       </ul>
     </div>
@@ -125,19 +125,19 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
   const frContent = (
     <div className="prose prose-lg max-w-none dark:prose-invert">
       <h2 className="text-2xl font-bold mb-4">
-        L'extracteur de Transcription YouTube et Téléchargeur TikTok de Référence
+        Sécurisez votre héritage numérique avec le chiffrement à connaissance zéro
       </h2>
       
       <p className="mb-4">
-        Dans l'univers numérique actuel, la réutilisation du contenu est la clé du succès. Que vous soyez blogueur ou gestionnaire de réseaux sociaux, Digital Heirloom offre une solution dopée à l'IA pour transformer vos vidéos en texte. Notre plateforme regroupe un extracteur de transcription YouTube ultra-précis et un téléchargeur TikTok rapide, le tout dans une interface unique.
+        À l'ère numérique d'aujourd'hui, nous accumulons de vastes quantités d'actifs numériques précieux—portefeuilles de cryptomonnaies, fichiers chiffrés, souvenirs précieux et documents importants. Mais que deviennent ces actifs lorsque vous n'êtes plus en mesure d'y accéder ? Digital Heirloom offre une solution sécurisée et automatisée pour garantir que votre héritage numérique est transféré en toute sécurité à vos proches, en utilisant un chiffrement de niveau militaire et une détection automatique de pulsation.
       </p>
 
       <h3 className="text-xl font-semibold mt-6 mb-3">
-        Pourquoi choisir Digital Heirloom pour votre création de contenu ?
+        Comment Digital Heirloom protège vos actifs numériques
       </h3>
       
       <p className="mb-4">
-        Ne perdez plus de temps à transcrire manuellement. Digital Heirloom utilise des algorithmes avancés pour récupérer les sous-titres officiels et générés automatiquement. Pour les fans de TikTok, notre outil permet de télécharger des vidéos TikTok, garantissant des fichiers propres pour vos montages professionnels.
+        Digital Heirloom utilise une architecture de chiffrement à connaissance zéro, ce qui signifie que vos données sont chiffrées dans votre navigateur avant d'atteindre nos serveurs. Nous ne voyons jamais vos mots de passe, clés de chiffrement ou contenus de fichiers. Combiné à la détection automatique de pulsation et à la fragmentation physique des clés, nous garantissons que vos actifs numériques restent sécurisés pendant votre vie et sont transférés en toute sécurité uniquement lorsque nécessaire.
       </p>
 
       <h3 className="text-xl font-semibold mt-6 mb-3">
@@ -146,16 +146,16 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
       
       <ol className="list-decimal list-inside space-y-2 mb-4">
         <li>
-          <strong>Copiez l'URL :</strong> Trouvez la vidéo YouTube ou TikTok et copiez le lien.
+          <strong>Créez votre coffre-fort numérique :</strong> Configurez votre coffre-fort numérique sécurisé et choisissez vos paramètres de chiffrement. Toutes les données sont chiffrées localement dans votre navigateur.
         </li>
         <li>
-          <strong>Collez le lien :</strong> Insérez le lien dans le champ de saisie de Digital Heirloom.
+          <strong>Ajoutez vos actifs numériques :</strong> Téléchargez des fichiers chiffrés, stockez des informations de portefeuille de cryptomonnaies ou enregistrez des documents importants. Tout est protégé par un chiffrement à connaissance zéro.
         </li>
         <li>
-          <strong>Choisissez le format :</strong> Sélectionnez "Transcription" (SRT/TXT) ou "Vidéo".
+          <strong>Configurez les bénéficiaires :</strong> Désignez des bénéficiaires de confiance qui recevront vos actifs numériques. Vous pouvez configurer plusieurs bénéficiaires avec différents niveaux d'accès.
         </li>
         <li>
-          <strong>Extrayez et Téléchargez :</strong> Cliquez sur "Extraire". Votre fichier est prêt en quelques secondes.
+          <strong>Configurez la détection de pulsation :</strong> Configurez des vérifications automatiques pour garantir que votre coffre-fort reste sécurisé. Si vous ne répondez plus, vos bénéficiaires seront notifiés et les actifs seront transférés en toute sécurité.
         </li>
       </ol>
 
@@ -165,13 +165,13 @@ export function SEOContent({ locale = 'en', className }: SEOContentProps) {
       
       <ul className="list-disc list-inside space-y-2 mb-4">
         <li>
-          <strong>Reconnaissance IA de Haute Précision :</strong> Nous garantissons des transcriptions fidèles aux paroles prononcées.
+          <strong>Chiffrement à connaissance zéro :</strong> Vos données sont chiffrées avant de quitter votre appareil. Même nous ne pouvons pas accéder à vos fichiers ou mots de passe.
         </li>
         <li>
-          <strong>Exportation Multi-formats :</strong> Sauvegardez en format SRT pour le sous-titrage ou en format TXT pour vos articles de blog.
+          <strong>Détection automatique de pulsation :</strong> Des vérifications périodiques garantissent que votre coffre-fort reste sécurisé. Si vous ne répondez plus, vos bénéficiaires sont automatiquement notifiés.
         </li>
         <li>
-          <strong>Vidéos TikTok Propres :</strong> Téléchargez vos vidéos préférées.
+          <strong>Fragmentation physique des clés :</strong> Pour les utilisateurs Pro, les clés de chiffrement sont divisées entre des composants numériques et physiques, éliminant les points de défaillance uniques.
         </li>
       </ul>
     </div>

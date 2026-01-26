@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "cross-env NEXT_PRIVATE_SKIP_TURBOPACK=1 next build",
+    "build": "cross-env NEXT_PRIVATE_SKIP_TURBOPACK=1 NODE_ENV=production next build",
     "build:fast": "NODE_OPTIONS='--max-old-space-size=4096' next build",
     "start": "next start",
     "lint": "next lint",

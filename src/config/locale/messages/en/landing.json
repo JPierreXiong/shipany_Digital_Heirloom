@@ -442,12 +442,12 @@
   "testimonials": {
     "id": "testimonials",
     "title": "What Users Say About Digital Heirloom",
-    "description": "Hear from content creators and businesses who transformed their video content with Digital Heirloom.",
+    "description": "Hear from users who have secured their digital legacy with Digital Heirloom.",
     "items": [
       {
         "name": "David Chen",
-        "role": "YouTube Content Creator",
-        "quote": "Digital Heirloom transformed my YouTube channel! I can now reach global audiences with accurate subtitles in 12 languages. My views increased by 300% after adding multilingual subtitles.",
+        "role": "Crypto Investor",
+        "quote": "Digital Heirloom gave me peace of mind knowing my Bitcoin wallets and private keys are safely stored. The zero-knowledge encryption means even the platform can't access my assets. My family will be able to access everything when needed.",
         "image": {
           "src": "/imgs/avatars/1.png",
           "alt": "david"
@@ -455,8 +455,8 @@
       },
       {
         "name": "Rachel Kim",
-        "role": "TikTok Influencer",
-        "quote": "One-click subtitle extraction and translation saved me hours every week. My TikTok videos now connect with viewers worldwide, and my engagement has skyrocketed!",
+        "role": "Solo Professional",
+        "quote": "As someone who lives alone, Digital Heirloom's heartbeat detection is a lifesaver. I know that if something happens to me, my loved ones will be notified and can access my important documents and digital memories.",
         "image": {
           "src": "/imgs/avatars/2.png",
           "alt": "rachel"
@@ -464,8 +464,8 @@
       },
       {
         "name": "Marcus Thompson",
-        "role": "Video Production Agency Owner",
-        "quote": "As a small agency, Digital Heirloom gives us enterprise-level subtitle capabilities at a fraction of the cost. We process hundreds of videos monthly with perfect accuracy.",
+        "role": "Family Man",
+        "quote": "I've stored all our family photos, important documents, and even my 2FA recovery codes in Digital Heirloom. Knowing my children will be able to access these precious memories gives me incredible peace of mind.",
         "image": {
           "src": "/imgs/avatars/3.png",
           "alt": "marcus"
@@ -473,8 +473,8 @@
       },
       {
         "name": "Sofia Garcia",
-        "role": "E-Learning Platform Manager",
-        "quote": "Digital Heirloom made our educational content accessible globally. Students from 50+ countries can now learn from our courses with accurate translations. Game-changer!",
+        "role": "Content Creator",
+        "quote": "As a content creator, my digital assets are my livelihood. Digital Heirloom protects my business continuity by ensuring my beneficiaries can access my accounts and revenue streams if something happens to me.",
         "image": {
           "src": "/imgs/avatars/4.png",
           "alt": "sofia"
@@ -482,8 +482,8 @@
       },
       {
         "name": "James Wilson",
-        "role": "Marketing Director",
-        "quote": "The AI-powered translation is incredibly accurate. We localize our marketing videos for different markets in minutes instead of days. ROI is through the roof!",
+        "role": "Tech Entrepreneur",
+        "quote": "The physical key fragmentation feature is brilliant. By splitting encryption keys between digital and physical components, I know my assets are truly secure. This is enterprise-grade security at an affordable price.",
         "image": {
           "src": "/imgs/avatars/5.png",
           "alt": "james"
@@ -491,8 +491,8 @@
       },
       {
         "name": "Anna Zhang",
-        "role": "Content Strategist",
-        "quote": "Digital Heirloom's one-click solution turned our YouTube and TikTok content into a global powerhouse. Our international audience grew 500% in just 3 months!",
+        "role": "Digital Nomad",
+        "quote": "Traveling constantly means I need a solution that works anywhere. Digital Heirloom's automated heartbeat detection ensures my digital legacy is protected no matter where I am in the world.",
         "image": {
           "src": "/imgs/avatars/6.png",
           "alt": "anna"

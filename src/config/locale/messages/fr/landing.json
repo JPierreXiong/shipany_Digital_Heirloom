@@ -442,12 +442,12 @@
   "testimonials": {
     "id": "testimonials",
     "title": "Ce que les utilisateurs disent de Digital Heirloom",
-    "description": "Écoutez les créateurs de contenu et les entreprises qui ont transformé leur contenu vidéo avec Digital Heirloom.",
+    "description": "Écoutez les utilisateurs qui ont sécurisé leur héritage numérique avec Digital Heirloom.",
     "items": [
       {
         "name": "David Chen",
-        "role": "Créateur de contenu YouTube",
-        "quote": "Digital Heirloom a transformé ma chaîne YouTube ! Je peux maintenant toucher un public mondial avec des sous-titres précis en 12 langues. Mes vues ont augmenté de 300% après avoir ajouté des sous-titres multilingues.",
+        "role": "Investisseur Crypto",
+        "quote": "Digital Heirloom m'a donné la tranquillité d'esprit en sachant que mes portefeuilles Bitcoin et clés privées sont stockés en toute sécurité. Le chiffrement à connaissance zéro signifie que même la plateforme ne peut pas accéder à mes actifs. Ma famille pourra accéder à tout quand ce sera nécessaire.",
         "image": {
           "src": "/imgs/avatars/1.png",
           "alt": "david"
@@ -455,8 +455,8 @@
       },
       {
         "name": "Rachel Kim",
-        "role": "Influenceuse TikTok",
-        "quote": "L'extraction et la traduction de sous-titres en un clic m'ont fait économiser des heures chaque semaine. Mes vidéos TikTok connectent maintenant avec des spectateurs du monde entier, et mon engagement a explosé !",
+        "role": "Professionnelle Solo",
+        "quote": "En tant que personne vivant seule, la détection de pulsation de Digital Heirloom est un sauveur de vie. Je sais que si quelque chose m'arrive, mes proches seront notifiés et pourront accéder à mes documents importants et souvenirs numériques.",
         "image": {
           "src": "/imgs/avatars/2.png",
           "alt": "rachel"
@@ -464,8 +464,8 @@
       },
       {
         "name": "Marcus Thompson",
-        "role": "Propriétaire d'agence de production vidéo",
-        "quote": "En tant que petite agence, Digital Heirloom nous donne des capacités de sous-titrage de niveau entreprise à une fraction du coût. Nous traitons des centaines de vidéos mensuellement avec une précision parfaite.",
+        "role": "Père de famille",
+        "quote": "J'ai stocké toutes nos photos de famille, documents importants et même mes codes de récupération 2FA dans Digital Heirloom. Savoir que mes enfants pourront accéder à ces souvenirs précieux me donne une tranquillité d'esprit incroyable.",
         "image": {
           "src": "/imgs/avatars/3.png",
           "alt": "marcus"
@@ -473,8 +473,8 @@
       },
       {
         "name": "Sofia Garcia",
-        "role": "Gestionnaire de plateforme e-learning",
-        "quote": "Digital Heirloom a rendu notre contenu éducatif accessible mondialement. Les étudiants de plus de 50 pays peuvent maintenant apprendre de nos cours avec des traductions précises. Changement de jeu !",
+        "role": "Créatrice de contenu",
+        "quote": "En tant que créatrice de contenu, mes actifs numériques sont ma source de revenus. Digital Heirloom protège la continuité de mon entreprise en garantissant que mes bénéficiaires peuvent accéder à mes comptes et flux de revenus si quelque chose m'arrive.",
         "image": {
           "src": "/imgs/avatars/4.png",
           "alt": "sofia"
@@ -482,8 +482,8 @@
       },
       {
         "name": "James Wilson",
-        "role": "Directeur marketing",
-        "quote": "La traduction alimentée par l'IA est incroyablement précise. Nous localisons nos vidéos marketing pour différents marchés en minutes au lieu de jours. Le ROI est au plafond !",
+        "role": "Entrepreneur Tech",
+        "quote": "La fonctionnalité de fragmentation physique des clés est brillante. En divisant les clés de chiffrement entre des composants numériques et physiques, je sais que mes actifs sont vraiment sécurisés. C'est une sécurité de niveau entreprise à un prix abordable.",
         "image": {
           "src": "/imgs/avatars/5.png",
           "alt": "james"
@@ -491,8 +491,8 @@
       },
       {
         "name": "Anna Zhang",
-        "role": "Stratège de contenu",
-        "quote": "La solution en un clic de Digital Heirloom a transformé notre contenu YouTube et TikTok en une puissance mondiale. Notre public international a augmenté de 500% en seulement 3 mois !",
+        "role": "Nomade Numérique",
+        "quote": "Voyager constamment signifie que j'ai besoin d'une solution qui fonctionne partout. La détection automatique de pulsation de Digital Heirloom garantit que mon héritage numérique est protégé peu importe où je me trouve dans le monde.",
         "image": {
           "src": "/imgs/avatars/6.png",
           "alt": "anna"

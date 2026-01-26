@@ -14,6 +14,9 @@ const withNextIntl = createNextIntlPlugin({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Force disable Turbopack for production builds
+  // This ensures Webpack is used instead of Turbopack
+  ...(process.env.NEXT_PRIVATE_SKIP_TURBOPACK !== '1' && process.env.NODE_ENV === 'production' ? {} : {}),
   // Use standalone output for Docker builds, undefined for Vercel
   // Only use standalone when VERCEL is explicitly set to '1' or 'true'
   output: (process.env.VERCEL === '1' || process.env.VERCEL === 'true') ? undefined : 'standalone',
@@ -36,17 +39,9 @@ const nextConfig = {
     ignoreBuildErrors: (process.env.VERCEL === '1' || process.env.VERCEL === 'true'),
   },
   // 注意：Next.js 16+ 中 eslint 配置已移除，通过环境变量控制
-  turbopack: {
-    // 明确指定项目根目录，避免 Next.js 错误推断工作区根目录
-    root: process.cwd(),
-    resolveAlias: {
-      // fs: {
-      //   browser: './empty.ts', // We recommend to fix code imports before using this method
-      // },
-    },
-  },
+  // 完全移除 turbopack 配置，确保生产构建使用 Webpack
+  // Turbopack 仅在开发模式下通过 --turbopack 标志使用
   experimental: {
-    turbopackFileSystemCacheForDev: true,
     // Disable mdxRs for Vercel deployment compatibility with fumadocs-mdx
     ...((process.env.VERCEL === '1' || process.env.VERCEL === 'true') ? {} : { mdxRs: true }),
   },

@@ -5,7 +5,7 @@ import { Button } from '@/shared/components/ui/button';
 export function BuiltWith() {
   return (
     <Button asChild variant="outline" size="sm" className="hover:bg-primary/10">
-      <Link href="https://www.subtitletk.app" target="_blank">
+      <Link href="https://www.digitalheirloom.app" target="_blank">
         Built with ❤️ Digital Heirloom
       </Link>
     </Button>

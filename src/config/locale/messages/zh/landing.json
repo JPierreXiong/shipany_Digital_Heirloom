@@ -442,12 +442,12 @@
   "testimonials": {
     "id": "testimonials",
     "title": "用户对 Digital Heirloom 的评价",
-    "description": "听听内容创作者和企业如何用 Digital Heirloom 改变他们的视频内容。",
+    "description": "听听使用 Digital Heirloom 保护数字遗产的用户怎么说。",
     "items": [
       {
         "name": "David Chen",
-        "role": "YouTube 内容创作者",
-        "quote": "Digital Heirloom 改变了我的 YouTube 频道！现在我可以为全球观众提供 12 种语言的准确字幕。添加多语言字幕后，我的观看量增长了 300%。",
+        "role": "加密货币投资者",
+        "quote": "Digital Heirloom 让我安心，因为我知道我的比特币钱包和私钥都安全存储。零知识加密意味着即使平台也无法访问我的资产。我的家人在需要时能够访问一切。",
         "image": {
           "src": "/imgs/avatars/1.png",
           "alt": "david"
@@ -455,8 +455,8 @@
       },
       {
         "name": "Rachel Kim",
-        "role": "TikTok 网红",
-        "quote": "一键字幕提取和翻译每周为我节省数小时。我的 TikTok 视频现在可以连接全球观众，参与度大幅提升！",
+        "role": "独居专业人士",
+        "quote": "作为独居者，Digital Heirloom 的心跳检测功能是救命稻草。我知道如果发生什么事，我的亲人会收到通知，并能访问我的重要文档和数字回忆。",
         "image": {
           "src": "/imgs/avatars/2.png",
           "alt": "rachel"
@@ -464,8 +464,8 @@
       },
       {
         "name": "Marcus Thompson",
-        "role": "视频制作机构负责人",
-        "quote": "作为小型机构，Digital Heirloom 以极低成本为我们提供了企业级的字幕能力。我们每月处理数百个视频，准确度完美。",
+        "role": "家庭主夫",
+        "quote": "我把所有家庭照片、重要文档，甚至我的 2FA 恢复代码都存储在 Digital Heirloom 中。知道我的孩子能够访问这些珍贵的回忆，让我非常安心。",
         "image": {
           "src": "/imgs/avatars/3.png",
           "alt": "marcus"
@@ -473,8 +473,8 @@
       },
       {
         "name": "Sofia Garcia",
-        "role": "在线教育平台经理",
-        "quote": "Digital Heirloom 让我们的教育内容走向全球。来自 50 多个国家的学生现在可以通过准确的翻译学习我们的课程。改变游戏规则！",
+        "role": "内容创作者",
+        "quote": "作为内容创作者，我的数字资产就是我的生计。Digital Heirloom 通过确保我的受益人在我发生意外时能够访问我的账户和收入流，保护了我的业务连续性。",
         "image": {
           "src": "/imgs/avatars/4.png",
           "alt": "sofia"
@@ -482,8 +482,8 @@
       },
       {
         "name": "James Wilson",
-        "role": "营销总监",
-        "quote": "AI 驱动的翻译准确度极高。我们可以在几分钟内为不同市场本地化营销视频，而不是几天。投资回报率超高！",
+        "role": "科技创业者",
+        "quote": "物理密钥分片功能非常出色。通过将加密密钥在数字和物理组件之间分割，我知道我的资产真正安全。这是以可承受的价格获得企业级安全性。",
         "image": {
           "src": "/imgs/avatars/5.png",
           "alt": "james"
@@ -491,8 +491,8 @@
       },
       {
         "name": "Anna Zhang",
-        "role": "内容策略师",
-        "quote": "Digital Heirloom 的一键解决方案将我们的 YouTube 和 TikTok 内容变成了全球力量。我们的国际观众在短短 3 个月内增长了 500%！",
+        "role": "数字游民",
+        "quote": "经常旅行意味着我需要一个在任何地方都能工作的解决方案。Digital Heirloom 的自动化心跳检测确保无论我在世界何处，我的数字遗产都受到保护。",
         "image": {
           "src": "/imgs/avatars/6.png",
           "alt": "anna"

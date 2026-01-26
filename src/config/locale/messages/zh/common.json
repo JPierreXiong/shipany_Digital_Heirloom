@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Digital Heirloom 模板二",
-    "description": "Digital Heirloom 是用于构建 AI SaaS 创业项目的 NextJS 脚手架。提供丰富模板和组件，助您快速上线产品。",
-    "keywords": "digital heirloom, digital-heirloom, digital-heirloom-demo"
+    "title": "Digital Heirloom - 守护您的数字遗产",
+    "description": "安全保护和传递您的数字资产、加密财富和珍贵回忆给您的亲人。零知识加密、自动化心跳检测和物理密钥分片，提供终极安全保障。",
+    "keywords": "数字遗产, 数字继承, 加密资产, 零知识加密, 死信开关, 数字保险箱, 加密货币继承, 数字遗产规划, 安全数据传输"
   },
   "sign": {
     "sign_in_title": "登录",
