@@ -14,7 +14,9 @@ const withNextIntl = createNextIntlPlugin({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.VERCEL ? undefined : 'standalone',
+  // Use standalone output for Docker builds, undefined for Vercel
+  // Only use standalone when VERCEL is explicitly set to '1' or 'true'
+  output: (process.env.VERCEL === '1' || process.env.VERCEL === 'true') ? undefined : 'standalone',
   reactStrictMode: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -31,7 +33,7 @@ const nextConfig = {
   // 类型检查配置（用于快速通过 Vercel 部署）
   typescript: {
     // 允许构建时忽略 TypeScript 错误（仅在 Vercel 环境下使用）
-    ignoreBuildErrors: !!process.env.VERCEL,
+    ignoreBuildErrors: (process.env.VERCEL === '1' || process.env.VERCEL === 'true'),
   },
   // 注意：Next.js 16+ 中 eslint 配置已移除，通过环境变量控制
   turbopack: {
@@ -46,7 +48,7 @@ const nextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true,
     // Disable mdxRs for Vercel deployment compatibility with fumadocs-mdx
-    ...(process.env.VERCEL ? {} : { mdxRs: true }),
+    ...((process.env.VERCEL === '1' || process.env.VERCEL === 'true') ? {} : { mdxRs: true }),
   },
   // Disable Turbopack for production builds to avoid font loading issues
   // Turbopack is only used in dev mode (--turbopack flag)
