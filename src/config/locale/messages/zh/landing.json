@@ -99,19 +99,11 @@
     "tip": "<span style=\"font-size: 0.75rem; font-weight: 300;\">无需信用卡</span>",
     "buttons": [
       {
-        "title": "免费开始",
+        "title": "开始 Digital Heirloom",
         "icon": "Shield",
-        "url": "/sign-up",
+        "url": "/digital-heirloom/dashboard",
         "target": "_self",
         "variant": "default",
-        "className": ""
-      },
-      {
-        "title": "了解更多",
-        "icon": "Info",
-        "url": "/blog",
-        "target": "_self",
-        "variant": "outline",
         "className": ""
       }
     ],
@@ -126,6 +118,43 @@
       "src": "/imgs/features/admin-dark.png",
       "alt": "hero"
     }
+  },
+  "solution-grid": {
+    "id": "solution-grid",
+    "title": "守护最重要的",
+    "highlight_text": "数字资产",
+    "description": "为每种数字生活方式量身定制的解决方案。",
+    "learn_more": "了解更多",
+    "items": [
+      {
+        "title": "加密货币投资者",
+        "description": "使用零知识安全网保护您的比特币和 Web3 资产。",
+        "href": "/solutions/crypto-inheritance",
+        "icon": "Wallet",
+        "tag": "WEB3"
+      },
+      {
+        "title": "独居生活",
+        "description": "自动签到功能，如果您无响应，会通知您的亲人。",
+        "href": "/solutions/solo-living-protection",
+        "icon": "UserCheck",
+        "tag": "SAFETY"
+      },
+      {
+        "title": "数字家庭",
+        "description": "确保您的孩子继承您的照片和受 2FA 保护的记忆。",
+        "href": "/solutions/family-digital-legacy",
+        "icon": "Users",
+        "tag": "LEGACY"
+      },
+      {
+        "title": "内容创作者",
+        "description": "保护您的数字业务连续性和 YouTube 收入。",
+        "href": "/solutions/creator-business-continuity",
+        "icon": "Laptop",
+        "tag": "BUSINESS"
+      }
+    ]
   },
   "logos": {
     "title": "Digital Heirloom 使用以下技术栈构建",
@@ -532,21 +561,15 @@
   },
   "cta": {
     "id": "cta",
-    "title": "发布你的第一个 AI SaaS 项目",
-    "description": "从这里出发，用 Digital Heirloom 极速交付。",
+    "title": "发布你的第一个数字遗产",
+    "description": "从这里出发，用 Digital Heirloom 守护您的数字资产。",
     "buttons": [
       {
-        "title": "获取 Digital Heirloom",
-        "url": "https://www.subtitletk.app",
-        "target": "_blank",
-        "icon": "Zap"
-      },
-      {
-        "title": "阅读文档",
-        "url": "/docs",
-        "target": "_blank",
-        "variant": "outline",
-        "icon": "BookOpenText"
+        "title": "开始 Digital Heirloom",
+        "url": "/digital-heirloom/dashboard",
+        "target": "_self",
+        "icon": "Shield",
+        "variant": "default"
       }
     ]
   },
@@ -641,7 +664,7 @@
         }
       ]
     },
-    "copyright": "Digital Heirloom 是独立产品，与 Google (YouTube) 或 ByteDance (TikTok) 无关联。",
+    "copyright": "Digital Heirloom - 守护您的数字遗产",
     "show_theme": true,
     "show_locale": true
   }

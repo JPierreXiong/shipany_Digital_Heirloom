@@ -22,10 +22,15 @@ ENV NODE_ENV=production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV VERCEL=0
+# Disable Turbopack for production builds to avoid font loading issues
+# This must be set before running the build command
+ENV NEXT_PRIVATE_SKIP_TURBOPACK=1
 
 # Install dependencies based on the preferred package manager
 COPY . .
-RUN pnpm build
+# Run build with explicit environment variable to ensure Turbopack is disabled
+# The cross-env in package.json should work, but we also set it as ENV for Docker
+RUN NEXT_PRIVATE_SKIP_TURBOPACK=1 pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner

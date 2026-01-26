@@ -99,19 +99,11 @@
     "tip": "<span style=\"font-size: 0.75rem; font-weight: 300;\">No credit card required</span>",
     "buttons": [
       {
-        "title": "Start for Free",
+        "title": "Start Digital Heirloom",
         "icon": "Shield",
-        "url": "/sign-up",
+        "url": "/digital-heirloom/dashboard",
         "target": "_self",
         "variant": "default",
-        "className": ""
-      },
-      {
-        "title": "Learn More",
-        "icon": "Info",
-        "url": "/blog",
-        "target": "_self",
-        "variant": "outline",
         "className": ""
       }
     ],
@@ -126,6 +118,43 @@
       "src": "/imgs/features/admin-dark.png",
       "alt": "hero"
     }
+  },
+  "solution-grid": {
+    "id": "solution-grid",
+    "title": "Protect What Matters",
+    "highlight_text": "Most",
+    "description": "Tailored solutions for every digital lifestyle.",
+    "learn_more": "Learn More",
+    "items": [
+      {
+        "title": "Crypto Investors",
+        "description": "Secure your Bitcoin and Web3 assets with a Zero-Knowledge safety net.",
+        "href": "/solutions/crypto-inheritance",
+        "icon": "Wallet",
+        "tag": "WEB3"
+      },
+      {
+        "title": "Solo Living",
+        "description": "Automated check-ins to notify loved ones if you are unresponsive.",
+        "href": "/solutions/solo-living-protection",
+        "icon": "UserCheck",
+        "tag": "SAFETY"
+      },
+      {
+        "title": "Digital Families",
+        "description": "Ensure your children inherit your photos and 2FA-locked memories.",
+        "href": "/solutions/family-digital-legacy",
+        "icon": "Users",
+        "tag": "LEGACY"
+      },
+      {
+        "title": "Content Creators",
+        "description": "Protect your digital business continuity and YouTube revenue.",
+        "href": "/solutions/creator-business-continuity",
+        "icon": "Laptop",
+        "tag": "BUSINESS"
+      }
+    ]
   },
   "logos": {
     "title": "Digital Heirloom is built on the shoulders of giants",
@@ -532,13 +561,12 @@
   },
   "cta": {
     "id": "cta",
-    "title": "Start Protecting Your Digital Legacy Today",
-    "description": "Join thousands of users who trust Afterglow to secure their most important digital assets.",
-    "tip": "<span style=\"font-size: 0.75rem; font-weight: 300;\">No credit card required</span>",
+    "title": "Launch Your First Digital Legacy",
+    "description": "Start here, protect your digital assets with Digital Heirloom.",
     "buttons": [
       {
-        "title": "Start for Free",
-        "url": "/sign-up",
+        "title": "Start Digital Heirloom",
+        "url": "/digital-heirloom/dashboard",
         "target": "_self",
         "icon": "Shield",
         "variant": "default",

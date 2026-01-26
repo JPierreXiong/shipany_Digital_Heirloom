@@ -1,48 +1,37 @@
 'use client';
 
 import { ArrowRight, Laptop, UserCheck, Users, Wallet } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Link } from '@/core/i18n/navigation';
 
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
+import { SmartIcon } from '@/shared/components/ui/smart-icon';
 
-const solutions = [
-  {
-    title: 'Crypto Investors',
-    description:
-      'Secure your Bitcoin and Web3 assets with a Zero-Knowledge safety net.',
-    href: '/solutions/crypto-inheritance',
-    icon: Wallet,
-    tag: 'Web3',
-  },
-  {
-    title: 'Solo Living',
-    description:
-      'Automated check-ins to notify loved ones if you are unresponsive.',
-    href: '/solutions/solo-living-protection',
-    icon: UserCheck,
-    tag: 'Safety',
-  },
-  {
-    title: 'Digital Families',
-    description:
-      'Ensure your children inherit your photos and 2FA-locked memories.',
-    href: '/solutions/family-digital-legacy',
-    icon: Users,
-    tag: 'Legacy',
-  },
-  {
-    title: 'Content Creators',
-    description:
-      'Protect your digital business continuity and YouTube revenue.',
-    href: '/solutions/creator-business-continuity',
-    icon: Laptop,
-    tag: 'Business',
-  },
-];
+const iconMap: Record<string, typeof Wallet> = {
+  Wallet,
+  UserCheck,
+  Users,
+  Laptop,
+};
 
 export function SolutionGrid({ className }: { className?: string }) {
+  const t = useTranslations('landing.solution-grid');
+  
+  const solutions = t.raw('items') as Array<{
+    title: string;
+    description: string;
+    href: string;
+    icon: string;
+    tag: string;
+  }>;
+
+  const title = t('title');
+  const highlightText = t('highlight_text');
+  const description = t('description');
+  const learnMore = t('learn_more');
+
   return (
     <section
       id="solutions"
@@ -68,11 +57,13 @@ export function SolutionGrid({ className }: { className?: string }) {
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl text-center text-balance mb-12 md:mb-16">
             <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
-              Protect What Matters{' '}
-              <span className="text-primary italic font-serif">Most</span>
+              {title}{' '}
+              {highlightText && (
+                <span className="text-primary italic font-serif">{highlightText}</span>
+              )}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Tailored solutions for every digital lifestyle.
+              {description}
             </p>
           </div>
         </ScrollAnimation>
@@ -80,7 +71,7 @@ export function SolutionGrid({ className }: { className?: string }) {
         <ScrollAnimation delay={0.2}>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {solutions.map((item, idx) => {
-              const Icon = item.icon;
+              const Icon = iconMap[item.icon] || Wallet;
               return (
                 <Link
                   key={idx}
@@ -100,7 +91,7 @@ export function SolutionGrid({ className }: { className?: string }) {
                     </p>
                   </div>
                   <div className="mt-8 flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-4">
-                    Learn More <ArrowRight className="h-4 w-4" />
+                    {learnMore} <ArrowRight className="h-4 w-4" />
                   </div>
                 </Link>
               );

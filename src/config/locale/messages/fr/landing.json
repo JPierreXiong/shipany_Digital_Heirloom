@@ -99,19 +99,11 @@
     "tip": "<span style=\"font-size: 0.75rem; font-weight: 300;\">Aucune carte de crédit requise</span>",
     "buttons": [
       {
-        "title": "Commencer gratuitement",
+        "title": "Commencer Digital Heirloom",
         "icon": "Shield",
-        "url": "/sign-up",
+        "url": "/digital-heirloom/dashboard",
         "target": "_self",
         "variant": "default",
-        "className": ""
-      },
-      {
-        "title": "En savoir plus",
-        "icon": "Info",
-        "url": "/blog",
-        "target": "_self",
-        "variant": "outline",
         "className": ""
       }
     ],
@@ -126,6 +118,43 @@
       "src": "/imgs/features/admin-dark.png",
       "alt": "hero"
     }
+  },
+  "solution-grid": {
+    "id": "solution-grid",
+    "title": "Protégez ce qui compte",
+    "highlight_text": "le plus",
+    "description": "Solutions sur mesure pour chaque mode de vie numérique.",
+    "learn_more": "En savoir plus",
+    "items": [
+      {
+        "title": "Investisseurs Crypto",
+        "description": "Sécurisez vos actifs Bitcoin et Web3 avec un filet de sécurité Zero-Knowledge.",
+        "href": "/solutions/crypto-inheritance",
+        "icon": "Wallet",
+        "tag": "WEB3"
+      },
+      {
+        "title": "Vie en Solo",
+        "description": "Vérifications automatisées pour notifier vos proches si vous ne répondez pas.",
+        "href": "/solutions/solo-living-protection",
+        "icon": "UserCheck",
+        "tag": "SAFETY"
+      },
+      {
+        "title": "Familles Numériques",
+        "description": "Assurez-vous que vos enfants héritent de vos photos et souvenirs verrouillés par 2FA.",
+        "href": "/solutions/family-digital-legacy",
+        "icon": "Users",
+        "tag": "LEGACY"
+      },
+      {
+        "title": "Créateurs de Contenu",
+        "description": "Protégez la continuité de votre entreprise numérique et les revenus YouTube.",
+        "href": "/solutions/creator-business-continuity",
+        "icon": "Laptop",
+        "tag": "BUSINESS"
+      }
+    ]
   },
   "logos": {
     "title": "Digital Heirloom est construit sur les épaules de géants",
@@ -532,21 +561,15 @@
   },
   "cta": {
     "id": "cta",
-    "title": "Déployez votre première startup SaaS IA",
-    "description": "Commencez ici, déployez avec Digital Heirloom.",
+    "title": "Lancez votre premier héritage numérique",
+    "description": "Commencez ici, protégez vos actifs numériques avec Digital Heirloom.",
     "buttons": [
       {
-        "title": "Obtenir Digital Heirloom",
-        "url": "https://www.subtitletk.app",
-        "target": "_blank",
-        "icon": "Zap"
-      },
-      {
-        "title": "Lire la documentation",
-        "url": "/docs",
-        "target": "_blank",
-        "variant": "outline",
-        "icon": "BookOpenText"
+        "title": "Commencer Digital Heirloom",
+        "url": "/digital-heirloom/dashboard",
+        "target": "_self",
+        "icon": "Shield",
+        "variant": "default"
       }
     ]
   },
@@ -641,7 +664,7 @@
         }
       ]
     },
-    "copyright": "Digital Heirloom est un produit indépendant et n'est pas affilié à Google (YouTube) ou ByteDance (TikTok).",
+    "copyright": "Digital Heirloom - Sécurisez votre héritage numérique",
     "show_theme": true,
     "show_locale": true
   }
