@@ -3,19 +3,59 @@
     "id": "header",
     "brand": {
       "title": "Afterglow",
-      "url": "/"
+      "url": "/",
+      "logo": {
+        "src": "/logo.png",
+        "alt": "Afterglow Digital Heirloom Logo"
+      }
     },
     "nav": {
       "items": [
         {
           "title": "Héritage Numérique",
+          "icon": "Shield",
           "url": "/digital-heirloom/dashboard",
-          "icon": "Shield"
+          "description": "Accédez à votre tableau de bord d'héritage numérique"
+        },
+        {
+          "title": "Solutions",
+          "icon": "Puzzle",
+          "children": [
+            {
+              "title": "Investisseurs Crypto",
+              "url": "/solutions/crypto-inheritance",
+              "description": "Sécurisez vos actifs Bitcoin et Web3 avec un chiffrement Zéro-Connaissance",
+              "icon": "Wallet"
+            },
+            {
+              "title": "Vie en Solo",
+              "url": "/solutions/solo-living-protection",
+              "description": "Filet de sécurité automatisé pour professionnels solos et nomades numériques",
+              "icon": "UserCheck"
+            },
+            {
+              "title": "Familles Numériques",
+              "url": "/solutions/family-digital-legacy",
+              "description": "Combler l'écart 2FA et garantir que votre famille hérite des souvenirs numériques",
+              "icon": "Users"
+            },
+            {
+              "title": "Créateurs de Contenu",
+              "url": "/solutions/creator-business-continuity",
+              "description": "Protégez la continuité de votre entreprise numérique et les revenus YouTube",
+              "icon": "Laptop"
+            }
+          ]
         },
         {
           "title": "Tarification",
           "url": "/pricing",
           "icon": "DollarSign"
+        },
+        {
+          "title": "Blog",
+          "url": "/blog",
+          "icon": "BookOpen"
         }
       ]
     },
@@ -528,7 +568,7 @@
     "id": "footer",
     "brand": {
       "title": "Digital Heirloom",
-      "description": "Digital Heirloom is a high-performance digital toolkit designed to extract and translate subtitles from YouTube and TikTok videos. We believe in simple, transparent pricing.",
+      "description": "Sécurisez votre héritage avec le chiffrement Zero-Knowledge. Protégez et transmettez vos actifs numériques — des portefeuilles crypto aux souvenirs personnels — grâce à notre filet de sécurité automatisé et privé. Assurez l'accès à vos proches au moment où ils en ont le plus besoin, sans compromettre votre vie privée aujourd'hui.",
       "url": "/"
     },
     "nav": {

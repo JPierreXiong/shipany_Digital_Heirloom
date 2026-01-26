@@ -7,6 +7,7 @@ import {
   FAQ,
   Features,
   Hero,
+  SolutionGrid,
   ZeroKnowledgeSecurity,
 } from '@/themes/default/blocks';
 
@@ -80,6 +81,9 @@ export default async function LandingPage({
       )}
 
       {page.hero && <Hero hero={page.hero} />}
+      
+      {/* Solutions Grid: Four Pillar Pages */}
+      <SolutionGrid />
       
       {/* Digital Heirloom: How It Works Section */}
       {page['how-it-works'] && <Features features={page['how-it-works']} className="bg-muted" />}

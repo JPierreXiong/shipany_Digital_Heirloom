@@ -8,5 +8,5 @@ export default async function PageDetailPage({
   locale?: string;
   post: PostType;
 }) {
-  return <PageDetail post={post} />;
+  return <PageDetail post={post} locale={locale} />;
 }

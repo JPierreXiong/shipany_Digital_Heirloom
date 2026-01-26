@@ -9,6 +9,7 @@ export * from './features-list';
 export * from './features-accordion';
 export * from './features-step';
 export * from './zero-knowledge-security';
+export * from './solution-grid';
 
 export * from './showcases';
 export * from './logos';

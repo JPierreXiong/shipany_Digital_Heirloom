@@ -3,19 +3,59 @@
     "id": "header",
     "brand": {
       "title": "Afterglow",
-      "url": "/"
+      "url": "/",
+      "logo": {
+        "src": "/logo.png",
+        "alt": "Afterglow Digital Heirloom Logo"
+      }
     },
     "nav": {
       "items": [
         {
           "title": "Digital Heirloom",
+          "icon": "Shield",
           "url": "/digital-heirloom/dashboard",
-          "icon": "Shield"
+          "description": "Access your digital legacy dashboard"
+        },
+        {
+          "title": "Solutions",
+          "icon": "Puzzle",
+          "children": [
+            {
+              "title": "Crypto Investors",
+              "url": "/solutions/crypto-inheritance",
+              "description": "Secure your Bitcoin and Web3 assets with Zero-Knowledge encryption",
+              "icon": "Wallet"
+            },
+            {
+              "title": "Solo Living",
+              "url": "/solutions/solo-living-protection",
+              "description": "Automated safety net for solo professionals and digital nomads",
+              "icon": "UserCheck"
+            },
+            {
+              "title": "Digital Families",
+              "url": "/solutions/family-digital-legacy",
+              "description": "Bridge the 2FA gap and ensure your family inherits digital memories",
+              "icon": "Users"
+            },
+            {
+              "title": "Content Creators",
+              "url": "/solutions/creator-business-continuity",
+              "description": "Protect your digital business continuity and YouTube revenue",
+              "icon": "Laptop"
+            }
+          ]
         },
         {
           "title": "Pricing",
           "url": "/pricing",
           "icon": "DollarSign"
+        },
+        {
+          "title": "Blog",
+          "url": "/blog",
+          "icon": "BookOpen"
         }
       ]
     },
@@ -524,12 +564,37 @@
     "id": "footer",
     "brand": {
       "title": "Afterglow",
-      "description": "Afterglow is a high-security digital asset custody and automated distribution platform. We protect your digital legacy with zero-knowledge encryption, ensuring your loved ones can access your digital assets when they need them most.",
+      "description": "Secure Your Legacy with Zero-Knowledge Encryption. Protect and pass on your digital assets—from crypto wallets to personal memories—with our automated, private safety net. Ensure your loved ones have access when they need it most, without compromising your privacy today.",
       "url": "/"
     },
     "copyright": "Afterglow - Secure Your Digital Legacy",
     "nav": {
       "items": [
+        {
+          "title": "Solutions",
+          "children": [
+            {
+              "title": "Crypto Inheritance",
+              "url": "/solutions/crypto-inheritance",
+              "target": "_self"
+            },
+            {
+              "title": "Solo Living Protection",
+              "url": "/solutions/solo-living-protection",
+              "target": "_self"
+            },
+            {
+              "title": "Family Digital Legacy",
+              "url": "/solutions/family-digital-legacy",
+              "target": "_self"
+            },
+            {
+              "title": "Creator Business Continuity",
+              "url": "/solutions/creator-business-continuity",
+              "target": "_self"
+            }
+          ]
+        },
         {
           "title": "About",
           "children": [
@@ -546,6 +611,11 @@
             {
               "title": "Pricing",
               "url": "/pricing",
+              "target": "_self"
+            },
+            {
+              "title": "Blog",
+              "url": "/blog",
               "target": "_self"
             }
           ]

@@ -1,13 +1,109 @@
+import Script from 'next/script';
 import { CalendarIcon, TimerIcon } from 'lucide-react';
 
 import { MarkdownPreview } from '@/shared/blocks/common';
 import { type Post as PostType } from '@/shared/types/blocks/blog';
+import {
+  generateArticleSchema,
+  generateSoftwareApplicationSchema,
+  generateFAQPageSchema,
+} from '@/shared/lib/json-ld';
+import { envConfigs } from '@/config';
 
 import '@/config/style/docs.css';
 
-export async function PageDetail({ post }: { post: PostType }) {
+/**
+ * Parse FAQ items from MDX content
+ * Looks for FAQ section with format:
+ * ## FAQ: Title
+ * ### Question
+ * Answer text...
+ */
+function parseFAQFromContent(content: string): Array<{ question: string; answer: string }> {
+  const faqItems: Array<{ question: string; answer: string }> = [];
+  
+  // Check if content contains FAQ section
+  const faqMatch = content.match(/##\s*FAQ[:\s]?.*?\n(.*?)(?=##|$)/is);
+  if (!faqMatch) {
+    return faqItems;
+  }
+
+  const faqSection = faqMatch[1];
+  
+  // Match questions (### Question text) and answers (following paragraphs)
+  const questionRegex = /###\s+(.+?)\n\n(.+?)(?=\n###|\n##|$)/gs;
+  let match;
+  
+  while ((match = questionRegex.exec(faqSection)) !== null) {
+    const question = match[1].trim();
+    let answer = match[2].trim();
+    
+    // Clean up markdown formatting from answer
+    answer = answer
+      .replace(/\*\*(.+?)\*\*/g, '$1') // Remove bold
+      .replace(/\*(.+?)\*/g, '$1') // Remove italic
+      .replace(/\[(.+?)\]\(.+?\)/g, '$1') // Remove links, keep text
+      .replace(/\n+/g, ' ') // Replace newlines with spaces
+      .trim();
+    
+    if (question && answer) {
+      faqItems.push({ question, answer });
+    }
+  }
+  
+  return faqItems;
+}
+
+export async function PageDetail({
+  post,
+  locale = 'en',
+}: {
+  post: PostType;
+  locale?: string;
+}) {
+  // Generate JSON-LD for pillar pages
+  const isPillarPage = post.slug?.startsWith('solutions/');
+  
+  // SoftwareApplication schema for pillar pages
+  const softwareSchema = isPillarPage
+    ? generateSoftwareApplicationSchema({
+        name: 'Afterglow Digital Heirloom Protocol',
+        description: post.description,
+        url: `${envConfigs.app_url || 'https://www.digitalheirloom.app'}/${post.slug}`,
+      })
+    : null;
+
+  // Article schema for all pages
+  const articleSchema = generateArticleSchema(post, locale, 'TechArticle');
+
+  // Parse FAQ from content for FAQPage JSON-LD
+  const contentToParse = post.content || post.body || '';
+  const faqItems = parseFAQFromContent(contentToParse);
+  const faqSchema = faqItems.length > 0 ? generateFAQPageSchema(faqItems) : null;
+
   return (
     <section id={post.id}>
+      {/* JSON-LD structured data for SEO */}
+      {softwareSchema && (
+        <Script
+          id={`json-ld-software-${post.slug}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        />
+      )}
+      <Script
+        id={`json-ld-article-${post.slug}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      {/* FAQPage JSON-LD for SEO - Rich Snippets */}
+      {faqSchema && (
+        <Script
+          id={`json-ld-faq-${post.slug}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <div className="py-24 md:py-32">
         <div className="mx-auto w-full max-w-4xl px-6 md:px-8">
           <div className="mt-16 text-center">

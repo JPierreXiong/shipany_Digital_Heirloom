@@ -3,19 +3,59 @@
     "id": "header",
     "brand": {
       "title": "Afterglow",
-      "url": "/"
+      "url": "/",
+      "logo": {
+        "src": "/logo.png",
+        "alt": "Afterglow Digital Heirloom Logo"
+      }
     },
     "nav": {
       "items": [
         {
           "title": "数字遗产",
+          "icon": "Shield",
           "url": "/digital-heirloom/dashboard",
-          "icon": "Shield"
+          "description": "访问您的数字遗产仪表板"
+        },
+        {
+          "title": "解决方案",
+          "icon": "Puzzle",
+          "children": [
+            {
+              "title": "加密投资者",
+              "url": "/solutions/crypto-inheritance",
+              "description": "使用零知识加密保护您的比特币和Web3资产",
+              "icon": "Wallet"
+            },
+            {
+              "title": "独居精英",
+              "url": "/solutions/solo-living-protection",
+              "description": "为独居专业人士和数字游民提供自动化安全网",
+              "icon": "UserCheck"
+            },
+            {
+              "title": "数字家庭",
+              "url": "/solutions/family-digital-legacy",
+              "description": "弥合2FA鸿沟，确保您的家人继承数字记忆",
+              "icon": "Users"
+            },
+            {
+              "title": "内容创作者",
+              "url": "/solutions/creator-business-continuity",
+              "description": "保护您的数字业务连续性和YouTube收入",
+              "icon": "Laptop"
+            }
+          ]
         },
         {
           "title": "价格",
           "url": "/pricing",
           "icon": "DollarSign"
+        },
+        {
+          "title": "博客",
+          "url": "/blog",
+          "icon": "BookOpen"
         }
       ]
     },
@@ -528,7 +568,7 @@
     "id": "footer",
     "brand": {
       "title": "Digital Heirloom",
-      "description": "Digital Heirloom is a high-performance digital toolkit designed to extract and translate subtitles from YouTube and TikTok videos. We believe in simple, transparent pricing.",
+      "description": "基于零知识加密，守护您的数字遗产。利用自动化、私密的数字安全网，安全保护并传承您的数字资产——从加密货币钱包到珍贵个人记忆。在保护您当下隐私的同时，确保挚爱亲朋在最需要的时候能够获得授权访问。",
       "url": "/"
     },
     "nav": {

@@ -253,7 +253,10 @@ export async function getLocalPage({
   slug: string;
   locale: string;
 }): Promise<BlogPostType | null> {
-  const localPage = await pagesSource.getPage([slug], locale);
+  // Convert slug string to array for nested paths (e.g., "solutions/crypto-inheritance" -> ["solutions", "crypto-inheritance"])
+  const slugArray = slug.split('/').filter(Boolean);
+  
+  const localPage = await pagesSource.getPage(slugArray, locale);
   if (!localPage) {
     return null;
   }

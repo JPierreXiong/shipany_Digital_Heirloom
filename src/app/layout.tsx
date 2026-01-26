@@ -3,6 +3,7 @@ import '@/config/style/global.css';
 import { JetBrains_Mono, Merriweather, Noto_Sans_Mono } from 'next/font/google';
 import { getLocale, setRequestLocale } from 'next-intl/server';
 import NextTopLoader from 'nextjs-toploader';
+import Script from 'next/script';
 
 import { envConfigs } from '@/config';
 import { locales } from '@/config/locale';
@@ -10,6 +11,7 @@ import { getAdsService } from '@/shared/services/ads';
 import { getAffiliateService } from '@/shared/services/affiliate';
 import { getAnalyticsService } from '@/shared/services/analytics';
 import { getCustomerService } from '@/shared/services/customer_service';
+import { generateOrganizationSchema } from '@/shared/lib/json-ld';
 
 const notoSansMono = Noto_Sans_Mono({
   subsets: ['latin'],
@@ -50,6 +52,9 @@ export default async function RootLayout({
 
   // app url
   const appUrl = envConfigs.app_url || '';
+
+  // Generate Organization JSON-LD for site-wide
+  const organizationSchema = generateOrganizationSchema();
 
   // ads components
   let adsMetaTags = null;
@@ -146,6 +151,13 @@ export default async function RootLayout({
         {customerServiceMetaTags}
         {/* inject customer service head scripts */}
         {customerServiceHeadScripts}
+
+        {/* Organization JSON-LD structured data for SEO */}
+        <Script
+          id="json-ld-organization"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body suppressHydrationWarning className="overflow-x-hidden">
         <NextTopLoader

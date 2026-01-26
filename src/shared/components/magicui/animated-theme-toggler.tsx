@@ -23,15 +23,20 @@ export const AnimatedThemeToggler = ({ className }: props) => {
 
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const changeTheme = async () => {
+    // 禁用主题切换，只保留夜晚模式
+    // 强制设置为dark模式
     if (!buttonRef.current) return;
 
-    await document.startViewTransition(() => {
-      flushSync(() => {
-        const dark = document.documentElement.classList.toggle("dark");
-        setTheme(dark ? "dark" : "light");
-        setIsDarkMode(dark);
-      });
-    }).ready;
+    // 确保始终是dark模式
+    if (theme !== "dark") {
+      await document.startViewTransition(() => {
+        flushSync(() => {
+          document.documentElement.classList.add("dark");
+          setTheme("dark");
+          setIsDarkMode(true);
+        });
+      }).ready;
+    }
 
     const { top, left, width, height } =
       buttonRef.current.getBoundingClientRect();
@@ -60,9 +65,10 @@ export const AnimatedThemeToggler = ({ className }: props) => {
     return null;
   }
 
+  // 只显示夜晚模式按钮，禁用白天模式切换
   return (
-    <button ref={buttonRef} onClick={changeTheme} className={cn(className)}>
-      {isDarkMode ? <SunDim /> : <Moon />}
+    <button ref={buttonRef} onClick={changeTheme} className={cn(className)} disabled title="Dark mode only">
+      <Moon />
     </button>
   );
 };

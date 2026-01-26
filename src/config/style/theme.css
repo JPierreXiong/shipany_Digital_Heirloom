@@ -1,11 +1,11 @@
 :root {
-  --background: oklch(0.9842 0.0034 247.8575);
+  --background: transparent; /* 移除纯白背景限制，允许Logo直接显示 */
   --foreground: oklch(0.2795 0.0368 260.031);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2795 0.0368 260.031);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2795 0.0368 260.031);
-  --primary: oklch(0.5854 0.2041 277.1173);
+  --primary: oklch(0.5854 0.2041 277.1173); /* #6366F1 Indigo 品牌色 */
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9276 0.0058 264.5313);
   --secondary-foreground: oklch(0.3729 0.0306 259.7328);
@@ -59,17 +59,17 @@
 }
 
 .dark {
-  --background: oklch(0.2077 0.0398 265.7549);
-  --foreground: oklch(0.9288 0.0126 255.5078);
-  --card: oklch(0.2795 0.0368 260.031);
+  --background: oklch(0 0 0); /* 纯黑 #000000 */
+  --foreground: oklch(0.95 0.0034 247.8575);
+  --card: oklch(0.05 0.0034 247.8575); /* 深蓝黑 #0F172A */
   --card-foreground: oklch(0.9288 0.0126 255.5078);
   --popover: oklch(0.2795 0.0368 260.031);
   --popover-foreground: oklch(0.9288 0.0126 255.5078);
-  --primary: oklch(0.6801 0.1583 276.9349);
+  --primary: oklch(0.5854 0.2041 277.1173); /* #6366F1 Indigo 保持品牌色一致 */
   --primary-foreground: oklch(0.2077 0.0398 265.7549);
   --secondary: oklch(0.3351 0.0331 260.912);
   --secondary-foreground: oklch(0.8717 0.0093 258.3382);
-  --muted: oklch(0.2795 0.0368 260.031);
+  --muted: oklch(0.1 0.0034 247.8575); /* 深色模式下的muted背景 */
   --muted-foreground: oklch(0.7137 0.0192 261.3246);
   --accent: oklch(0.3729 0.0306 259.7328);
   --accent-foreground: oklch(0.8717 0.0093 258.3382);

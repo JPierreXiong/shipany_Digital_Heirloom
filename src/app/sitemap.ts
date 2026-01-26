@@ -17,10 +17,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/disclaimer',
   ];
 
+  // Pillar pages (high priority for SEO)
+  const pillarPages = [
+    '/solutions/crypto-inheritance',
+    '/solutions/solo-living-protection',
+    '/solutions/family-digital-legacy',
+    '/solutions/creator-business-continuity',
+  ];
+
   // Known blog posts (add more as you create them)
   const blogPosts = [
     'how-decryption-works',
-    // Add more blog post slugs here as you create them
+    'self-custody-estate-planning-bitcoin-ethereum',
+    'beyond-multisig-zero-knowledge-crypto-inheritance-2026',
+    '95-billion-ghost-wallet-problem-cold-storage-failure',
+    'digital-assets-2026-estate-tax-sunset-probate',
+    'nfts-stablecoins-onchain-wealth-succession-checklist',
   ];
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
@@ -40,6 +52,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     });
 
+    // Add pillar pages for each locale (high priority)
+    pillarPages.forEach((pillarRoute) => {
+      const pillarUrl = locale === 'en'
+        ? `${baseUrl}${pillarRoute}`
+        : `${baseUrl}/${locale}${pillarRoute}`;
+      
+      sitemapEntries.push({
+        url: pillarUrl,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.9, // High priority for pillar pages
+      });
+    });
+
     // Add blog posts for each locale
     blogPosts.forEach((postSlug) => {
       const blogUrl = locale === 'en'
@@ -50,7 +76,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: blogUrl,
         lastModified: new Date(),
         changeFrequency: 'weekly',
-        priority: 0.9, // High priority for blog posts
+        priority: 0.8, // High priority for blog posts
       });
     });
   });
