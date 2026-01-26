@@ -14,7 +14,7 @@ const withNextIntl = createNextIntlPlugin({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.VERCEL === 'true' ? undefined : 'standalone',
+  output: process.env.VERCEL ? undefined : 'standalone',
   reactStrictMode: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -31,7 +31,7 @@ const nextConfig = {
   // 类型检查配置（用于快速通过 Vercel 部署）
   typescript: {
     // 允许构建时忽略 TypeScript 错误（仅在 Vercel 环境下使用）
-    ignoreBuildErrors: process.env.VERCEL === 'true',
+    ignoreBuildErrors: !!process.env.VERCEL,
   },
   // 注意：Next.js 16+ 中 eslint 配置已移除，通过环境变量控制
   turbopack: {
