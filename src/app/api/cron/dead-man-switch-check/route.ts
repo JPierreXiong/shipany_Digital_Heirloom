@@ -44,6 +44,22 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Hobby Plan 限制：只能每小时执行，所以需要判断时间
+    // 只在 UTC 00:00 执行主要逻辑（每天一次）
+    const now = new Date();
+    const hour = now.getUTCHours();
+    const minute = now.getUTCMinutes();
+    
+    // 只在 UTC 00:00 执行（允许 0-5 分钟的误差，因为 Hobby Plan 不能保证精确时间）
+    if (hour !== 0 || minute > 5) {
+      return NextResponse.json({
+        success: true,
+        skipped: true,
+        message: `Not the scheduled time (UTC ${hour}:${minute.toString().padStart(2, '0')}), skipping execution. Will run at UTC 00:00.`,
+        currentTime: now.toISOString(),
+      });
+    }
+
     const startTime = Date.now();
     const results = {
       warningsSent: 0,
