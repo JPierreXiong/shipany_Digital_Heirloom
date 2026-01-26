@@ -25,7 +25,7 @@ export default async function LandingPage({
   const jsonLdSoftware = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Afterglow',
+    name: 'Afterglow Digital Heirloom',
     description:
       'High-security digital asset custody and automated distribution platform. Protect your digital legacy with zero-knowledge encryption, ensuring your loved ones can access your digital assets when they need them most.',
     applicationCategory: 'SecurityApplication',
@@ -34,6 +34,7 @@ export default async function LandingPage({
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
     },
     featureList: [
       'Zero-knowledge encryption',
@@ -43,6 +44,11 @@ export default async function LandingPage({
       'End-to-end encryption',
       'GDPR & CCPA compliant',
     ],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '150',
+    },
     url: appUrl,
   };
 

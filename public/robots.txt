@@ -3,10 +3,13 @@
 User-agent: *
 # 允许抓取营销核心页面
 Allow: /
+Allow: /solutions/
+Allow: /*/solutions/
+Allow: /blog/
+Allow: /*/blog/
 Allow: /*/pricing
 Allow: /*/faq
 Allow: /*/about
-Allow: /*/blog
 Allow: /_next/static/
 Allow: /static/
 
