@@ -28,9 +28,9 @@ ENV NEXT_PRIVATE_SKIP_TURBOPACK=1
 
 # Install dependencies based on the preferred package manager
 COPY . .
-# Run build with explicit environment variable to ensure Turbopack is disabled
-# The cross-env in package.json should work, but we also set it as ENV for Docker
-RUN NEXT_PRIVATE_SKIP_TURBOPACK=1 pnpm build
+# Run build - NEXT_PRIVATE_SKIP_TURBOPACK is already set as ENV above
+# Using pnpm build which has cross-env NEXT_PRIVATE_SKIP_TURBOPACK=1 in package.json
+RUN pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner
