@@ -111,6 +111,30 @@ export function Footer({ footer }: { footer: FooterType }) {
             </div>
           ) : null}
         </div>
+
+        {/* Twelve Tools Featured Link */}
+        <div
+          style={{
+            textAlign: 'center',
+            fontSize: '12px',
+            color: '#666',
+            marginTop: '20px',
+          }}
+        >
+          <span>Featured on </span>
+          <a
+            href="https://twelve.tools"
+            target="_blank"
+            rel="noopener"
+            style={{
+              color: '#6d28d9',
+              textDecoration: 'none',
+              fontWeight: 'bold',
+            }}
+          >
+            Twelve Tools
+          </a>
+        </div>
       </div>
     </footer>
   );
