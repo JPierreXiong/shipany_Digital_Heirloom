@@ -45,7 +45,17 @@ export function Footer({ footer }: { footer: FooterType }) {
                       target={subItem.target || ''}
                       className="text-muted-foreground hover:text-primary block break-words duration-150"
                     >
-                      <span className="break-words">{subItem.title || ''}</span>
+                      {subItem.image ? (
+                        <img
+                          src={subItem.image.src}
+                          alt={subItem.image.alt || subItem.title || ''}
+                          width={subItem.image.className?.includes('small') ? 150 : 200}
+                          height={subItem.image.className?.includes('small') ? 40 : 54}
+                          style={{ display: 'inline-block' }}
+                        />
+                      ) : (
+                        <span className="break-words">{subItem.title || ''}</span>
+                      )}
                     </Link>
                   ))}
                 </div>
@@ -110,29 +120,6 @@ export function Footer({ footer }: { footer: FooterType }) {
               ))}
             </div>
           ) : null}
-        </div>
-
-        {/* Twelve Tools Featured Badge */}
-        <div
-          style={{
-            marginTop: '20px',
-            textAlign: 'center',
-            fontSize: '13px',
-          }}
-        >
-          <a
-            href="https://twelve.tools"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="https://twelve.tools/badge/featured.svg"
-              alt="Afterglow on Twelve Tools"
-              width="180"
-              height="auto"
-              style={{ display: 'inline-block' }}
-            />
-          </a>
         </div>
       </div>
     </footer>

@@ -630,9 +630,13 @@
               "target": "_blank"
             },
             {
-              "title": "Resend",
-              "url": "https://resend.com",
-              "target": "_blank"
+              "title": "Twelve Tools",
+              "url": "https://twelve.tools",
+              "target": "_blank",
+              "image": {
+                "src": "https://twelve.tools/badge0-dark.svg",
+                "alt": "Featured on Twelve Tools"
+              }
             }
           ]
         }
