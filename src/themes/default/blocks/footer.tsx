@@ -112,27 +112,26 @@ export function Footer({ footer }: { footer: FooterType }) {
           ) : null}
         </div>
 
-        {/* Twelve Tools Featured Link */}
+        {/* Twelve Tools Featured Badge */}
         <div
           style={{
-            textAlign: 'center',
-            fontSize: '12px',
-            color: '#666',
             marginTop: '20px',
+            textAlign: 'center',
+            fontSize: '13px',
           }}
         >
-          <span>Featured on </span>
           <a
             href="https://twelve.tools"
             target="_blank"
             rel="noopener"
-            style={{
-              color: '#6d28d9',
-              textDecoration: 'none',
-              fontWeight: 'bold',
-            }}
           >
-            Twelve Tools
+            <img
+              src="https://twelve.tools/badge/featured.svg"
+              alt="Afterglow on Twelve Tools"
+              width="180"
+              height="auto"
+              style={{ display: 'inline-block' }}
+            />
           </a>
         </div>
       </div>
