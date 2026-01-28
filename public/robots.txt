@@ -1,7 +1,7 @@
 # https://www.digitalheirloom.app/robots.txt
 
 User-agent: *
-# 允许抓取营销核心页面
+# 允许爬虫访问所有核心业务路径，确保 SaaS 解决方案被看见
 Allow: /
 Allow: /solutions/
 Allow: /*/solutions/
@@ -12,9 +12,13 @@ Allow: /*/faq
 Allow: /*/about
 Allow: /_next/static/
 Allow: /static/
+# 开发者工具/SaaS 平台路径（即使尚未完全开发，也允许访问以展示 SaaS 属性）
+Allow: /api/docs
+Allow: /developer-portal
+Allow: /docs/
 
-# 隐私禁区：绝对屏蔽用户私有数据和操作逻辑
-Disallow: /api/
+# 仅屏蔽不需要索引的私有/动态生成路径
+Disallow: /api/v1/internal/
 Disallow: /*/dashboard/
 Disallow: /*/vault/
 Disallow: /*/setup/
@@ -26,7 +30,7 @@ Disallow: /inherit/*
 # 屏蔽搜索参数页面，防止权重分散 (如：?ref=, ?source=)
 Disallow: /*?*
 
-# 站点地图：使用绝对地址
+# 明确指引站点地图，加速 Schema (FAQ/SoftwareApplication) 的抓取
 Sitemap: https://www.digitalheirloom.app/sitemap.xml
 
 # 建议爬虫抓取间隔 (部分搜索引擎适用)
