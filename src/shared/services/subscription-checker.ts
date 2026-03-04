@@ -4,8 +4,8 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/shared/models/digital-vault';
-import { eq, lt } from 'drizzle-orm';
+import { subscription } from '@/core/db/schema';
+import { eq, and, lt } from 'drizzle-orm';
 
 export async function checkExpiredSubscriptions() {
   console.log('[Subscription Checker] Starting expired subscription check...');
@@ -13,47 +13,49 @@ export async function checkExpiredSubscriptions() {
   try {
     const now = new Date();
     
-    // 查找所有过期的保险箱
-    const expiredVaults = await db()
+    // 查找所有过期的活跃订阅
+    const expiredSubscriptions = await db()
       .select()
-      .from(digitalVault)
+      .from(subscription)
       .where(
-        eq(digitalVault.planLevel, 'annual')
+        and(
+          eq(subscription.status, 'active'),
+          lt(subscription.currentPeriodEnd, now)
+        )
       );
     
-    let expiredCount = 0;
-    let downgradedCount = 0;
+    console.log(`[Subscription Checker] Found ${expiredSubscriptions.length} expired subscriptions`);
     
-    for (const vault of expiredVaults) {
-      // 检查是否过期
-      if (vault.currentPeriodEnd && new Date(vault.currentPeriodEnd) < now) {
-        // 降级到免费版
+    // 处理每个过期订阅
+    for (const sub of expiredSubscriptions) {
+      try {
+        // 更新订阅状态为过期
         await db()
-          .update(digitalVault)
+          .update(subscription)
           .set({
-            planLevel: 'free',
-            currentPeriodEnd: null,
+            status: 'expired',
             updatedAt: now
           })
-          .where(eq(digitalVault.id, vault.id));
+          .where(eq(subscription.id, sub.id));
         
-        expiredCount++;
-        downgradedCount++;
+        console.log(`[Subscription Checker] Marked subscription ${sub.id} as expired for user ${sub.userId}`);
         
-        console.log(`[Subscription Checker] Downgraded vault ${vault.id} to free plan`);
+        // TODO: 发送过期通知邮件
+        // TODO: 降级用户权限
+        
+      } catch (error) {
+        console.error(`[Subscription Checker] Failed to process subscription ${sub.id}:`, error);
       }
     }
     
-    console.log(`[Subscription Checker] Completed: ${expiredCount} expired, ${downgradedCount} downgraded`);
-    
+    console.log('[Subscription Checker] Completed successfully');
     return {
-      checked: expiredVaults.length,
-      expired: expiredCount,
-      downgraded: downgradedCount
+      checked: expiredSubscriptions.length,
+      processed: expiredSubscriptions.length
     };
+    
   } catch (error) {
-    console.error('[Subscription Checker] Error:', error);
+    console.error('[Subscription Checker] Fatal error:', error);
     throw error;
   }
 }
-

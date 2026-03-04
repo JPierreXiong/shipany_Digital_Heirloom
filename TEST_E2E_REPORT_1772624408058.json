@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-03-04T11:40:03.138Z",
+  "tests": [
+    {
+      "name": "User Signup",
+      "status": "passed",
+      "message": "User created: test_1772624403138@example.com",
+      "data": {
+        "userId": "bca651d7-8889-4d8b-a59b-079000f2d92b"
+      },
+      "timestamp": "2026-03-04T11:40:04.952Z"
+    },
+    {
+      "name": "User Signin",
+      "status": "passed",
+      "message": "User signed in successfully",
+      "data": {
+        "userId": "bca651d7-8889-4d8b-a59b-079000f2d92b"
+      },
+      "timestamp": "2026-03-04T11:40:05.720Z"
+    },
+    {
+      "name": "Subscription Payment",
+      "status": "skipped",
+      "message": "Payment requires real payment gateway integration",
+      "data": null,
+      "timestamp": "2026-03-04T11:40:05.720Z"
+    },
+    {
+      "name": "Membership Display",
+      "status": "failed",
+      "message": "HTTP 405",
+      "data": null,
+      "timestamp": "2026-03-04T11:40:06.132Z"
+    },
+    {
+      "name": "Vault Creation",
+      "status": "failed",
+      "message": "HTTP 401",
+      "data": {
+        "error": "Unauthorized"
+      },
+      "timestamp": "2026-03-04T11:40:06.532Z"
+    },
+    {
+      "name": "File Encryption & Upload",
+      "status": "failed",
+      "message": "HTTP 401",
+      "data": {
+        "error": "Unauthorized"
+      },
+      "timestamp": "2026-03-04T11:40:07.596Z"
+    },
+    {
+      "name": "Add Beneficiary",
+      "status": "failed",
+      "message": "HTTP 401",
+      "data": {
+        "error": "Unauthorized"
+      },
+      "timestamp": "2026-03-04T11:40:07.991Z"
+    },
+    {
+      "name": "Trigger Inheritance",
+      "status": "skipped",
+      "message": "Requires Dead Man's Switch to be triggered (manual or time-based)",
+      "data": null,
+      "timestamp": "2026-03-04T11:40:07.991Z"
+    },
+    {
+      "name": "Beneficiary Decryption",
+      "status": "passed",
+      "message": "Data decrypted successfully",
+      "data": {
+        "fileName": "test-document.txt",
+        "contentLength": 44
+      },
+      "timestamp": "2026-03-04T11:40:08.058Z"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 3,
+    "failed": 4,
+    "skipped": 2
+  }
+}

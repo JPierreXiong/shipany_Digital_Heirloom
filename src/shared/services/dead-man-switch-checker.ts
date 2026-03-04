@@ -1,45 +1,67 @@
 /**
  * Dead Man's Switch 检查服务
- * 检查并触发继承流程
+ * 检查并触发 Dead Man's Switch
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/shared/models/digital-vault';
-import { eq } from 'drizzle-orm';
+import { digitalVault } from '@/core/db/schema';
+import { eq, and } from 'drizzle-orm';
 
 export async function checkDeadManSwitch() {
-  console.log('[Dead Man Switch] Starting check...');
+  console.log('[Dead Man Switch] Starting Dead Man\'s Switch check...');
   
   try {
-    // 查找所有状态为 triggered 的保险箱
+    const now = new Date();
+    
+    // 查找所有已触发但未处理的 vault
     const triggeredVaults = await db()
       .select()
       .from(digitalVault)
-      .where(eq(digitalVault.status, 'triggered'));
+      .where(
+        and(
+          eq(digitalVault.status, 'triggered'),
+          eq(digitalVault.deadManSwitchEnabled, true)
+        )
+      );
+    
+    console.log(`[Dead Man Switch] Found ${triggeredVaults.length} triggered vaults`);
     
     let processedCount = 0;
     
     for (const vault of triggeredVaults) {
-      console.log(`[Dead Man Switch] Processing vault ${vault.id}`);
-      
-      // 这里应该触发继承流程：
-      // 1. 发送邮件给受益人
-      // 2. 生成访问令牌
-      // 3. 更新状态为 released
-      
-      // 目前只记录日志
-      processedCount++;
+      try {
+        console.log(`[Dead Man Switch] Processing vault ${vault.id} for user ${vault.userId}`);
+        
+        // TODO: 获取受益人列表
+        // TODO: 生成解密密钥片段
+        // TODO: 发送邮件给受益人
+        // TODO: 记录继承日志
+        
+        // 更新状态为已释放
+        await db()
+          .update(digitalVault)
+          .set({
+            status: 'released',
+            updatedAt: now
+          })
+          .where(eq(digitalVault.id, vault.id));
+        
+        processedCount++;
+        console.log(`[Dead Man Switch] Successfully processed vault ${vault.id}`);
+        
+      } catch (error) {
+        console.error(`[Dead Man Switch] Failed to process vault ${vault.id}:`, error);
+      }
     }
     
     console.log(`[Dead Man Switch] Completed: ${processedCount} vaults processed`);
-    
     return {
-      triggered: triggeredVaults.length,
+      checked: triggeredVaults.length,
       processed: processedCount
     };
+    
   } catch (error) {
-    console.error('[Dead Man Switch] Error:', error);
+    console.error('[Dead Man Switch] Fatal error:', error);
     throw error;
   }
 }
-

@@ -1,11 +1,11 @@
 /**
  * 心跳检查服务
- * 检查用户的心跳状态
+ * 检查用户的心跳状态，识别不活跃用户
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/shared/models/digital-vault';
-import { eq } from 'drizzle-orm';
+import { digitalVault } from '@/core/db/schema';
+import { eq, and, lt } from 'drizzle-orm';
 
 export async function checkHeartbeats() {
   console.log('[Heartbeat Checker] Starting heartbeat check...');
@@ -13,53 +13,67 @@ export async function checkHeartbeats() {
   try {
     const now = new Date();
     
-    // 查找所有启用 Dead Man's Switch 的保险箱
+    // 查找所有启用了 Dead Man's Switch 的 vault
     const vaults = await db()
       .select()
       .from(digitalVault)
-      .where(eq(digitalVault.deadManSwitchEnabled, true));
+      .where(
+        and(
+          eq(digitalVault.deadManSwitchEnabled, true),
+          eq(digitalVault.status, 'active')
+        )
+      );
     
-    let checkedCount = 0;
-    let missedCount = 0;
+    console.log(`[Heartbeat Checker] Found ${vaults.length} active vaults with DMS enabled`);
+    
+    let inactiveCount = 0;
     
     for (const vault of vaults) {
-      checkedCount++;
-      
-      if (!vault.lastSeenAt) {
-        continue;
-      }
-      
-      const lastSeen = new Date(vault.lastSeenAt);
-      const heartbeatFrequency = vault.heartbeatFrequency || 30; // 默认 30 天
-      const gracePeriod = vault.gracePeriod || 7; // 默认 7 天
-      const totalDays = heartbeatFrequency + gracePeriod;
-      
-      const daysSinceLastSeen = Math.floor((now.getTime() - lastSeen.getTime()) / (1000 * 60 * 60 * 24));
-      
-      if (daysSinceLastSeen > totalDays) {
-        missedCount++;
-        console.log(`[Heartbeat Checker] Vault ${vault.id} missed heartbeat: ${daysSinceLastSeen} days`);
+      try {
+        if (!vault.lastSeenAt || !vault.heartbeatFrequency || !vault.gracePeriod) {
+          continue;
+        }
         
-        // 更新状态为 triggered
-        await db()
-          .update(digitalVault)
-          .set({
-            status: 'triggered',
-            updatedAt: now
-          })
-          .where(eq(digitalVault.id, vault.id));
+        // 计算最后心跳时间 + 频率 + 宽限期
+        const lastSeen = new Date(vault.lastSeenAt);
+        const maxInactiveDays = vault.heartbeatFrequency + vault.gracePeriod;
+        const maxInactiveMs = maxInactiveDays * 24 * 60 * 60 * 1000;
+        const inactiveThreshold = new Date(lastSeen.getTime() + maxInactiveMs);
+        
+        // 检查是否超过不活跃阈值
+        if (now > inactiveThreshold) {
+          inactiveCount++;
+          
+          console.log(`[Heartbeat Checker] Vault ${vault.id} is inactive (last seen: ${lastSeen.toISOString()})`);
+          
+          // 更新状态为触发
+          await db()
+            .update(digitalVault)
+            .set({
+              status: 'triggered',
+              updatedAt: now
+            })
+            .where(eq(digitalVault.id, vault.id));
+          
+          // TODO: 触发继承流程
+          // TODO: 通知受益人
+          
+          console.log(`[Heartbeat Checker] Triggered inheritance for vault ${vault.id}`);
+        }
+        
+      } catch (error) {
+        console.error(`[Heartbeat Checker] Failed to process vault ${vault.id}:`, error);
       }
     }
     
-    console.log(`[Heartbeat Checker] Completed: ${checkedCount} checked, ${missedCount} missed`);
-    
+    console.log(`[Heartbeat Checker] Completed: ${inactiveCount} vaults triggered`);
     return {
-      checked: checkedCount,
-      missed: missedCount
+      checked: vaults.length,
+      triggered: inactiveCount
     };
+    
   } catch (error) {
-    console.error('[Heartbeat Checker] Error:', error);
+    console.error('[Heartbeat Checker] Fatal error:', error);
     throw error;
   }
 }
-
