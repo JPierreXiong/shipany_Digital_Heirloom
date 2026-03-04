@@ -15,3 +15,5 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "请修复上述错误后再构建" -ForegroundColor Red
 }
 
+
+

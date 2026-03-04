@@ -123,3 +123,5 @@ echo "  3. 查看 Upstash Logs 确认执行状态"
 echo ""
 echo "🎉 配置完成！"
 
+
+

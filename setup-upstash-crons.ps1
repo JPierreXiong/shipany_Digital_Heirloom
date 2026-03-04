@@ -117,3 +117,5 @@ Write-Host "  3. 查看 Upstash Logs 确认执行状态"
 Write-Host ""
 Write-Host "🎉 配置完成！" -ForegroundColor Green
 
+
+
