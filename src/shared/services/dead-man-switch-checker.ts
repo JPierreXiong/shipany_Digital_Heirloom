@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/core/db/schema';
+import { digitalVault } from '@/config/db/schema';
 import { eq, and } from 'drizzle-orm';
 
 export async function checkDeadManSwitch() {

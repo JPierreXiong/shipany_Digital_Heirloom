@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault, user, subscription } from '@/core/db/schema';
+import { digitalVault, user } from '@/config/db/schema';
 import { sql } from 'drizzle-orm';
 
 export async function checkSystemHealth() {
@@ -70,26 +70,25 @@ export async function checkSystemHealth() {
       console.error('[System Health] User stats failed:', error);
     }
     
-    // 4. 统计订阅数据
+    // 4. 统计订阅数据（基于 Vault 的 planLevel）
     try {
-      const subStats = await db()
+      const planStats = await db()
         .select({
-          status: subscription.status,
+          planLevel: digitalVault.planLevel,
           count: sql<number>`count(*)::int`
         })
-        .from(subscription)
-        .groupBy(subscription.status);
+        .from(digitalVault)
+        .groupBy(digitalVault.planLevel);
       
-      healthMetrics.subscriptions.total = subStats.reduce((sum, s) => sum + s.count, 0);
-      subStats.forEach(stat => {
-        if (stat.status === 'active') healthMetrics.subscriptions.active = stat.count;
-        if (stat.status === 'expired') healthMetrics.subscriptions.expired = stat.count;
+      healthMetrics.subscriptions.total = planStats.reduce((sum, s) => sum + s.count, 0);
+      planStats.forEach(stat => {
+        if (stat.planLevel !== 'free') healthMetrics.subscriptions.active = stat.count;
       });
       
-      console.log(`[System Health] Subscriptions: ${healthMetrics.subscriptions.total} total, ${healthMetrics.subscriptions.active} active`);
+      console.log(`[System Health] Plans: ${healthMetrics.subscriptions.total} total, ${healthMetrics.subscriptions.active} paid`);
     } catch (error: any) {
-      healthMetrics.errors.push(`Subscription stats error: ${error.message}`);
-      console.error('[System Health] Subscription stats failed:', error);
+      healthMetrics.errors.push(`Plan stats error: ${error.message}`);
+      console.error('[System Health] Plan stats failed:', error);
     }
     
     // 5. 检查异常情况

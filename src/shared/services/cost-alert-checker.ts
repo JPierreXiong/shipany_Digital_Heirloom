@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault, user } from '@/core/db/schema';
+import { digitalVault, user } from '@/config/db/schema';
 import { sql } from 'drizzle-orm';
 
 // 成本配置（每月）

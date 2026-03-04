@@ -4,8 +4,8 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/core/db/schema';
-import { eq, and, lt } from 'drizzle-orm';
+import { digitalVault } from '@/config/db/schema';
+import { eq, and } from 'drizzle-orm';
 
 export async function checkHeartbeats() {
   console.log('[Heartbeat Checker] Starting heartbeat check...');
