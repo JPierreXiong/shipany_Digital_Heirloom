@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-03-04T02:28:11.644Z",
+  "tests": [
+    {
+      "name": "环境变量配置",
+      "passed": false,
+      "message": "缺少环境变量: CREEM_API_KEY, CREEM_WEBHOOK_SECRET, CREEM_PRODUCT_ID_LIFETIME_BASE, CREEM_PRODUCT_ID_LIFETIME_PRO"
+    },
+    {
+      "name": "服务器健康检查",
+      "passed": true,
+      "status": 200,
+      "statusText": "OK"
+    },
+    {
+      "name": "API路由可访问性",
+      "passed": false,
+      "details": [
+        {
+          "route": "/api/user/get-user-info",
+          "accessible": true,
+          "status": 405
+        },
+        {
+          "route": "/api/payment/creem/webhook",
+          "accessible": false,
+          "status": 404
+        }
+      ]
+    },
+    {
+      "name": "定价配置",
+      "passed": false,
+      "details": [
+        {
+          "locale": "en",
+          "passed": false,
+          "error": "Module \"file:///D:/AIsoftware/shipany_Digital%20Heirloom/src/config/locale/messages/en/pricing.json\" needs an import attribute of \"type: json\""
+        },
+        {
+          "locale": "zh",
+          "passed": false,
+          "error": "Module \"file:///D:/AIsoftware/shipany_Digital%20Heirloom/src/config/locale/messages/zh/pricing.json\" needs an import attribute of \"type: json\""
+        },
+        {
+          "locale": "fr",
+          "passed": false,
+          "error": "Module \"file:///D:/AIsoftware/shipany_Digital%20Heirloom/src/config/locale/messages/fr/pricing.json\" needs an import attribute of \"type: json\""
+        }
+      ]
+    },
+    {
+      "name": "新文件检查",
+      "passed": true,
+      "details": [
+        {
+          "file": "src/shared/services/plan-sync.ts",
+          "exists": true
+        },
+        {
+          "file": "src/shared/components/subscription-status.tsx",
+          "exists": true
+        }
+      ]
+    }
+  ]
+}

@@ -14,6 +14,12 @@
         "title": "Annuel",
         "is_featured": true,
         "label": "Recommandé"
+      },
+      {
+        "name": "lifetime",
+        "title": "À vie",
+        "is_featured": false,
+        "label": "Paiement unique"
       }
     ],
     "items": [
@@ -114,6 +120,78 @@
         "payment_product_id": "prod_4epepOcgUjSjPoWmAnBaFt",
         "group": "annual",
         "plan_name": "Pro"
+      },
+      {
+        "title": "Base à vie",
+        "description": "Paiement unique, accès à vie",
+        "label": "Meilleure valeur",
+        "features_title": "Tout dans Base Annuel, plus",
+        "features": [
+          "Stockage 50MB (petites pièces jointes/images)",
+          "✅ Interrupteur mort-vivant automatique",
+          "Jusqu'à 3 bénéficiaires",
+          "Rythme cardiaque ajustable (30-365 jours)",
+          "Notifications par e-mail + SMS (mondial)",
+          "Kit de récupération PDF de base",
+          "Support prioritaire",
+          "🎁 Accès à vie - payez une fois, utilisez pour toujours",
+          "🎁 Toutes les futures mises à jour du plan Base incluses"
+        ],
+        "interval": "one-time",
+        "amount": 29900,
+        "currency": "USD",
+        "price": "$299",
+        "original_price": "$588",
+        "unit": "/ à vie",
+        "is_featured": true,
+        "tip": "Économisez $289 par rapport à 12 ans d'abonnement annuel !",
+        "button": {
+          "title": "Obtenir Base à vie",
+          "url": "/#pricing",
+          "icon": "RiInfinityFill"
+        },
+        "product_id": "digital-heirloom-base-lifetime",
+        "product_name": "Digital Heirloom Base (À vie)",
+        "payment_product_id": "prod_7TTyBF8uPUAGrNJ5tK8sJW",
+        "group": "lifetime",
+        "plan_name": "Base à vie"
+      },
+      {
+        "title": "Pro à vie",
+        "description": "Protection ultime, pour toujours",
+        "label": "Ultime",
+        "features_title": "Tout dans Pro Annuel, plus",
+        "features": [
+          "Stockage 2GB (vidéos/documents importants)",
+          "✅ Interrupteur mort-vivant prioritaire + alertes instantanées",
+          "Bénéficiaires illimités (mode fiducie familiale)",
+          "Rythme cardiaque granulaire (1 jour - 10 ans)",
+          "E-mail + SMS + vérification humaine",
+          "✅ Déclenchement automatique de la logistique ShipAny",
+          "Envoi de carte de sauvegarde physique (frais supplémentaires)",
+          "Support prioritaire 24/7",
+          "🎁 Accès à vie - payez une fois, utilisez pour toujours",
+          "🎁 Toutes les futures mises à jour du plan Pro incluses",
+          "🎁 Canal de support VIP"
+        ],
+        "interval": "one-time",
+        "amount": 49900,
+        "currency": "USD",
+        "price": "$499",
+        "original_price": "$1,788",
+        "unit": "/ à vie",
+        "is_featured": false,
+        "tip": "Économisez $1,289 par rapport à 12 ans d'abonnement annuel !",
+        "button": {
+          "title": "Obtenir Pro à vie",
+          "url": "/#pricing",
+          "icon": "RiInfinityFill"
+        },
+        "product_id": "digital-heirloom-pro-lifetime",
+        "product_name": "Digital Heirloom Pro (À vie)",
+        "payment_product_id": "prod_66sZAZLqySq4Rixu7XgYYh",
+        "group": "lifetime",
+        "plan_name": "Pro à vie"
       }
     ]
   },

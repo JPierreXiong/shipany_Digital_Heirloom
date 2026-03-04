@@ -14,6 +14,12 @@
         "title": "Annual",
         "is_featured": true,
         "label": "Recommended"
+      },
+      {
+        "name": "lifetime",
+        "title": "Lifetime",
+        "is_featured": false,
+        "label": "One-time Payment"
       }
     ],
     "items": [
@@ -114,6 +120,78 @@
         "payment_product_id": "prod_4epepOcgUjSjPoWmAnBaFt",
         "group": "annual",
         "plan_name": "Pro"
+      },
+      {
+        "title": "Lifetime Base",
+        "description": "One-time payment, lifetime access",
+        "label": "Best Value",
+        "features_title": "Everything in Base Annual, plus",
+        "features": [
+          "50MB storage (small attachments/images)",
+          "✅ Automatic Dead Man's Switch",
+          "Up to 3 beneficiaries",
+          "Adjustable heartbeat (30-365 days)",
+          "Email + SMS notifications (global)",
+          "Basic PDF recovery kit",
+          "Priority support",
+          "🎁 Lifetime access - pay once, use forever",
+          "🎁 All future Base plan updates included"
+        ],
+        "interval": "one-time",
+        "amount": 29900,
+        "currency": "USD",
+        "price": "$299",
+        "original_price": "$588",
+        "unit": "/ lifetime",
+        "is_featured": true,
+        "tip": "Save $289 compared to 12 years of annual!",
+        "button": {
+          "title": "Get Lifetime Base",
+          "url": "/#pricing",
+          "icon": "RiInfinityFill"
+        },
+        "product_id": "digital-heirloom-base-lifetime",
+        "product_name": "Digital Heirloom Base (Lifetime)",
+        "payment_product_id": "prod_7TTyBF8uPUAGrNJ5tK8sJW",
+        "group": "lifetime",
+        "plan_name": "Lifetime Base"
+      },
+      {
+        "title": "Lifetime Pro",
+        "description": "Ultimate protection, forever",
+        "label": "Ultimate",
+        "features_title": "Everything in Pro Annual, plus",
+        "features": [
+          "2GB storage (videos/important documents)",
+          "✅ Priority Dead Man's Switch + instant alerts",
+          "Unlimited beneficiaries (family trust mode)",
+          "Granular heartbeat (1 day - 10 years)",
+          "Email + SMS + human verification",
+          "✅ ShipAny logistics auto-trigger",
+          "Physical backup card mailing (extra fee)",
+          "24/7 priority support",
+          "🎁 Lifetime access - pay once, use forever",
+          "🎁 All future Pro plan updates included",
+          "🎁 VIP support channel"
+        ],
+        "interval": "one-time",
+        "amount": 49900,
+        "currency": "USD",
+        "price": "$499",
+        "original_price": "$1,788",
+        "unit": "/ lifetime",
+        "is_featured": false,
+        "tip": "Save $1,289 compared to 12 years of annual!",
+        "button": {
+          "title": "Get Lifetime Pro",
+          "url": "/#pricing",
+          "icon": "RiInfinityFill"
+        },
+        "product_id": "digital-heirloom-pro-lifetime",
+        "product_name": "Digital Heirloom Pro (Lifetime)",
+        "payment_product_id": "prod_66sZAZLqySq4Rixu7XgYYh",
+        "group": "lifetime",
+        "plan_name": "Lifetime Pro"
       }
     ]
   },

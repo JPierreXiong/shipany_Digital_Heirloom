@@ -1,0 +1,133 @@
+{
+  "timestamp": "2026-03-04T02:30:48.150Z",
+  "tests": [
+    {
+      "name": "新文件检查",
+      "passed": true,
+      "details": [
+        {
+          "file": "src/shared/services/plan-sync.ts",
+          "exists": true
+        },
+        {
+          "file": "src/shared/components/subscription-status.tsx",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "name": "定价配置",
+      "passed": true,
+      "details": [
+        {
+          "locale": "en",
+          "hasLifetimeBase": true,
+          "hasLifetimePro": true,
+          "lifetimeBasePrice": "$299",
+          "lifetimeProPrice": "$499",
+          "lifetimeBasePaymentId": "prod_7TTyBF8uPUAGrNJ5tK8sJW",
+          "lifetimeProPaymentId": "prod_66sZAZLqySq4Rixu7XgYYh",
+          "passed": true
+        },
+        {
+          "locale": "zh",
+          "hasLifetimeBase": true,
+          "hasLifetimePro": true,
+          "lifetimeBasePrice": "$299",
+          "lifetimeProPrice": "$499",
+          "lifetimeBasePaymentId": "prod_7TTyBF8uPUAGrNJ5tK8sJW",
+          "lifetimeProPaymentId": "prod_66sZAZLqySq4Rixu7XgYYh",
+          "passed": true
+        },
+        {
+          "locale": "fr",
+          "hasLifetimeBase": true,
+          "hasLifetimePro": true,
+          "lifetimeBasePrice": "$299",
+          "lifetimeProPrice": "$499",
+          "lifetimeBasePaymentId": "prod_7TTyBF8uPUAGrNJ5tK8sJW",
+          "lifetimeProPaymentId": "prod_66sZAZLqySq4Rixu7XgYYh",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "代码修改",
+      "passed": false,
+      "details": [
+        {
+          "file": "src/shared/services/payment.ts",
+          "passed": false,
+          "checks": [
+            {
+              "description": "计划同步到保险库",
+              "found": false
+            },
+            {
+              "description": "支付成功处理",
+              "found": true
+            }
+          ]
+        },
+        {
+          "file": "src/shared/models/digital-vault.ts",
+          "passed": false,
+          "checks": [
+            {
+              "description": "更新保险库计划",
+              "found": false
+            }
+          ]
+        },
+        {
+          "file": "src/app/api/user/get-user-info/route.ts",
+          "passed": false,
+          "checks": [
+            {
+              "description": "订阅信息",
+              "found": true
+            },
+            {
+              "description": "过期时间",
+              "found": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "服务器状态",
+      "passed": true,
+      "status": 200,
+      "statusText": "OK"
+    },
+    {
+      "name": "API路由",
+      "passed": false,
+      "details": [
+        {
+          "route": "/api/user/get-user-info",
+          "accessible": true,
+          "status": 405,
+          "statusOk": true
+        },
+        {
+          "route": "/api/payment/notify/creem",
+          "accessible": false,
+          "error": "The operation was aborted due to timeout"
+        }
+      ]
+    },
+    {
+      "name": "环境变量配置",
+      "passed": false,
+      "note": "部分环境变量待配置（不影响代码实施）"
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "passed": 3,
+    "failed": 3,
+    "successRate": "50.0%"
+  }
+}

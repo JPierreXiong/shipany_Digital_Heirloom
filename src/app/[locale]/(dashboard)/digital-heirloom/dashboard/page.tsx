@@ -10,6 +10,16 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/core/i18n/navigation';
 import { Heart, Shield, Clock, Users, Lock, AlertCircle, ArrowUpCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { SubscriptionStatus } from '@/shared/components/subscription-status';
+
+interface SubscriptionInfo {
+  status: string;
+  planName: string;
+  interval?: string;
+  currentPeriodStart?: Date | string;
+  currentPeriodEnd?: Date | string;
+  daysRemaining?: number | null;
+}
 
 interface DashboardStats {
   vaultItemsCount: number;
@@ -19,6 +29,7 @@ interface DashboardStats {
   lastCheckIn: string | null;
   nextCheckInDue: number | null; // 天数
   userPlan?: 'free' | 'base' | 'pro' | 'on_demand';
+  subscription?: SubscriptionInfo | null;
 }
 
 export default function DigitalHeirloomDashboardPage() {
@@ -32,15 +43,21 @@ export default function DigitalHeirloomDashboardPage() {
 
   const loadDashboardData = async () => {
     try {
-      // 0. 获取用户信息（包含套餐信息）
+      // 0. 获取用户信息（包含套餐信息和订阅信息）
       let userPlan: 'free' | 'base' | 'pro' | 'on_demand' = 'free';
+      let subscriptionInfo: SubscriptionInfo | null = null;
+      
       try {
         const userResponse = await fetch('/api/user/get-user-info', {
           method: 'POST',
         });
         const userResult = await userResponse.json();
-        if (userResult.code === 0 && userResult.data?.planType) {
-          userPlan = userResult.data.planType;
+        if (userResult.code === 0 && userResult.data) {
+          userPlan = userResult.data.planType || 'free';
+          // 获取订阅信息
+          if (userResult.data.subscription) {
+            subscriptionInfo = userResult.data.subscription;
+          }
         }
       } catch (userError) {
         console.warn('获取用户套餐信息失败:', userError);
@@ -68,6 +85,7 @@ export default function DigitalHeirloomDashboardPage() {
           lastCheckIn: null,
           nextCheckInDue: null,
           userPlan,
+          subscription: subscriptionInfo,
         });
         setLoading(false);
         return;
@@ -125,6 +143,7 @@ export default function DigitalHeirloomDashboardPage() {
         lastCheckIn,
         nextCheckInDue,
         userPlan,
+        subscription: subscriptionInfo,
       });
     } catch (error) {
       console.error('加载 Dashboard 数据失败:', error);
@@ -176,6 +195,11 @@ export default function DigitalHeirloomDashboardPage() {
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             Your digital legacy is secure. Here's an overview of your account.
           </p>
+        </div>
+
+        {/* 订阅状态卡片 */}
+        <div className="mb-8">
+          <SubscriptionStatus subscription={stats?.subscription || null} />
         </div>
 
         {/* Dead Man's Switch 警告框 */}

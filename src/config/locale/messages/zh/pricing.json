@@ -14,6 +14,12 @@
         "title": "年付",
         "is_featured": true,
         "label": "推荐"
+      },
+      {
+        "name": "lifetime",
+        "title": "终身版",
+        "is_featured": false,
+        "label": "一次付费"
       }
     ],
     "items": [
@@ -114,6 +120,78 @@
         "payment_product_id": "prod_4epepOcgUjSjPoWmAnBaFt",
         "group": "annual",
         "plan_name": "尊享版"
+      },
+      {
+        "title": "终身标准版",
+        "description": "一次付费，终身使用",
+        "label": "超值",
+        "features_title": "包含年付标准版所有功能，此外",
+        "features": [
+          "50MB 存储（支持小附件/图片）",
+          "✅ 自动死信开关",
+          "最多 3 位受益人",
+          "可调节心跳频率 (30-365天)",
+          "Email + 短信通知（全球）",
+          "基础 PDF 恢复包",
+          "优先支持",
+          "🎁 终身访问权限 - 一次付费，永久使用",
+          "🎁 包含所有未来标准版更新"
+        ],
+        "interval": "one-time",
+        "amount": 29900,
+        "currency": "USD",
+        "price": "$299",
+        "original_price": "$588",
+        "unit": "/ 终身",
+        "is_featured": true,
+        "tip": "相比12年年付节省 $289！",
+        "button": {
+          "title": "获取终身标准版",
+          "url": "/#pricing",
+          "icon": "RiInfinityFill"
+        },
+        "product_id": "digital-heirloom-base-lifetime",
+        "product_name": "Digital Heirloom 标准版（终身）",
+        "payment_product_id": "prod_7TTyBF8uPUAGrNJ5tK8sJW",
+        "group": "lifetime",
+        "plan_name": "终身标准版"
+      },
+      {
+        "title": "终身尊享版",
+        "description": "终极保护，永久有效",
+        "label": "至尊",
+        "features_title": "包含年付尊享版所有功能，此外",
+        "features": [
+          "2GB 存储（支持视频/重要文档）",
+          "✅ 优先死信开关 + 极速通知",
+          "无限制受益人（支持家族信托模式）",
+          "极细化心跳调节 (1天-10年)",
+          "Email + 短信 + 人工核验",
+          "✅ ShipAny 物流自动触发",
+          "物理备份卡邮寄（额外收费）",
+          "24/7 优先支持",
+          "🎁 终身访问权限 - 一次付费，永久使用",
+          "🎁 包含所有未来尊享版更新",
+          "🎁 VIP 专属支持通道"
+        ],
+        "interval": "one-time",
+        "amount": 49900,
+        "currency": "USD",
+        "price": "$499",
+        "original_price": "$1,788",
+        "unit": "/ 终身",
+        "is_featured": false,
+        "tip": "相比12年年付节省 $1,289！",
+        "button": {
+          "title": "获取终身尊享版",
+          "url": "/#pricing",
+          "icon": "RiInfinityFill"
+        },
+        "product_id": "digital-heirloom-pro-lifetime",
+        "product_name": "Digital Heirloom 尊享版（终身）",
+        "payment_product_id": "prod_66sZAZLqySq4Rixu7XgYYh",
+        "group": "lifetime",
+        "plan_name": "终身尊享版"
       }
     ]
   },

@@ -35,6 +35,11 @@ import {
   UpdateSubscription,
   updateSubscriptionBySubscriptionNo,
 } from '../models/subscription';
+import { 
+  syncUserPlan, 
+  getPlanLevelFromProductId,
+  calculateLifetimeEndDate 
+} from './plan-sync';
 
 /**
  * get payment service with configs
@@ -242,6 +247,21 @@ export async function handleCheckoutSuccess({
       newSubscription,
       newCredit,
     });
+
+    // 🆕 同步更新 Vault 的计划等级和有效期
+    if (subscriptionInfo) {
+      const planLevel = getPlanLevelFromProductId(order.productId || '');
+      
+      // 判断是否为终身版（interval 为 one-time）
+      const isLifetime = subscriptionInfo.interval === 'one-time';
+      const currentPeriodEnd = isLifetime 
+        ? calculateLifetimeEndDate() 
+        : subscriptionInfo.currentPeriodEnd;
+      
+      await syncUserPlan(order.userId, planLevel, currentPeriodEnd);
+      
+      console.log(`✅ Synced vault for user ${order.userId}: ${planLevel}, expires: ${currentPeriodEnd}`);
+    }
   } else if (
     session.paymentStatus === PaymentStatus.FAILED ||
     session.paymentStatus === PaymentStatus.CANCELED
@@ -501,6 +521,12 @@ export async function handleSubscriptionRenewal({
       newOrder: order,
       newCredit,
     });
+
+    // 🆕 同步更新 Vault 有效期
+    const planLevel = getPlanLevelFromProductId(subscription.productId || '');
+    await syncUserPlan(subscription.userId, planLevel, subscriptionInfo.currentPeriodEnd);
+    
+    console.log(`✅ Synced vault renewal for user ${subscription.userId}: expires ${subscriptionInfo.currentPeriodEnd}`);
   } else {
     throw new Error('unknown payment status');
   }

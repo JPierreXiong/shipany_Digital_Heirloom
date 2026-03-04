@@ -5,6 +5,9 @@ import { getUserInfo } from '@/shared/models/user';
 import { hasPermission } from '@/shared/services/rbac';
 import { getUserPlanLimits } from '@/shared/services/media/plan-limits';
 import { PLAN_CONFIG, PlanType } from '@/shared/config/plans';
+import { getCurrentSubscription } from '@/shared/models/subscription';
+import { findDigitalVaultByUserId } from '@/shared/models/digital-vault';
+import { calculateDaysRemaining } from '@/shared/services/plan-sync';
 
 export async function POST(req: Request) {
   try {
@@ -24,6 +27,12 @@ export async function POST(req: Request) {
     const planLimits = await getUserPlanLimits(user.id);
     const planConfig = PLAN_CONFIG[planLimits.planType as PlanType] || PLAN_CONFIG.free;
 
+    // 🆕 获取订阅信息
+    const subscription = await getCurrentSubscription(user.id);
+    
+    // 🆕 获取 Vault 信息
+    const vault = await findDigitalVaultByUserId(user.id);
+
     return respData({ 
       ...user, 
       isAdmin, 
@@ -36,6 +45,22 @@ export async function POST(req: Request) {
         translationCharLimit: planLimits.subscriptionLimits?.translationCharLimit ?? planConfig.translationCharLimit,
         freeTrialCount: planConfig.freeTrialCount || 0,
       },
+      // 🆕 订阅信息
+      subscription: subscription ? {
+        status: subscription.status,
+        planName: subscription.planName,
+        interval: subscription.interval,
+        currentPeriodStart: subscription.currentPeriodStart,
+        currentPeriodEnd: subscription.currentPeriodEnd,
+        daysRemaining: calculateDaysRemaining(subscription.currentPeriodEnd),
+      } : null,
+      // 🆕 Vault 信息
+      vault: vault ? {
+        planLevel: vault.planLevel,
+        currentPeriodEnd: vault.currentPeriodEnd,
+        bonusDays: vault.bonusDays,
+        daysRemaining: calculateDaysRemaining(vault.currentPeriodEnd),
+      } : null,
     });
   } catch (e) {
     console.log('get user info failed:', e);

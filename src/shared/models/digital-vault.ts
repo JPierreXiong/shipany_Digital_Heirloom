@@ -97,6 +97,22 @@ export async function updateDigitalVault(
 }
 
 /**
+ * 根据用户 ID 更新数字保险箱
+ */
+export async function updateDigitalVaultByUserId(
+  userId: string,
+  updateVault: UpdateDigitalVault
+) {
+  const [result] = await db()
+    .update(digitalVaults)
+    .set(updateVault)
+    .where(eq(digitalVaults.userId, userId))
+    .returning();
+
+  return result;
+}
+
+/**
  * 更新最后活跃时间（心跳）
  */
 export async function updateVaultHeartbeat(vaultId: string) {
