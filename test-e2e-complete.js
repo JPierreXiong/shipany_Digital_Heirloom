@@ -278,9 +278,12 @@ async function test6_EncryptAndUploadFile() {
     };
     
     // 使用主密码加密数据
-    const cipher = crypto.createCipher('aes-256-cbc', testContext.masterPasswordHash);
+    const key = crypto.scryptSync(testContext.masterPasswordHash, 'salt', 32);
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
     let encrypted = cipher.update(JSON.stringify(testData), 'utf8', 'hex');
     encrypted += cipher.final('hex');
+    encrypted = iv.toString('hex') + ':' + encrypted;
     
     testContext.encryptedData = encrypted;
     
@@ -366,8 +369,12 @@ async function test9_BeneficiaryDecryption() {
     }
     
     // 模拟受益人解密
-    const decipher = crypto.createDecipher('aes-256-cbc', testContext.masterPasswordHash);
-    let decrypted = decipher.update(testContext.encryptedData, 'hex', 'utf8');
+    const parts = testContext.encryptedData.split(':');
+    const iv = Buffer.from(parts[0], 'hex');
+    const encryptedText = parts[1];
+    const key = crypto.scryptSync(testContext.masterPasswordHash, 'salt', 32);
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     
     const data = JSON.parse(decrypted);

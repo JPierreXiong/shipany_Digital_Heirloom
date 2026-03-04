@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-03-04T11:33:46.390Z",
+  "tests": [
+    {
+      "name": "User Signup",
+      "status": "passed",
+      "message": "User created: test_1772624026390@example.com",
+      "data": {
+        "userId": "19bc9e07-34ef-454b-a5c9-f080e72f1515"
+      },
+      "timestamp": "2026-03-04T11:33:48.599Z"
+    },
+    {
+      "name": "User Signin",
+      "status": "passed",
+      "message": "User signed in successfully",
+      "data": {
+        "userId": "19bc9e07-34ef-454b-a5c9-f080e72f1515"
+      },
+      "timestamp": "2026-03-04T11:33:49.466Z"
+    },
+    {
+      "name": "Subscription Payment",
+      "status": "skipped",
+      "message": "Payment requires real payment gateway integration",
+      "data": null,
+      "timestamp": "2026-03-04T11:33:49.466Z"
+    },
+    {
+      "name": "Membership Display",
+      "status": "failed",
+      "message": "HTTP 405",
+      "data": null,
+      "timestamp": "2026-03-04T11:33:50.111Z"
+    },
+    {
+      "name": "Vault Creation",
+      "status": "failed",
+      "message": "HTTP 401",
+      "data": {
+        "error": "Unauthorized"
+      },
+      "timestamp": "2026-03-04T11:33:51.067Z"
+    },
+    {
+      "name": "File Encryption & Upload",
+      "status": "failed",
+      "message": "crypto.createCipher is not a function",
+      "data": null,
+      "timestamp": "2026-03-04T11:33:51.068Z"
+    },
+    {
+      "name": "Add Beneficiary",
+      "status": "failed",
+      "message": "HTTP 401",
+      "data": {
+        "error": "Unauthorized"
+      },
+      "timestamp": "2026-03-04T11:33:51.764Z"
+    },
+    {
+      "name": "Trigger Inheritance",
+      "status": "skipped",
+      "message": "Requires Dead Man's Switch to be triggered (manual or time-based)",
+      "data": null,
+      "timestamp": "2026-03-04T11:33:51.764Z"
+    },
+    {
+      "name": "Beneficiary Decryption",
+      "status": "skipped",
+      "message": "No encrypted data available",
+      "data": null,
+      "timestamp": "2026-03-04T11:33:51.764Z"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 2,
+    "failed": 4,
+    "skipped": 3
+  }
+}
