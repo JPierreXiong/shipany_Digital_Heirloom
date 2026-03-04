@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/config/db/schema';
+import { digitalVaults } from '@/config/db/schema';
 import { eq, and } from 'drizzle-orm';
 
 export async function checkHeartbeats() {
@@ -16,11 +16,11 @@ export async function checkHeartbeats() {
     // 查找所有启用了 Dead Man's Switch 的 vault
     const vaults = await db()
       .select()
-      .from(digitalVault)
+      .from(digitalVaults)
       .where(
         and(
-          eq(digitalVault.deadManSwitchEnabled, true),
-          eq(digitalVault.status, 'active')
+          eq(digitalVaults.deadManSwitchEnabled, true),
+          eq(digitalVaults.status, 'active')
         )
       );
     
@@ -48,12 +48,12 @@ export async function checkHeartbeats() {
           
           // 更新状态为触发
           await db()
-            .update(digitalVault)
+            .update(digitalVaults)
             .set({
               status: 'triggered',
               updatedAt: now
             })
-            .where(eq(digitalVault.id, vault.id));
+            .where(eq(digitalVaults.id, vault.id));
           
           // TODO: 触发继承流程
           // TODO: 通知受益人

@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault, user } from '@/config/db/schema';
+import { digitalVaults, user } from '@/config/db/schema';
 import { sql } from 'drizzle-orm';
 
 export async function checkSystemHealth() {
@@ -37,11 +37,11 @@ export async function checkSystemHealth() {
     try {
       const vaultStats = await db()
         .select({
-          status: digitalVault.status,
+          status: digitalVaults.status,
           count: sql<number>`count(*)::int`
         })
-        .from(digitalVault)
-        .groupBy(digitalVault.status);
+        .from(digitalVaults)
+        .groupBy(digitalVaults.status);
       
       healthMetrics.vaults.total = vaultStats.reduce((sum, s) => sum + s.count, 0);
       vaultStats.forEach(stat => {
@@ -74,11 +74,11 @@ export async function checkSystemHealth() {
     try {
       const planStats = await db()
         .select({
-          planLevel: digitalVault.planLevel,
+          planLevel: digitalVaults.planLevel,
           count: sql<number>`count(*)::int`
         })
-        .from(digitalVault)
-        .groupBy(digitalVault.planLevel);
+        .from(digitalVaults)
+        .groupBy(digitalVaults.planLevel);
       
       healthMetrics.subscriptions.total = planStats.reduce((sum, s) => sum + s.count, 0);
       planStats.forEach(stat => {

@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/config/db/schema';
+import { digitalVaults } from '@/config/db/schema';
 import { eq, and, lt, ne } from 'drizzle-orm';
 
 export async function checkExpiredSubscriptions() {
@@ -16,12 +16,12 @@ export async function checkExpiredSubscriptions() {
     // 查找所有订阅已过期但状态仍为 active 的 vault
     const expiredVaults = await db()
       .select()
-      .from(digitalVault)
+      .from(digitalVaults)
       .where(
         and(
-          eq(digitalVault.status, 'active'),
-          ne(digitalVault.planLevel, 'lifetime'),
-          lt(digitalVault.currentPeriodEnd, now)
+          eq(digitalVaults.status, 'active'),
+          ne(digitalVaults.planLevel, 'lifetime'),
+          lt(digitalVaults.currentPeriodEnd, now)
         )
       );
     
@@ -32,13 +32,13 @@ export async function checkExpiredSubscriptions() {
       try {
         // 降级到免费版
         await db()
-          .update(digitalVault)
+          .update(digitalVaults)
           .set({
             planLevel: 'free',
             currentPeriodEnd: null,
             updatedAt: now
           })
-          .where(eq(digitalVault.id, vault.id));
+          .where(eq(digitalVaults.id, vault.id));
         
         console.log(`[Subscription Checker] Downgraded vault ${vault.id} to free plan for user ${vault.userId}`);
         

@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault, user } from '@/config/db/schema';
+import { digitalVaults, user } from '@/config/db/schema';
 import { sql } from 'drizzle-orm';
 
 // 成本配置（每月）
@@ -77,7 +77,7 @@ export async function checkCostAlerts() {
       
       const vaultResult = await db()
         .select({ count: sql<number>`count(*)::int` })
-        .from(digitalVault);
+        .from(digitalVaults);
       vaultCount = vaultResult[0]?.count || 0;
       
       console.log(`[Cost Alert] Users: ${userCount}, Vaults: ${vaultCount}`);

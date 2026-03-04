@@ -4,7 +4,7 @@
  */
 
 import { db } from '@/core/db';
-import { digitalVault } from '@/config/db/schema';
+import { digitalVaults } from '@/config/db/schema';
 import { eq, and } from 'drizzle-orm';
 
 export async function checkDeadManSwitch() {
@@ -16,11 +16,11 @@ export async function checkDeadManSwitch() {
     // 查找所有已触发但未处理的 vault
     const triggeredVaults = await db()
       .select()
-      .from(digitalVault)
+      .from(digitalVaults)
       .where(
         and(
-          eq(digitalVault.status, 'triggered'),
-          eq(digitalVault.deadManSwitchEnabled, true)
+          eq(digitalVaults.status, 'triggered'),
+          eq(digitalVaults.deadManSwitchEnabled, true)
         )
       );
     
@@ -39,12 +39,12 @@ export async function checkDeadManSwitch() {
         
         // 更新状态为已释放
         await db()
-          .update(digitalVault)
+          .update(digitalVaults)
           .set({
             status: 'released',
             updatedAt: now
           })
-          .where(eq(digitalVault.id, vault.id));
+          .where(eq(digitalVaults.id, vault.id));
         
         processedCount++;
         console.log(`[Dead Man Switch] Successfully processed vault ${vault.id}`);
