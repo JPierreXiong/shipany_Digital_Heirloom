@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
  * 
  * 调度建议: 每天 1-2 次即可
  * - 每天凌晨 2:00 (0 2 * * *)
- * - 或每 12 小时 (0 */12 * * *)
+ * - 或每 12 小时 (0 星号/12 * * *)
  */
 export async function POST(request: NextRequest) {
   try {
