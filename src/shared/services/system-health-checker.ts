@@ -43,8 +43,8 @@ export async function checkSystemHealth() {
         .from(digitalVaults)
         .groupBy(digitalVaults.status);
       
-      healthMetrics.vaults.total = vaultStats.reduce((sum, s) => sum + s.count, 0);
-      vaultStats.forEach(stat => {
+      healthMetrics.vaults.total = vaultStats.reduce((sum: number, s: any) => sum + s.count, 0);
+      vaultStats.forEach((stat: any) => {
         if (stat.status === 'active') healthMetrics.vaults.active = stat.count;
         if (stat.status === 'triggered') healthMetrics.vaults.triggered = stat.count;
         if (stat.status === 'released') healthMetrics.vaults.released = stat.count;
@@ -80,8 +80,8 @@ export async function checkSystemHealth() {
         .from(digitalVaults)
         .groupBy(digitalVaults.planLevel);
       
-      healthMetrics.subscriptions.total = planStats.reduce((sum, s) => sum + s.count, 0);
-      planStats.forEach(stat => {
+      healthMetrics.subscriptions.total = planStats.reduce((sum: number, s: any) => sum + s.count, 0);
+      planStats.forEach((stat: any) => {
         if (stat.planLevel !== 'free') healthMetrics.subscriptions.active = stat.count;
       });
       
