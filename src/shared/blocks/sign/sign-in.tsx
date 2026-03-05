@@ -142,12 +142,12 @@ export function SignIn({
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">{t('password_title')}</Label>
-                  {/* <Link
-                    href="#"
+                  <Link
+                    href="/forgot-password"
                     className="ml-auto inline-block text-sm underline"
                   >
                     Forgot your password?
-                  </Link> */}
+                  </Link>
                 </div>
 
                 <Input
@@ -157,6 +157,7 @@ export function SignIn({
                   autoComplete="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSignIn()}
                 />
               </div>
 
