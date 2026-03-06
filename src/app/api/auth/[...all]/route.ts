@@ -5,7 +5,8 @@ import { getAuth } from '@/core/auth';
 export async function POST(request: Request) {
   try {
     const auth = await getAuth();
-    const handler = toNextJsHandler(auth.handler);
+    // Better-Auth 1.3.7: 直接传递 auth 对象，不需要 auth.handler
+    const handler = toNextJsHandler(auth);
     const response = await handler.POST(request);
     
     // Log 422 errors for debugging
@@ -31,7 +32,8 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   try {
     const auth = await getAuth();
-    const handler = toNextJsHandler(auth.handler);
+    // Better-Auth 1.3.7: 直接传递 auth 对象，不需要 auth.handler
+    const handler = toNextJsHandler(auth);
     return handler.GET(request);
   } catch (error) {
     console.error('Auth GET error:', error);
