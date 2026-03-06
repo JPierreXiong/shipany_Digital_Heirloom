@@ -53,6 +53,31 @@ export async function getAuthOptions() {
       configs.google_client_id && configs.google_one_tap_enabled === 'true'
         ? [oneTap()]
         : [],
+    // 🆕 注册后自动创建 Vault 和设置试用期
+    hooks: {
+      after: [
+        {
+          matcher: (context) => context.path === '/sign-up/email',
+          handler: async (context) => {
+            try {
+              const { user } = context;
+              if (!user?.id) return;
+
+              // 动态导入避免循环依赖
+              const { createVaultForNewUser } = await import('@/shared/hooks/create-vault-on-signup');
+              
+              // 创建 Vault 并设置 7 天试用期
+              await createVaultForNewUser(user.id);
+              
+              console.log(`✅ Auto-created vault for new user: ${user.id}`);
+            } catch (error) {
+              console.error('❌ Failed to create vault for new user:', error);
+              // 不抛出错误，避免影响注册流程
+            }
+          },
+        },
+      ],
+    },
   };
 }
 

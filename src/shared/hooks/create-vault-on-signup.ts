@@ -14,6 +14,10 @@ export async function createVaultForNewUser(userId: string) {
   try {
     console.log(`Creating vault for new user: ${userId}`);
 
+    // 🆕 计算 7 天试用期结束时间
+    const trialEndDate = new Date();
+    trialEndDate.setDate(trialEndDate.getDate() + 7);
+
     // 创建初始保险箱（未加密状态）
     const vault = await createDigitalVault({
       id: getUuid(),
@@ -25,17 +29,17 @@ export async function createVaultForNewUser(userId: string) {
       recoveryBackupToken: null,
       recoveryBackupSalt: null,
       recoveryBackupIv: null,
-      heartbeatFrequency: 90, // 默认90天
+      heartbeatFrequency: 180, // Free 用户默认 180 天（固定）
       gracePeriod: 7, // 默认7天宽限期
       lastSeenAt: new Date(),
       deadManSwitchEnabled: false, // 默认关闭，用户完成设置后开启
       status: 'active',
       planLevel: 'free', // 新用户默认免费版
-      currentPeriodEnd: null,
+      currentPeriodEnd: trialEndDate, // 🆕 设置 7 天试用期
       bonusDays: 0,
     });
 
-    console.log(`✅ Vault created successfully for user ${userId}: ${vault.id}`);
+    console.log(`✅ Vault created successfully for user ${userId}: ${vault.id}, trial ends: ${trialEndDate}`);
     return vault;
   } catch (error) {
     console.error(`❌ Failed to create vault for user ${userId}:`, error);
@@ -43,6 +47,7 @@ export async function createVaultForNewUser(userId: string) {
     return null;
   }
 }
+
 
 
 

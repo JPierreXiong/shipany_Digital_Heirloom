@@ -249,18 +249,22 @@ export async function handleCheckoutSuccess({
     });
 
     // 🆕 同步更新 Vault 的计划等级和有效期
-    if (subscriptionInfo) {
-      const planLevel = getPlanLevelFromProductId(order.productId || '');
-      
-      // 判断是否为终身版（interval 为 one-time）
-      const isLifetime = subscriptionInfo.interval === 'one-time';
-      const currentPeriodEnd = isLifetime 
-        ? calculateLifetimeEndDate() 
-        : subscriptionInfo.currentPeriodEnd;
-      
+    const planLevel = getPlanLevelFromProductId(order.productId || '');
+    let currentPeriodEnd: Date | null = null;
+
+    // 1️⃣ 订阅支付（年费）- 使用订阅信息中的有效期
+    if (order.paymentType === PaymentType.SUBSCRIPTION && subscriptionInfo) {
+      currentPeriodEnd = subscriptionInfo.currentPeriodEnd;
+    }
+    // 2️⃣ 一次性买断（Lifetime）- 设置为 100 年后
+    else if (order.paymentType === PaymentType.ONE_TIME) {
+      currentPeriodEnd = calculateLifetimeEndDate();
+    }
+
+    // 同步 Vault 权益（只要不是 free 就同步）
+    if (planLevel !== 'free' && currentPeriodEnd) {
       await syncUserPlan(order.userId, planLevel, currentPeriodEnd);
-      
-      console.log(`✅ Synced vault for user ${order.userId}: ${planLevel}, expires: ${currentPeriodEnd}`);
+      console.log(`✅ Activated ${planLevel} plan for user ${order.userId}, expires: ${currentPeriodEnd}`);
     }
   } else if (
     session.paymentStatus === PaymentStatus.FAILED ||
