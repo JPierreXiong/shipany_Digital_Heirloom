@@ -7,7 +7,15 @@ import { getUserPlanLimits } from '@/shared/services/media/plan-limits';
 import { PLAN_CONFIG, PlanType } from '@/shared/config/plans';
 import { getCurrentSubscription } from '@/shared/models/subscription';
 import { findDigitalVaultByUserId } from '@/shared/models/digital-vault';
-import { calculateDaysRemaining } from '@/shared/services/plan-sync';
+// 计算剩余天数
+function calculateDaysRemaining(endDate: Date | null | undefined): number | null {
+  if (!endDate) return null;
+  const now = new Date();
+  const end = new Date(endDate);
+  const diffTime = end.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays > 0 ? diffDays : 0;
+}
 
 export async function POST(req: Request) {
   try {
