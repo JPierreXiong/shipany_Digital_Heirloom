@@ -10,15 +10,20 @@ import { getAuth } from '@/core/auth';
  */
 export async function GET(request: NextRequest) {
   try {
-    // 获取当前用户 session
+    // 获取当前用户 session（从 cookie 中读取）
     const auth = await getAuth();
+    
+    // Better-Auth 会自动从 cookie 中读取 session
     const session = await auth.api.getSession({
       headers: request.headers,
     });
 
     if (!session?.user) {
       return NextResponse.json(
-        { error: 'Unauthorized - Please login first' },
+        { 
+          error: 'Unauthorized - Please login first',
+          message: 'No valid session found. Please login to access your vaults.'
+        },
         { status: 401 }
       );
     }

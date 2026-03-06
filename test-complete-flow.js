@@ -7,7 +7,7 @@ console.log('╚═════════════════════�
 
 const testEmail = `test_${Date.now()}@example.com`;
 const testPassword = 'Test123456!';
-let authToken = null;
+let authCookie = null;
 let userId = null;
 
 // 测试 1: 用户注册
@@ -29,12 +29,19 @@ async function test1_SignUp() {
     
     if (response.ok) {
       const data = await response.json();
-      authToken = data.token;
+      
+      // 获取 Set-Cookie header
+      const setCookie = response.headers.get('set-cookie');
+      if (setCookie) {
+        authCookie = setCookie;
+      }
+      
       userId = data.user?.id;
       
       console.log('   ✅ 注册成功');
       console.log(`   用户 ID: ${userId}`);
-      console.log(`   邮箱: ${data.user?.email}\n`);
+      console.log(`   邮箱: ${data.user?.email}`);
+      console.log(`   Cookie: ${authCookie ? '已获取' : '未获取'}\n`);
       return { success: true, data };
     } else {
       const error = await response.text();
@@ -66,10 +73,15 @@ async function test2_SignIn() {
     
     if (response.ok) {
       const data = await response.json();
-      authToken = data.token;
+      
+      // 获取 Set-Cookie header
+      const setCookie = response.headers.get('set-cookie');
+      if (setCookie) {
+        authCookie = setCookie;
+      }
       
       console.log('   ✅ 登录成功');
-      console.log(`   Token: ${authToken?.substring(0, 20)}...\n`);
+      console.log(`   Cookie: ${authCookie ? '已获取' : '未获取'}\n`);
       return { success: true, data };
     } else {
       console.log('   ❌ 登录失败\n');
@@ -85,8 +97,8 @@ async function test2_SignIn() {
 async function test3_VaultList() {
   console.log('【测试 3】获取 Vault 列表...\n');
   
-  if (!authToken) {
-    console.log('   ⚠️  跳过（未登录）\n');
+  if (!authCookie) {
+    console.log('   ⚠️  跳过（未获取到 Cookie）\n');
     return { success: false };
   }
   
@@ -95,7 +107,7 @@ async function test3_VaultList() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authToken}`
+        'Cookie': authCookie
       }
     });
     
@@ -117,7 +129,9 @@ async function test3_VaultList() {
       console.log('   ⚠️  API 不存在（需要创建）\n');
       return { success: false };
     } else {
-      console.log('   ❌ 获取失败\n');
+      const error = await response.text();
+      console.log('   ❌ 获取失败');
+      console.log(`   错误: ${error.substring(0, 100)}\n`);
       return { success: false };
     }
   } catch (error) {
