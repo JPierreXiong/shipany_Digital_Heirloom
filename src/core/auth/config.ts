@@ -57,8 +57,10 @@ export async function getAuthOptions() {
     hooks: {
       after: [
         {
-          matcher: (context) => context.path === '/sign-up/email',
-          handler: async (context) => {
+          matcher(context) {
+            return context.path === '/sign-up/email';
+          },
+          async handler(context) {
             try {
               const { user } = context;
               if (!user?.id) return;

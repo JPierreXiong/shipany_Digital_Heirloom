@@ -20,12 +20,15 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // 从 Better-Auth 获取 session
     const auth = await getAuth();
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
 
-    if (!session) {
+    if (!session?.user) {
       return NextResponse.json(
-        { error: 'Unauthorized' },
+        { error: 'Unauthorized - Please login first' },
         { status: 401 }
       );
     }
