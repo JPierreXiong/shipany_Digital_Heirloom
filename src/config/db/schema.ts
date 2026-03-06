@@ -844,3 +844,51 @@ export const systemAlerts = pgTable(
     index('idx_alert_category').on(table.category),
   ]
 );
+
+/**
+ * Vault 资产文件表
+ * 存储加密文件的元数据（文件本身存储在 Vercel Blob）
+ */
+export const vaultAssets = pgTable(
+  'vault_assets',
+  {
+    id: text('id').primaryKey(),
+    vaultId: text('vault_id')
+      .notNull()
+      .references(() => digitalVaults.id, { onDelete: 'cascade' }),
+    // 文件信息
+    fileName: text('file_name').notNull(), // 原始文件名
+    displayName: text('display_name'), // 显示名称（可选）
+    fileType: text('file_type').notNull(), // MIME 类型（image/jpeg, video/mp4, etc）
+    fileSize: integer('file_size').notNull(), // 文件大小（字节）
+    // 存储路径（Vercel Blob URL）
+    storagePath: text('storage_path').notNull(), // Blob 存储路径或 URL
+    // 加密参数
+    encryptionSalt: text('encryption_salt').notNull(), // 加密盐值（Base64）
+    encryptionIv: text('encryption_iv').notNull(), // 加密初始向量（Base64）
+    checksum: text('checksum').notNull(), // 文件校验和（SHA-256）
+    // 分类
+    category: text('category').notNull(), // secure_keys, legal_docs, video_legacy, instructions
+    // 版本控制
+    version: integer('version').default(1).notNull(),
+    // 状态
+    status: text('status').default('active').notNull(), // active, deleted, archived
+    // 时间戳
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at')
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+    deletedAt: timestamp('deleted_at'),
+  },
+  (table) => [
+    // 查询保险箱的所有资产
+    index('idx_vault_assets_vault').on(table.vaultId),
+    // 按分类查询
+    index('idx_vault_assets_category').on(table.category),
+    // 按状态查询
+    index('idx_vault_assets_status').on(table.status),
+    // 按创建时间排序
+    index('idx_vault_assets_created').on(table.createdAt),
+  ]
+);
