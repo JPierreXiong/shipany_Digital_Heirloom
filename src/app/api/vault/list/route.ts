@@ -28,28 +28,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 查询用户的所有 Vault
+    // 查询用户的所有 Vault（使用 select all）
     const vaults = await db()
-      .select({
-        id: digitalVaults.id,
-        name: digitalVaults.name,
-        description: digitalVaults.description,
-        planLevel: digitalVaults.planLevel,
-        status: digitalVaults.status,
-        storageUsed: digitalVaults.storageUsed,
-        storageLimit: digitalVaults.storageLimit,
-        currentPeriodEnd: digitalVaults.currentPeriodEnd,
-        createdAt: digitalVaults.createdAt,
-        updatedAt: digitalVaults.updatedAt,
-      })
+      .select()
       .from(digitalVaults)
       .where(eq(digitalVaults.userId, session.user.id))
       .orderBy(desc(digitalVaults.createdAt));
 
     return NextResponse.json({
       success: true,
-      vaults,
-      total: vaults.length,
+      vaults: vaults || [],
+      total: vaults?.length || 0,
     });
   } catch (error) {
     console.error('[Vault List] Error:', error);
